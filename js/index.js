@@ -1,23 +1,26 @@
 ﻿/* Start Game Entity */
 
-function GameEntity(DOMElement, parentDOMElement, id, className, textContent) {
+function GameEntity(DOMElement, parentDOMElement, appendToParent, id, className, textContent) {
 
     /* Start Initialize Protected Data */
 
     this._DOMElement = DOMElement || document.createElement("div");
     this._parentDOMElement = parentDOMElement || document.body;
-
+    this._appendToParent = appendToParent || false;
     this._DOMElement.className = className || "";
     this._DOMElement.classList.add("game-entity");
     this._DOMElement.id = id || "";
     this._DOMElement.textContent = textContent || "";
 
-    this._parentDOMElement.appendChild(this._DOMElement)
+    if (this._appendToParent) {
+
+        this._parentDOMElement.appendChild(this._DOMElement)
+    }
 
     var cr = this._DOMElement.getBoundingClientRect();
 
     this._x = cr.left;
-    this._y = cr.top;
+    this._y = cr.bottom;
     this._width = cr.width;
     this._height = cr.height;
 
@@ -217,7 +220,7 @@ GameEntity.prototype.repaint = function () {
         this._DOMElement.style.cssText = "".concat(
             "position: absolute;",
             "left: {x}px;".replace("{x}", this._x),
-            "top: {y}px;".replace("{y}", this._y),
+            "bottom: {y}px;".replace("{y}", this._y),
             "width: {width}px;".replace("{width}", this._width),
             "height: {height}px;".replace("{height}", this._height),
             "transform: rotate({angle}deg);".replace("{angle}", this._angle),
@@ -235,7 +238,7 @@ GameEntity.prototype.repaint = function () {
 
 function GameField(parentDOMElement) {
 
-    GameEntity.call(this, null, parentDOMElement, "game-field");
+    GameEntity.call(this, null, parentDOMElement, true, "game-field");
 
     this._skyLayer = new GameFieldLayer(this._DOMElement, "sky");
     this._starsLayer = new GameFieldLayer(this._DOMElement, "stars");
@@ -292,7 +295,7 @@ GameField.prototype.repaint = function () {
 
 function GameFieldLayer(parentDOMElement, id) {
 
-    GameEntity.call(this, null, parentDOMElement, id, "game-field-layer");
+    GameEntity.call(this, null, parentDOMElement, true, id, "game-field-layer");
 
     this._backgroundPositionX = 0;
     this._backgroundPositionY = 0;
@@ -380,7 +383,7 @@ GameFieldLayer.prototype.repaint = function () {
 
 function Trickster(parentDOMElement, textContent) {
 
-    GameEntity.call(this, null, parentDOMElement, null, "trickster", textContent);
+    GameEntity.call(this, null, parentDOMElement,true, null, "trickster", textContent);
 
     this._fps = 10;
 
