@@ -8,6 +8,7 @@ var game = new Game(gameWrapper);
 
 document.addEventListener('keydown', game.keyDownEventHandler.bind(game), false);
 document.addEventListener('keyup', game.keyDownEventHandler.bind(game), false);
+document.addEventListener('click', game.mouseClickEventHandler.bind(game), false);
 
 /* End Event Listeners */
 

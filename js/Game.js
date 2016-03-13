@@ -14,6 +14,7 @@ function Game(parentDOMElement) {
 
     this._gameField = initializeGameField();
 
+
     this._isRightKeyPressed = false;
     this._isLeftKeyPressed = false;
     this._isUpKeyPressed = false;
@@ -41,6 +42,13 @@ Game.prototype.keyDownEventHandler = function (e) {
 
         case 27:
             {
+                if (this._gameField.getMenuLayer().isVisible()) {
+
+                    this._gameField.getMenuLayer().makeHidden();
+                } else {
+
+                    this._gameField.getMenuLayer().makeVisible();
+                }
 
                 break;
             }
@@ -95,6 +103,33 @@ Game.prototype.keyUpEventHandler = function (e) {
     }
 }
 
+Game.prototype.mouseClickEventHandler = function (e) {
+
+    switch (e.target.id) {
+
+        case "play-game-menu-item":
+            {
+
+                this.start();
+                break;
+            }
+
+        case "stop-game-menu-item":
+            {
+
+                this.stop();
+                break;
+            }
+
+        case "resume-game-menu-item":
+            {
+
+                this.start();
+                break;
+            }
+    }
+}
+
 Game.prototype.runGameLoop = function () {
 
     this._animationFrameManager.runAtFPS(function () {
@@ -109,13 +144,13 @@ Game.prototype.runGameLoop = function () {
 
         if (this._isDownKeyPressed) {
 
-           
+       
             this._isDownKeyPressed = false;
         }
 
         if (this._isLeftKeyPressed) {
 
-           
+       
             this._isLeftKeyPressed = false;
         }
 
@@ -128,9 +163,9 @@ Game.prototype.runGameLoop = function () {
         this._gameField.getCloudsLayer().moveBackgroundPositition();
         this._gameField.getStarsLayer().moveBackgroundPositition();
 
-       
+
         this._gameField.repaint();
- 
+        
 
     }.bind(this), 15);
 
