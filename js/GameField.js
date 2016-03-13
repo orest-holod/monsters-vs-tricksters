@@ -7,7 +7,8 @@ function GameField(parentDOMElement, appendToParentDOMElement) {
     this._skyLayer = new GameFieldLayer(this._DOMElement, true, 'sky');
     this._starsLayer = new GameFieldLayer(this._DOMElement, true, 'stars');
     this._cloudsLayer = new GameFieldLayer(this._DOMElement, true, 'clouds');
-   
+    this._towerLayer = new GameFieldLayer(this._DOMElement, true, 'tower');
+    this._stepsLayer = new GameFieldStepsLayer(this._DOMElement, true);
     this._menuLayer = new GameFieldMenuLayer(this._DOMElement, true);
     this._fpsLayer = new GameFieldLayer(this._DOMElement, true, "fps");
 }
@@ -31,7 +32,15 @@ GameField.prototype.getCloudsLayer = function () {
     return this._cloudsLayer;
 }
 
+GameField.prototype.getTowerLayer = function () {
 
+    return this._towerLayer;
+}
+
+GameField.prototype.getStepsLayer = function () {
+
+    return this._stepsLayer;
+}
 
 GameField.prototype.getMenuLayer = function () {
 
@@ -50,7 +59,7 @@ GameField.prototype.repaint = function () {
     this._skyLayer.repaint();
     this._starsLayer.repaint();
     this._cloudsLayer.repaint();
-  
+    this._stepsLayer.repaint();
     this._menuLayer.repaint();
 }
 
