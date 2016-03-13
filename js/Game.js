@@ -30,8 +30,12 @@ function Game(parentDOMElement) {
         starsLayer.setBackgroundPositionDX(-1);
         starsLayer.setBackgroundPositionDY(-1);
 
+        var stepsLayer = gameField.getStepsLayer();
+        stepsLayer.generateSteps(that._colors);
+
         return gameField;
     }
+
 
 }
 
@@ -41,6 +45,7 @@ Game.prototype.keyDownEventHandler = function (e) {
 
         case 27:
             {
+               
 
                 break;
             }
@@ -95,6 +100,8 @@ Game.prototype.keyUpEventHandler = function (e) {
     }
 }
 
+
+
 Game.prototype.runGameLoop = function () {
 
     this._animationFrameManager.runAtFPS(function () {
@@ -103,19 +110,19 @@ Game.prototype.runGameLoop = function () {
 
         if (this._isUpKeyPressed) {
 
-           
+            this._gameField.getStepsLayer().addPixel();
             this._isUpKeyPressed = false;
         }
 
         if (this._isDownKeyPressed) {
 
-           
+            this._gameField.getStepsLayer().minusPixel();
             this._isDownKeyPressed = false;
         }
 
         if (this._isLeftKeyPressed) {
 
-           
+         
             this._isLeftKeyPressed = false;
         }
 
@@ -128,10 +135,11 @@ Game.prototype.runGameLoop = function () {
         this._gameField.getCloudsLayer().moveBackgroundPositition();
         this._gameField.getStarsLayer().moveBackgroundPositition();
 
-       
+      
         this._gameField.repaint();
- 
+       
 
+     
     }.bind(this), 15);
 
     this._animationFrameManager.requestAnimationFrame(this.runGameLoop.bind(this), 10);
