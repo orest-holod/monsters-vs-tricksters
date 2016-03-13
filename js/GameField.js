@@ -9,6 +9,7 @@ function GameField(parentDOMElement, appendToParentDOMElement) {
     this._cloudsLayer = new GameFieldLayer(this._DOMElement, true, 'clouds');
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
     this._towerLayer = new GameFieldLayer(this._DOMElement, true, 'tower');
@@ -18,6 +19,8 @@ function GameField(parentDOMElement, appendToParentDOMElement) {
    
 >>>>>>> parent of 53c4bfd... Clickable menu in correct order with monster cursor
     this._menuLayer = new GameFieldMenuLayer(this._DOMElement, true);
+=======
+>>>>>>> parent of 9ac0384... Menu
     this._fpsLayer = new GameFieldLayer(this._DOMElement, true, "fps");
 }
 
@@ -42,6 +45,7 @@ GameField.prototype.getCloudsLayer = function () {
 
 GameField.prototype.getTowerLayer = function () {
 
+<<<<<<< HEAD
     return this._towerLayer;
 }
 
@@ -55,6 +59,8 @@ GameField.prototype.getMenuLayer = function () {
     return this._menuLayer;
 }
 
+=======
+>>>>>>> parent of 9ac0384... Menu
 GameField.prototype.getFPSLayer = function () {
 
     return this._fpsLayer;
@@ -66,6 +72,7 @@ GameField.prototype.repaint = function () {
 
     this._skyLayer.repaint();
     this._starsLayer.repaint();
+<<<<<<< HEAD
     this._cloudsLayer.repaint();
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -77,6 +84,8 @@ GameField.prototype.repaint = function () {
   
 >>>>>>> parent of 53c4bfd... Clickable menu in correct order with monster cursor
     this._menuLayer.repaint();
+=======
+>>>>>>> parent of 9ac0384... Menu
 }
 
 /* End Public Methods */

@@ -143,22 +143,6 @@ body {
 
 }
 
-#menu {
-  width: 60rem;
-  z-index: 100;
-  background: linear-gradient(rgba(70, 46, 142, 0), rgba(70, 46, 142, 0.4)); /*164, 46, 80*/
-  
-  text-shadow: 0 0 15px #ec7aec;
-
-  font-family: 'LuckiestGuy', cursive;
-  color: #d0c8c5;
-  -webkit-text-stroke: 1px #e073ef;
-}
-
-#menu.hidden {
-    display: none;
-}
-
 #fps {
      z-index: 200;
 
@@ -166,15 +150,7 @@ body {
     font-size: 3rem;
 }
 
-/* Step */
 
-.step {
-	position: absolute;
-	height: 0.62rem;
-	display: inline-block;
-	margin: 0;
-	border-radius: 3px;
-}
 
 /* Trickster */
 
@@ -190,64 +166,4 @@ body {
     color: #fff;
     text-shadow: 0px 0px 3rem #fff;
     text-align: center;
-}
-
-/* Monster */
-
-.monster {
-    z-index: 2;
-
-    width: 7rem;
-    height: 7rem;
-
-    font-family: Monsters;
-    font-size: 7rem;
-    line-height: 1;
-    color: #fff;
-    text-shadow: 0px 0px 3rem #fff;
-    box-shadow: 0px 0px 3.5rem 1rem #fff;
-    text-align: center;
-    border-radius: 50%;
-}
-
-#main-monster {
-    box-shadow: none;
-}
-
-/* Menu */
-
-#menu-header {
-  font-size: 50px;
-  text-align: center;
-  left: 0;
-  right: 0;
-}
-
-#play-game-menu-item,
-#resume-game-menu-item,
-#stop-game-menu-item,
-#save-game-menu-item,
-#facebook-menu-item,
-#google-menu-item,
-#facebook-menu-item,
-#google-menu-item {
-  text-align: center;
-  left: 0;
-  right: 0;
-  font-size: 30px;
-  text-align: center;
-  border: 2px solid #d0c8c5;
-  border-radius: 25%;
-  
-  margin: 0 auto;
-  box-shadow: 0 0 10px white;
-
-}
-
-#menu > div:hover {
-  background: linear-gradient(to bottom, rgba(224,184,219,0.8) 0%, rgba(219,180,214,0) 24%, rgba(147,119,142,0.76) 84%, rgba(147,119,142,0.8) 100%);
-}
-
-#menu > div:active {
-  background: linear-gradient(to bottom, rgba(147,119,142,0.8) 0%,rgba(147,119,142,0.41) 36%, rgba(224,184,219,0) 76%, rgba(224,184,219,0.8) 100%);
 }
