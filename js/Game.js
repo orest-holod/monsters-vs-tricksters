@@ -15,10 +15,13 @@ function Game(parentDOMElement) {
     this._gameField = initializeGameField();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     
 
     
 
+=======
+>>>>>>> parent of 9ac0384... Menu
 =======
 >>>>>>> parent of 9ac0384... Menu
     this._isRightKeyPressed = false;
@@ -120,7 +123,11 @@ Game.prototype.runGameLoop = function () {
         if (this._isDownKeyPressed) {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             this._gameField.getStepsLayer().minusPixel();
+=======
+           
+>>>>>>> parent of 9ac0384... Menu
 =======
            
 >>>>>>> parent of 9ac0384... Menu
@@ -130,7 +137,11 @@ Game.prototype.runGameLoop = function () {
         if (this._isLeftKeyPressed) {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
           
+=======
+           
+>>>>>>> parent of 9ac0384... Menu
 =======
            
 >>>>>>> parent of 9ac0384... Menu
@@ -147,10 +158,13 @@ Game.prototype.runGameLoop = function () {
         this._gameField.getStarsLayer().moveBackgroundPositition();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
       
         this._gameField.repaint();
       
 =======
+=======
+>>>>>>> parent of 9ac0384... Menu
        
         this._gameField.repaint();
  
