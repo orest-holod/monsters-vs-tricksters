@@ -16,10 +16,13 @@ function Game(parentDOMElement) {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     
 
     
 
+=======
+>>>>>>> parent of 9ac0384... Menu
 =======
 >>>>>>> parent of 9ac0384... Menu
 =======
@@ -124,7 +127,11 @@ Game.prototype.runGameLoop = function () {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             this._gameField.getStepsLayer().minusPixel();
+=======
+           
+>>>>>>> parent of 9ac0384... Menu
 =======
            
 >>>>>>> parent of 9ac0384... Menu
@@ -138,7 +145,11 @@ Game.prototype.runGameLoop = function () {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           
+=======
+           
+>>>>>>> parent of 9ac0384... Menu
 =======
            
 >>>>>>> parent of 9ac0384... Menu
@@ -159,10 +170,13 @@ Game.prototype.runGameLoop = function () {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       
         this._gameField.repaint();
       
 =======
+=======
+>>>>>>> parent of 9ac0384... Menu
 =======
 >>>>>>> parent of 9ac0384... Menu
        
