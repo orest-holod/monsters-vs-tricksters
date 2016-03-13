@@ -14,23 +14,23 @@ function GameFieldMenuLayer(parentDOMElement, appendToParentDOMElement) {
     var facebookMenuItem = new MenuItem(this.getDOMElement(), 'facebook-menu-item', 'FB');
     var googleMenuItem = new MenuItem(this.getDOMElement(), 'google-menu-item', 'G+');
 
-    playGameMenuItem.setX(0);
-    playGameMenuItem.setY(this._menuHeader.getY() + this._menuHeader.getHeight() + 50);
-
-    stopGameMenuItem.setX(0);
-    stopGameMenuItem.setY(playGameMenuItem.getY() + playGameMenuItem.getHeight() + 10);
-
-    resumeGameMenuItem.setX(0);
-    resumeGameMenuItem.setY(stopGameMenuItem.getY() + stopGameMenuItem.getHeight() + 10);
-
-    saveGameMenuItem.setX(0);
-    saveGameMenuItem.setY(resumeGameMenuItem.getY() + resumeGameMenuItem.getHeight() + 10);
+    googleMenuItem.setX(0);
+    googleMenuItem.setY(this._menuHeader.getY() + this._menuHeader.getHeight() - 90);
 
     facebookMenuItem.setX(0);
-    facebookMenuItem.setY(saveGameMenuItem.getY() + saveGameMenuItem.getHeight() + 10);
+    facebookMenuItem.setY(googleMenuItem.getY() + googleMenuItem.getHeight() + 15);
 
-    googleMenuItem.setX(0);
-    googleMenuItem.setY(facebookMenuItem.getY() + facebookMenuItem.getHeight() + 10);
+    saveGameMenuItem.setX(0);
+    saveGameMenuItem.setY(facebookMenuItem.getY() + facebookMenuItem.getHeight() + 15);
+
+    resumeGameMenuItem.setX(0);
+    resumeGameMenuItem.setY(saveGameMenuItem.getY() + saveGameMenuItem.getHeight() + 15);
+
+    stopGameMenuItem.setX(0);
+    stopGameMenuItem.setY(resumeGameMenuItem.getY() + resumeGameMenuItem.getHeight() + 15);
+
+    playGameMenuItem.setX(0);
+    playGameMenuItem.setY(stopGameMenuItem.getY() + stopGameMenuItem.getHeight() + 15);
 
     this._menuItems.push(playGameMenuItem);
     this._menuItems.push(stopGameMenuItem);
