@@ -8,11 +8,15 @@ function GameField(parentDOMElement, appendToParentDOMElement) {
     this._starsLayer = new GameFieldLayer(this._DOMElement, true, 'stars');
     this._cloudsLayer = new GameFieldLayer(this._DOMElement, true, 'clouds');
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
     this._towerLayer = new GameFieldLayer(this._DOMElement, true, 'tower');
     this._stepsLayer = new GameFieldStepsLayer(this._DOMElement, true);
 >>>>>>> origin/master
+=======
+   
+>>>>>>> parent of 53c4bfd... Clickable menu in correct order with monster cursor
     this._menuLayer = new GameFieldMenuLayer(this._DOMElement, true);
     this._fpsLayer = new GameFieldLayer(this._DOMElement, true, "fps");
 }
@@ -64,13 +68,21 @@ GameField.prototype.repaint = function () {
     this._starsLayer.repaint();
     this._cloudsLayer.repaint();
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
     this._stepsLayer.repaint();
 >>>>>>> origin/master
+=======
+  
+>>>>>>> parent of 53c4bfd... Clickable menu in correct order with monster cursor
     this._menuLayer.repaint();
 }
 
 /* End Public Methods */
 
 /* End Game Field */
+
+
+
+
