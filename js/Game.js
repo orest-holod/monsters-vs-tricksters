@@ -14,10 +14,19 @@ function Game(parentDOMElement) {
 
     this._gameField = initializeGameField();
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
     
 
     
 
+=======
+>>>>>>> parent of 9ac0384... Menu
+=======
+>>>>>>> parent of 9ac0384... Menu
+=======
+>>>>>>> parent of 9ac0384... Menu
     this._isRightKeyPressed = false;
     this._isLeftKeyPressed = false;
     this._isUpKeyPressed = false;
@@ -48,13 +57,6 @@ Game.prototype.keyDownEventHandler = function (e) {
 
         case 27:
             {
-                if (this._gameField.getMenuLayer().isVisible()) {
-
-                    this._gameField.getMenuLayer().makeHidden();
-                } else {
-
-                    this._gameField.getMenuLayer().makeVisible();
-                }
 
                 break;
             }
@@ -109,33 +111,6 @@ Game.prototype.keyUpEventHandler = function (e) {
     }
 }
 
-Game.prototype.mouseClickEventHandler = function (e) {
-
-    switch (e.target.id) {
-
-        case "play-game-menu-item":
-            {
-
-                this.start();
-                break;
-            }
-
-        case "stop-game-menu-item":
-            {
-
-                this.stop();
-                break;
-            }
-
-        case "resume-game-menu-item":
-            {
-
-                this.start();
-                break;
-            }
-    }
-}
-
 Game.prototype.runGameLoop = function () {
 
     this._animationFrameManager.runAtFPS(function () {
@@ -150,13 +125,37 @@ Game.prototype.runGameLoop = function () {
 
         if (this._isDownKeyPressed) {
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             this._gameField.getStepsLayer().minusPixel();
+=======
+           
+>>>>>>> parent of 9ac0384... Menu
+=======
+           
+>>>>>>> parent of 9ac0384... Menu
+=======
+           
+>>>>>>> parent of 9ac0384... Menu
             this._isDownKeyPressed = false;
         }
 
         if (this._isLeftKeyPressed) {
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           
+=======
+           
+>>>>>>> parent of 9ac0384... Menu
+=======
+           
+>>>>>>> parent of 9ac0384... Menu
+=======
+           
+>>>>>>> parent of 9ac0384... Menu
             this._isLeftKeyPressed = false;
         }
 
@@ -169,9 +168,22 @@ Game.prototype.runGameLoop = function () {
         this._gameField.getCloudsLayer().moveBackgroundPositition();
         this._gameField.getStarsLayer().moveBackgroundPositition();
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
       
         this._gameField.repaint();
       
+=======
+=======
+>>>>>>> parent of 9ac0384... Menu
+=======
+>>>>>>> parent of 9ac0384... Menu
+       
+        this._gameField.repaint();
+ 
+
+>>>>>>> parent of 9ac0384... Menu
     }.bind(this), 15);
 
     this._animationFrameManager.requestAnimationFrame(this.runGameLoop.bind(this), 10);
