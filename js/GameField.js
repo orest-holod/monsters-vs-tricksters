@@ -12,11 +12,15 @@ function GameField(parentDOMElement, appendToParentDOMElement) {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
     this._towerLayer = new GameFieldLayer(this._DOMElement, true, 'tower');
     this._stepsLayer = new GameFieldStepsLayer(this._DOMElement, true);
 >>>>>>> origin/master
+=======
+   
+>>>>>>> parent of 53c4bfd... Clickable menu in correct order with monster cursor
 =======
    
 >>>>>>> parent of 53c4bfd... Clickable menu in correct order with monster cursor
@@ -90,10 +94,14 @@ GameField.prototype.repaint = function () {
     this._cloudsLayer.repaint();
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
     this._stepsLayer.repaint();
 >>>>>>> origin/master
+=======
+  
+>>>>>>> parent of 53c4bfd... Clickable menu in correct order with monster cursor
 =======
   
 >>>>>>> parent of 53c4bfd... Clickable menu in correct order with monster cursor
