@@ -129,6 +129,9 @@ body {
   background: linear-gradient(rgba(70, 46, 142, 0), rgba(70, 46, 142, 0.4)); /*164, 46, 80*/
   
   text-shadow: 0 0 15px #ec7aec;
+<<<<<<< HEAD
+>>>>>>> parent of 53c4bfd... Clickable menu in correct order with monster cursor
+=======
 >>>>>>> parent of 53c4bfd... Clickable menu in correct order with monster cursor
 
     background: linear-gradient(163deg, transparent 0px, transparent 1px, #222 1px, #222 14px, transparent 14px),
