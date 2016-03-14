@@ -14,9 +14,14 @@ function Game(parentDOMElement) {
 
     this._gameField = initializeGameField();
 
-    
+    this._tricksters = initializeTricksters();
 
-    
+    this._monsters = initializeMonsters();
+
+    this._mainMonster = new Monster(this._gameField.getDOMElement(), true, 'main-monster', "A");
+    this._mainMonster.setX(0);
+    this._mainMonster.setY(0);
+    this._mainMonster.setDX(15);
 
     this._isRightKeyPressed = false;
     this._isLeftKeyPressed = false;
@@ -38,6 +43,69 @@ function Game(parentDOMElement) {
         stepsLayer.generateSteps(that._colors);
 
         return gameField;
+    }
+
+    function initializeTricksters() {
+
+        var tricksters = [];
+
+        var stepsLayer = that._gameField.getStepsLayer();
+        var stepsLayerDOMElement = stepsLayer.getDOMElement();
+        var steps = stepsLayer.getSteps();
+
+        steps.filter(function (step, index) {
+
+            return index % 2 === 0;
+
+        }).forEach(function (step) {
+
+            var trickster = new Trickster(stepsLayerDOMElement, true, that._alphabet[Math.floor(Math.random() * (that._alphabet.length + 1))]);
+
+            var color = that._colors[Math.floor(Math.random() * that._colors.length)];
+            trickster.setColor(color);
+            trickster.setTextShadow("0px 0px 3rem " + color);
+            trickster.setX(step.getX() + step.getWidth() / 2);
+            trickster.setY(step.getY() + step.getHeight() + 10);
+            trickster.setDX(10);
+            trickster.setDY(10);
+            trickster.setDAngle(5);
+            trickster.setLevitateDX(step.getWidth() / 2);
+            tricksters.push(trickster);
+
+        });
+
+        tricksters.filter(function (trickster, index) { return index % 2 === 0 }).forEach(function (trickster) { trickster.setLevitateDY(50); });
+
+        return tricksters;
+    }
+
+    function initializeMonsters() {
+
+        var monsters = [];
+
+        var stepsLayer = that._gameField.getStepsLayer();
+        var stepsLayerDOMElement = stepsLayer.getDOMElement();
+        var steps = stepsLayer.getSteps();
+
+        steps.filter(function (step, index) {
+
+            return index % 2 !== 0;
+
+        }).forEach(function (step) {
+
+            var monster = new Monster(stepsLayerDOMElement, true, '', that._alphabet[Math.floor(Math.random() * (that._alphabet.length + 1))]);
+
+            var color = that._colors[Math.floor(Math.random() * that._colors.length)];
+            monster.setColor(color);
+            monster.setTextShadow("0px 0px 3rem " + color);
+            monster.setX(step.getX() + step.getWidth() / 2);
+            monster.setY(step.getY() + step.getHeight() + 10);
+            monster.setDAngle(5);
+            monsters.push(monster);
+        });
+
+        return monsters;
+
     }
 
 }
@@ -156,22 +224,30 @@ Game.prototype.runGameLoop = function () {
 
         if (this._isLeftKeyPressed) {
 
-          
+            this._mainMonster.moveLeft();
             this._isLeftKeyPressed = false;
         }
 
         if (this._isRightKeyPressed) {
 
-          
+            this._mainMonster.moveRight();
             this._isRightKeyPressed = false;
         }
 
         this._gameField.getCloudsLayer().moveBackgroundPositition();
         this._gameField.getStarsLayer().moveBackgroundPositition();
 
-      
+        this._tricksters.filter(function (trickster, index) { return index % 2 === 0; }).forEach(function (trickster) { trickster.rotate() });
+        this._tricksters.forEach(function (trickster) { trickster.levitate() });
+        this._monsters.forEach(function (monster) { monster.rotate() });
+
         this._gameField.repaint();
-      
+        this._mainMonster.repaint();
+
+        this._tricksters.forEach(function (trickster) { trickster.repaint() });
+        this._monsters.forEach(function (monster) { monster.repaint() });
+
+
     }.bind(this), 15);
 
     this._animationFrameManager.requestAnimationFrame(this.runGameLoop.bind(this), 10);
