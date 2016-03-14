@@ -9,7 +9,7 @@ function GameEntity(DOMElementTagName, parentDOMElement, appendToParentDOMElemen
     this._appendedToParentDOMElement = appendToParentDOMElement;
 
     if (this._parentDOMElement && this._appendedToParentDOMElement) {
-        
+
         this._parentDOMElement.appendChild(this._DOMElement);
     }
 
@@ -24,7 +24,7 @@ function GameEntity(DOMElementTagName, parentDOMElement, appendToParentDOMElemen
 
         var that = this;
 
-        classNameList.forEach(function(className) {
+        classNameList.forEach(function (className) {
             that._DOMElement.classList.add(className);
         });
     }
@@ -38,7 +38,7 @@ function GameEntity(DOMElementTagName, parentDOMElement, appendToParentDOMElemen
 
     this._x = cr.left;
     this._y = cr.bottom;
-    
+
 
     this._width = cr.width;
     this._height = cr.height;
@@ -51,15 +51,26 @@ function GameEntity(DOMElementTagName, parentDOMElement, appendToParentDOMElemen
     this._backgroundColor = '';
     this._textShadow = '';
     this._boxShadow = '';
-
-    this._isVisible = true;
-
     this._backgroundPositionX = 0;
     this._backgroundPositionY = 0;
     this._backgroundPositionDX = 0;
     this._backgroundPositionDY = 0;
+    this._display = 'block';
 
-    this._needRepaint = false;
+    this._needRepaint = {
+        x: false,
+        y: false,
+        angle: false,
+        width: false,
+        height: false,
+        color: false,
+        backgroudColor: false,
+        textShadow: false,
+        boxShadow: false,
+        backgroundPositionX: false,
+        backgroundPositionY: false,
+        display: false
+    };
 
     /* End Initialize Private Data */
 }
@@ -83,7 +94,7 @@ GameEntity.prototype.setX = function (value) {
 
     this._x = value;
 
-    this._needRepaint = true;
+    this._needRepaint.x = true;
 }
 
 GameEntity.prototype.getY = function () {
@@ -95,7 +106,7 @@ GameEntity.prototype.setY = function (value) {
 
     this._y = value;
 
-    this._needRepaint = true;
+    this._needRepaint.y = true;
 }
 
 GameEntity.prototype.getWidth = function () {
@@ -107,7 +118,7 @@ GameEntity.prototype.setWidth = function (value) {
 
     this._width = value;
 
-    this._needRepaint = true;
+    this._needRepaint.width = true;
 }
 
 GameEntity.prototype.getHeight = function () {
@@ -119,7 +130,7 @@ GameEntity.prototype.setHeight = function (value) {
 
     this._height = value;
 
-    this._needRepaint = true;
+    this._needRepaint.height = true;
 }
 
 GameEntity.prototype.getDX = function () {
@@ -151,7 +162,7 @@ GameEntity.prototype.setAngle = function (value) {
 
     this._angle = value;
 
-    this._needRepaint = true;
+    this._needRepaint.angle = true;
 }
 
 GameEntity.prototype.getDAngle = function () {
@@ -183,7 +194,7 @@ GameEntity.prototype.setColor = function (value) {
 
     this._color = value;
 
-    this._needRepaint = true;
+    this._needRepaint.color = true;
 }
 
 GameEntity.prototype.getBackgroundColor = function () {
@@ -195,7 +206,7 @@ GameEntity.prototype.setBackgroundColor = function (value) {
 
     this._backgroundColor = value;
 
-    this._needRepaint = true;
+    this._needRepaint.backgroudColor = true;
 }
 
 GameEntity.prototype.getTextShadow = function () {
@@ -207,7 +218,7 @@ GameEntity.prototype.setTextShadow = function (value) {
 
     this._textShadow = value;
 
-    this._needRepaint = true;
+    this._needRepaint.textShadow = true;
 }
 
 GameEntity.prototype.getBoxShadow = function () {
@@ -219,7 +230,7 @@ GameEntity.prototype.setBoxShadow = function (value) {
 
     this._boxShadow = value;
 
-    this._needRepaint = true;
+    this._needRepaint.boxShadow = true;
 }
 
 GameEntity.prototype.getBackgroundPositionX = function () {
@@ -231,7 +242,7 @@ GameEntity.prototype.setBackgroundPositionX = function (value) {
 
     this._backgroundPositionX = value;
 
-    this._needRepaint = true;
+    this._needRepaint.backgroundPositionX = true;
 }
 
 GameEntity.prototype.getBackgroundPositionY = function () {
@@ -243,7 +254,7 @@ GameEntity.prototype.setBackgroundPositionY = function (value) {
 
     this._backgroundPositionY = value;
 
-    this._needRepaint = true;
+    this._needRepaint.backgroundPositionY = true;
 }
 
 GameEntity.prototype.getBackgroundPositionDX = function () {
@@ -266,111 +277,129 @@ GameEntity.prototype.setBackgroundPositionDY = function (value) {
     this._backgroundPositionDY = value;
 }
 
-GameEntity.prototype.makeHidden = function() {
+GameEntity.prototype.makeHidden = function () {
 
-    this._isVisible = false;
-    this._x = 0;
+    this._display = 'none';
 
-    this._needRepaint = true;
+    this._needRepaint.display = true;
 }
 
 GameEntity.prototype.makeVisible = function () {
 
-    this._isVisible = true;
-    this._x = 0;
+    this._display = 'block';
 
-    this._needRepaint = true;
+    this._needRepaint.display = true;
 }
 
-GameEntity.prototype.isVisible = function() {
+GameEntity.prototype.isVisible = function () {
 
-    return this._isVisible;
+    return this._display !== 'none';
 }
 
 GameEntity.prototype.repaint = function () {
 
-    if (this._needRepaint) {
+    var cssText = '';
 
-        var cssText = '';
+    if (this._needRepaint.x) {
 
-        if (this._x) {
+        cssText += 'left: {x}{CSS_UNIT};'
+            .replace('{x}', this._x)
+            .replace('{CSS_UNIT}', GameEntity.prototype.CSS_UNIT);
 
-            cssText += 'left: {x}{CSS_UNIT};'
-                .replace('{x}', this._x)
-                .replace('{CSS_UNIT}', GameEntity.prototype.CSS_UNIT);
-        }
+        this._needRepaint.x = false;
+    }
 
-        if (this._y) {
+    if (this._needRepaint.y) {
 
-            cssText += 'bottom: {y}{CSS_UNIT};'
-                .replace('{y}', this._y)
-                .replace('{CSS_UNIT}', GameEntity.prototype.CSS_UNIT);
-        }
+        cssText += 'bottom: {y}{CSS_UNIT};'
+            .replace('{y}', this._y)
+            .replace('{CSS_UNIT}', GameEntity.prototype.CSS_UNIT);
 
-        if (this._width) {
+        this._needRepaint.y = false;
+    }
 
-            cssText += 'width: {width}{CSS_UNIT};'
-                .replace('{width}', this._width)
-                .replace('{CSS_UNIT}', GameEntity.prototype.CSS_UNIT);
-        }
+    if (this._needRepaint.width) {
 
-        if (this._height) {
+        cssText += 'width: {width}{CSS_UNIT};'
+            .replace('{width}', this._width)
+            .replace('{CSS_UNIT}', GameEntity.prototype.CSS_UNIT);
 
-            cssText += 'height: {height}{CSS_UNIT};'
-                .replace('{height}', this._height)
-                .replace('{CSS_UNIT}', GameEntity.prototype.CSS_UNIT);
-        }
+        this._needRepaint.width = false;
+    }
 
-        if (this._angle) {
+    if (this._needRepaint.height) {
 
-            cssText += 'transform: rotate({angle}deg);'
-                .replace('{angle}', this._angle);
-        }
+        cssText += 'height: {height}{CSS_UNIT};'
+            .replace('{height}', this._height)
+            .replace('{CSS_UNIT}', GameEntity.prototype.CSS_UNIT);
 
-        if (this._backgroundPositionX || this._backgroundPositionY) {
-            
-            cssText += 'background-position: {x}{CSS_UNIT} {y}{CSS_UNIT};'
-                .replace('{x}', this._backgroundPositionX)
-                .replace('{y}', this._backgroundPositionY)
-                .replace('{CSS_UNIT}', GameEntity.prototype.CSS_UNIT)
-                .replace('{CSS_UNIT}', GameEntity.prototype.CSS_UNIT);
-        }
+        this._needRepaint.height = false;
+    }
 
-        if (this._color) {
+    if (this._needRepaint.angle) {
 
-            cssText += 'color: {color};'
-                .replace('{color}', this._color);
-        }
+        cssText += 'transform: rotate({angle}deg);'
+            .replace('{angle}', this._angle);
 
-        if (this._backgroundColor) {
+        this._needRepaint.angle = false;
+    }
 
-            cssText += 'background-color: {background-color};'
-                .replace('{background-color}', this._backgroundColor);
-        }
+    if (this._needRepaint.backgroundPositionX || this._needRepaint.backgroundPositionY) {
 
-        if (this._textShadow) {
+        cssText += 'background-position: {x}{CSS_UNIT} {y}{CSS_UNIT};'
+            .replace('{x}', this._backgroundPositionX)
+            .replace('{y}', this._backgroundPositionY)
+            .replace('{CSS_UNIT}', GameEntity.prototype.CSS_UNIT)
+            .replace('{CSS_UNIT}', GameEntity.prototype.CSS_UNIT);
 
-            cssText += "text-shadow: {text-shadow};"
-                .replace('{text-shadow}', this._textShadow);
-        }
+        this._needRepaint.backgroundPositionX = false;
+        this._needRepaint.backgroundPositionY = false;
+    }
 
-        if (this._boxShadow) {
+    if (this._needRepaint.color) {
 
-            cssText += "box-shadow: {box-shadow};"
-                .replace('{box-shadow}', this._boxShadow);
-        }
+        cssText += 'color: {color};'
+            .replace('{color}', this._color);
 
-        if (!this._isVisible) {
+        this._needRepaint.color = false;
+    }
 
-            this._DOMElement.classList.add("hidden");
-        } else {
+    if (this._needRepaint.backgroundColor) {
 
-            this._DOMElement.classList.remove("hidden");
-        }
+        cssText += 'background-color: {background-color};'
+            .replace('{background-color}', this._backgroundColor);
+
+        this._needRepaint.backgroundColor = false;
+    }
+
+    if (this._needRepaint.textShadow) {
+
+        cssText += 'text-shadow: {text-shadow};'
+            .replace('{text-shadow}', this._textShadow);
+
+        this._needRepaint.textShadow = false;
+    }
+
+    if (this._needRepaint.boxShadow) {
+
+        cssText += 'box-shadow: {box-shadow};'
+            .replace('{box-shadow}', this._boxShadow);
+
+        this._needRepaint.boxShadow = false;
+    }
+
+    if (this._needRepaint.display) {
+
+        cssText += 'display: {display}'
+            .replace('{display}', this._display);
+
+        this._needRepaint.display = false;
+
+    }
+
+    if (cssText) {
 
         this._DOMElement.style.cssText = cssText;
-
-        this._needRepaint = false;
     }
 }
 
