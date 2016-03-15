@@ -57,7 +57,7 @@ function Game(parentDOMElement) {
 
         }).forEach(function (step) {
 
-            var trickster = new Trickster(stepsLayerDOMElement, true, that._alphabet[Math.floor(Math.random() * (that._alphabet.length + 1))]);
+            var trickster = new Trickster(stepsLayerDOMElement, true, that._alphabet[Math.floor(Math.random() * (that._alphabet.length))]);
 
             var color = that._colors[Math.floor(Math.random() * that._colors.length)];
             trickster.setColor(color);
@@ -91,7 +91,7 @@ function Game(parentDOMElement) {
 
         }).forEach(function (step) {
 
-            var monster = new Monster(stepsLayerDOMElement, true, '', that._alphabet[Math.floor(Math.random() * (that._alphabet.length + 1))]);
+            var monster = new Monster(stepsLayerDOMElement, true, '', that._alphabet[Math.floor(Math.random() * (that._alphabet.length))]);
 
             var color = that._colors[Math.floor(Math.random() * that._colors.length)];
             monster.setColor(color);
