@@ -10,7 +10,7 @@ function GameField(parentDOMElement, appendToParentDOMElement) {
     this._towerLayer = new GameFieldLayer(this._DOMElement, true, 'tower');
     this._stepsLayer = new GameFieldStepsLayer(this._DOMElement, true);
     this._menuLayer = new GameFieldMenuLayer(this._DOMElement, true);
-    this._fpsLayer = new GameFieldLayer(this._DOMElement, true, "fps");
+    this._fpsLayer = new GameFieldLayer(this._DOMElement, true, 'fps');
 }
 
 GameField.prototype = Object.create(GameEntity.prototype);
