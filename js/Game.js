@@ -148,6 +148,16 @@ Game.prototype.mouseClickEventHandler = function (e) {
                 this.resume();
                 break;
             }
+        case 'facebook-menu-item':
+            {
+                FacebookLogIn();
+                break;
+            }
+        case 'google-menu-item' :
+            {
+                GoogleLogIn();
+                break;
+            }
     }
 }
 
