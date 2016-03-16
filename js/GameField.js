@@ -2,65 +2,40 @@
 
 function GameField(parentDOMElement, appendToParentDOMElement) {
 
-    GameEntity.call(this, 'div', parentDOMElement, appendToParentDOMElement, ['game-field']);
+    GameEntity.call(this, 'div', parentDOMElement, appendToParentDOMElement, 'game-field', ['game-field']);
 
-    this._skyLayer = new GameFieldLayer(this._DOMElement, true, 'sky');
-    this._starsLayer = new GameFieldLayer(this._DOMElement, true, 'stars');
-    this._cloudsLayer = new GameFieldLayer(this._DOMElement, true, 'clouds');
-    this._towerLayer = new GameFieldLayer(this._DOMElement, true, 'tower');
-    this._stepsLayer = new GameFieldStepsLayer(this._DOMElement, true);
-    this._menuLayer = new GameFieldMenuLayer(this._DOMElement, true);
-    this._fpsLayer = new GameFieldLayer(this._DOMElement, true, 'fps');
+    this._gameFieldBackground = new GameFieldBackground(this._DOMElement, true);
+    this._gameFieldTower = new GameFieldTower(this._DOMElement, true);
+    this._gameFieldMenu = new GameFieldMenu(this._DOMElement, true);
 }
 
 GameField.prototype = Object.create(GameEntity.prototype);
 
 /* Start Public Methods */
 
-GameField.prototype.getSkyLayer = function () {
+GameField.prototype.getGameFieldBackground = function () {
 
-    return this._skyLayer;
+    return this._gameFieldBackground;
 }
 
-GameField.prototype.getStarsLayer = function () {
 
-    return this._starsLayer;
+GameField.prototype.getGameFieldTower = function () {
+
+    return this._gameFieldTower;
 }
 
-GameField.prototype.getCloudsLayer = function () {
+GameField.prototype.getGameFieldMenu = function () {
 
-    return this._cloudsLayer;
-}
-
-GameField.prototype.getTowerLayer = function () {
-
-    return this._towerLayer;
-}
-
-GameField.prototype.getStepsLayer = function () {
-
-    return this._stepsLayer;
-}
-
-GameField.prototype.getMenuLayer = function () {
-
-    return this._menuLayer;
-}
-
-GameField.prototype.getFPSLayer = function () {
-
-    return this._fpsLayer;
+    return this._gameFieldMenu;
 }
 
 GameField.prototype.repaint = function () {
 
     GameEntity.prototype.repaint.call(this);
 
-    this._skyLayer.repaint();
-    this._starsLayer.repaint();
-    this._cloudsLayer.repaint();
-    this._stepsLayer.repaint();
-    this._menuLayer.repaint();
+    this._gameFieldBackground.repaint();
+    this._gameFieldTower.repaint();
+    this._gameFieldMenu.repaint();
 }
 
 /* End Public Methods */
