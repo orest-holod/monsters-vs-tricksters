@@ -13,10 +13,6 @@ function Game(parentDOMElement) {
 
     this._gameField = initializeGameField();
 
-    this._tricksters = initializeTricksters();
-
-    this._monsters = initializeMonsters();
-
     this._mainMonster = new Monster(this._gameField.getDOMElement(), true, 'main-monster', 'A');
     this._mainMonster.setDX(15);
 
@@ -30,83 +26,24 @@ function Game(parentDOMElement) {
 
         var gameField = new GameField(that._parentDOMElement, true);
 
-        var cloudsLayer = gameField.getCloudsLayer();
+        var cloudsLayer = gameField.getGameFieldBackground().getGameFieldBackgroundCloudsLayer();
         cloudsLayer.setBackgroundPositionDX(5);
 
-        var starsLayer = gameField.getStarsLayer();
+        var starsLayer = gameField.getGameFieldBackground().getGameFieldBackgroundStarsLayer();
         starsLayer.setBackgroundPositionDX(-1);
         starsLayer.setBackgroundPositionDY(-1);
 
-        var stepsLayer = gameField.getStepsLayer();
+        var stepsLayer = gameField.getGameFieldTower();
         stepsLayer.generateSteps(that._colors);
+        stepsLayer.generateTricksters(that._colors, that._alphabet);
+        stepsLayer.generateMonsters(that._colors, that._alphabet);
 
         return gameField;
     }
 
-    function initializeTricksters() {
-
-        var tricksters = [];
-
-        var stepsLayer = that._gameField.getStepsLayer();
-        var stepsLayerDOMElement = stepsLayer.getDOMElement();
-        var steps = stepsLayer.getSteps();
-
-        steps.filter(function (step, index) {
-
-            return index % 2 === 0;
-
-        }).forEach(function (step) {
-
-            var trickster = new Trickster(stepsLayerDOMElement, true, that._alphabet[Math.floor(Math.random() * (that._alphabet.length))]);
-
-            var color = that._colors[Math.floor(Math.random() * that._colors.length)];
-            trickster.setColor(color);
-            trickster.setTextShadow('0px 0px 3rem ' + color);
-            trickster.setX(step.getX() + step.getWidth() / 2);
-            trickster.setY(step.getY() + step.getHeight() + 10);
-            trickster.setDX(10);
-            trickster.setDY(10);
-            trickster.setDAngle(5);
-            trickster.setLevitateDX(step.getWidth() / 2);
-            tricksters.push(trickster);
-
-        });
-
-        tricksters.filter(function (trickster, index) { return index % 2 === 0 }).forEach(function (trickster) { trickster.setLevitateDY(50); });
-
-        return tricksters;
-    }
-
-    function initializeMonsters() {
-
-        var monsters = [];
-
-        var stepsLayer = that._gameField.getStepsLayer();
-        var stepsLayerDOMElement = stepsLayer.getDOMElement();
-        var steps = stepsLayer.getSteps();
-
-        steps.filter(function (step, index) {
-
-            return index % 2 !== 0;
-
-        }).forEach(function (step) {
-
-            var monster = new Monster(stepsLayerDOMElement, true, '', that._alphabet[Math.floor(Math.random() * (that._alphabet.length))]);
-
-            var color = that._colors[Math.floor(Math.random() * that._colors.length)];
-            monster.setColor(color);
-            monster.setTextShadow("0px 0px 3rem " + color);
-            monster.setX(step.getX() + step.getWidth() / 2);
-            monster.setY(step.getY() + step.getHeight() + 10);
-            monster.setDAngle(5);
-            monsters.push(monster);
-        });
-
-        return monsters;
-
-    }
-
 }
+
+/* Start Public Methods */
 
 Game.prototype.keyDownEventHandler = function (e) {
 
@@ -135,10 +72,12 @@ Game.prototype.keyDownEventHandler = function (e) {
         }
 
         case 39: {
+
             this._isRightKeyPressed = true;
             break;
         }
         case 37: {
+
             this._isLeftKeyPressed = true;
             break;
         }
@@ -172,10 +111,13 @@ Game.prototype.keyUpEventHandler = function (e) {
         }
 
         case 39: {
+
             this._isRightKeyPressed = false;
             break;
         }
+
         case 37: {
+
             this._isLeftKeyPressed = false;
             break;
         }
@@ -213,13 +155,13 @@ Game.prototype.runGameLoop = function () {
 
     if (this._isEscPressed) {
 
-        if (this._gameField.getMenuLayer().isVisible()) {
+        if (this._gameField.getGameFieldMenu().isVisible()) {
 
-            this._gameField.getMenuLayer().makeHidden();
+            this._gameField.getGameFieldMenu().makeHidden();
         }
         else {
 
-            this._gameField.getMenuLayer().makeVisible();
+            this._gameField.getGameFieldMenu().makeVisible();
         }
 
         this._isEscPressed = false;
@@ -227,13 +169,13 @@ Game.prototype.runGameLoop = function () {
 
     if (this._isUpKeyPressed) {
 
-        this._gameField.getStepsLayer().addPixel();
+        this._gameField.getGameFieldTower().addPixel();
         this._isUpKeyPressed = false;
     }
 
     if (this._isDownKeyPressed) {
 
-        this._gameField.getStepsLayer().minusPixel();
+        this._gameField.getGameFieldTower().minusPixel();
         this._isDownKeyPressed = false;
     }
 
@@ -250,21 +192,24 @@ Game.prototype.runGameLoop = function () {
     }
 
     this._animationFrameManager.runAtFPS(function () {
+ 
+        /* Start Logic */
 
-        //this._gameField.getFPSLayer().getDOMElement().textContent = this._animationFrameManager.getAvailableFPS() + "fps/" + this._animationFrameManager.getUsedFPS()+ "fps";
+        this._gameField.getGameFieldBackground().getGameFieldBackgroundCloudsLayer().moveBackgroundPositition();
+        this._gameField.getGameFieldBackground().getGameFieldBackgroundStarsLayer().moveBackgroundPositition();
 
-        this._gameField.getCloudsLayer().moveBackgroundPositition();
-        this._gameField.getStarsLayer().moveBackgroundPositition();
+        this._gameField.getGameFieldTower().getVisibleTricksters().forEach(function (trickster) { trickster.rotate(); });
+        this._gameField.getGameFieldTower().getVisibleTricksters().forEach(function (trickster) { trickster.levitate(); });
+        this._gameField.getGameFieldTower().getVisibleMonsters().forEach(function (monster) { monster.rotate(); });
 
-        this._tricksters.filter(function (trickster, index) { return index % 2 === 0; }).forEach(function (trickster) { trickster.rotate() });
-        this._tricksters.forEach(function (trickster) { trickster.levitate() });
-        this._monsters.forEach(function (monster) { monster.rotate() });
+        /* End Logic */
+
+        /* Start Repaint */
 
         this._gameField.repaint();
         this._mainMonster.repaint();
 
-        this._tricksters.forEach(function (trickster) { trickster.repaint() });
-        this._monsters.forEach(function (monster) { monster.repaint() });
+        /* End Repaint */
 
     }.bind(this), 10);
 
@@ -290,5 +235,7 @@ Game.prototype.reset = function () {
     
     this._animationFrameManager.requestAnimationFrame(this.runGameLoop.bind(this));
 }
+
+/* End Public Methods */
 
 /* End Game */

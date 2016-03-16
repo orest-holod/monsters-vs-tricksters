@@ -2,12 +2,14 @@
 
 function Trickster(parentDOMElement, appendToParentDOMElement, textContent) {
 
-    GameEntity.call(this, 'div', parentDOMElement, true, '', ['trickster'], textContent);
+    GameEntity.call(this, 'div', parentDOMElement, appendToParentDOMElement, '', ['trickster'], textContent);
 
     this._preLevitateX = 0;
     this._preLevitateY = 0;
     this._levitateDX = 0;
     this._levitateDY = 0;
+
+    this._targetStep = null;
 }
 
 Trickster.prototype = Object.create(GameEntity.prototype);
@@ -96,6 +98,16 @@ Trickster.prototype.levitate = function () {
 Trickster.prototype.rotate = function () {
 
     this.setAngle(this.getAngle() + this.getDAngle());
+}
+
+Trickster.prototype.setTargetStep = function(value) {
+
+    this._targetStep = value;
+}
+
+Trickster.prototype.getTargetStep = function () {
+
+    return this._targetStep;
 }
 
 /* End Public Methods */
