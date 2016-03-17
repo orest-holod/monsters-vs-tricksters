@@ -13,7 +13,6 @@ function GameFieldTower(parentDOMElement, appendToParentDOMElement) {
     this._steps = [];
     this._tricksters = [];
     this._monsters = [];
-    this._gamer = null;
 }
 
 GameFieldTower.prototype = Object.create(GameFieldLayer.prototype);
@@ -153,6 +152,11 @@ GameFieldTower.prototype.getVisibleTricksters = function () {
 GameFieldTower.prototype.getVisibleMonsters = function () {
 
     return this._monsters.filter(function (monster) { return monster.isAppendedToParentDOMElement(); });;
+}
+
+GameFieldTower.prototype.getGamer = function() {
+
+    return this._gamer;
 }
 
 GameFieldTower.prototype.repaint = function () {
