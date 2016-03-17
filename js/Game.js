@@ -226,10 +226,8 @@ Game.prototype.runGameLoop = function () {
 
                     this._gamer.fall();
                 }
-
-                this._isLeftKeyPressed = false;
             }
-
+            
             if (this._isRightKeyPressed) {
 
                 this._gamer.moveRight();
@@ -238,9 +236,13 @@ Game.prototype.runGameLoop = function () {
 
                     this._gamer.fall();
                 }
-
-                this._isRightKeyPressed = false;
             }
+
+            if (!this._isLeftKeyPressed && !this._isRightKeyPressed) {
+
+                this._gamer.standStill();
+            }
+            
 
             if (this._isSpaceKeyPressed) {
 
@@ -275,7 +277,7 @@ Game.prototype.runGameLoop = function () {
             /* End Repaint */
 
 
-        }.bind(this), 10);
+        }.bind(this), 20);
 
     }
 
