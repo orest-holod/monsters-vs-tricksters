@@ -2,7 +2,7 @@
 
 function Gamer(gameField) {
 
-    GameEntity.call(this, 'div', gameField.getGameFieldTower().getDOMElement(), true, 'gamer', ['monster'], 'A');
+    GameEntity.call(this, 'div', gameField.getGameFieldTower().getDOMElement(), true, 'gamer', ['monster'], 'Q');
 
     this._gameField = gameField;
     this._gameFieldTower = gameField.getGameFieldTower();
@@ -10,8 +10,8 @@ function Gamer(gameField) {
     this._targetStep = gameField.getGameFieldTower().getSteps()[10];
 
     this._isFalling = false;
-    this._fallingCounter = 0;
     this._isJumping = false;
+    this._fallingCounter = 0;
     this._nearestTargetBottomStep = null;
     this._ddy = 10;
 
@@ -20,6 +20,7 @@ function Gamer(gameField) {
 
     this.setDX(10);
     this.setDY(10);
+    this.setDAngle(10);
 }
 
 Gamer.prototype = Object.create(GameEntity.prototype);
@@ -81,15 +82,40 @@ Gamer.prototype.getNearestBottomTargetStep = function () {
     return nearestBottomTargetStep;
 }
 
+Gamer.prototype.moveLeft = function () {
+
+        if (this.getAngle() < 0) {
+
+            this.setAngle(this.getAngle() + this.getDAngle());
+        }
+        else {
+
+            this.setAngle(this.getAngle() - this.getDAngle());
+        }
+
+    this.setX(this.getX() - this.getDX());
+}
 
 Gamer.prototype.moveRight = function () {
 
+    if (this.getAngle() > 0) {
+
+        this.setAngle(this.getAngle() - this.getDAngle());
+    }
+    else {
+
+        this.setAngle(this.getAngle() + this.getDAngle());
+    }
+    
     this.setX(this.getX() + this.getDX());
 }
 
-Gamer.prototype.moveLeft = function () {
+Gamer.prototype.standStill = function() {
+    
+    if (this.getAngle() !== 0) {
 
-    this.setX(this.getX() - this.getDX());
+        this.setAngle(0);
+    }
 
 }
 
