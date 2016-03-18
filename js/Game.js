@@ -12,15 +12,16 @@ function Game(parentDOMElement) {
     this._animationFrameManager = new AnimationFrameManager();
 
     this._gameField = initializeGameField();
-
-    this._mainMonster = new Monster(this._gameField.getDOMElement(), true, 'main-monster', 'A');
-    this._mainMonster.setDX(15);
+    this._gamer = new Gamer(this._gameField);
 
     this._isEscPressed = false;
     this._isRightKeyPressed = false;
     this._isLeftKeyPressed = false;
     this._isUpKeyPressed = false;
     this._isDownKeyPressed = false;
+    this._isSpaceKeyPressed = false;
+
+    this._isGameOver = false;
 
     function initializeGameField() {
 
@@ -33,10 +34,10 @@ function Game(parentDOMElement) {
         starsLayer.setBackgroundPositionDX(-1);
         starsLayer.setBackgroundPositionDY(-1);
 
-        var stepsLayer = gameField.getGameFieldTower();
-        stepsLayer.generateSteps(that._colors);
-        stepsLayer.generateTricksters(that._colors, that._alphabet);
-        stepsLayer.generateMonsters(that._colors, that._alphabet);
+        var gameFieldTower = gameField.getGameFieldTower();
+        gameFieldTower.generateSteps(that._colors);
+        gameFieldTower.generateTricksters(that._colors, that._alphabet);
+        gameFieldTower.generateMonsters(that._colors, that._alphabet);
 
         return gameField;
     }
@@ -76,11 +77,22 @@ Game.prototype.keyDownEventHandler = function (e) {
             this._isRightKeyPressed = true;
             break;
         }
+
         case 37: {
 
             this._isLeftKeyPressed = true;
             break;
         }
+
+        case 32:
+            {
+                if (!this._isSpaceKeyPressed) {
+
+                    this._isSpaceKeyPressed = true;
+                }
+
+                break;
+            }
     }
 }
 
@@ -121,6 +133,16 @@ Game.prototype.keyUpEventHandler = function (e) {
             this._isLeftKeyPressed = false;
             break;
         }
+
+        case 32:
+            {
+                if (this._isSpaceKeyPressed) {
+
+                    this._isSpaceKeyPressed = false;
+                }
+
+                break;
+            }
     }
 }
 
@@ -163,65 +185,92 @@ Game.prototype.mouseClickEventHandler = function (e) {
 
 Game.prototype.runGameLoop = function () {
 
-    if (this._isEscPressed) {
+    if (!this._isGameOver) {
 
-        if (this._gameField.getGameFieldMenu().isVisible()) {
-
-            this._gameField.getGameFieldMenu().makeHidden();
-        }
-        else {
-
-            this._gameField.getGameFieldMenu().makeVisible();
-        }
-
-        this._isEscPressed = false;
-    }
-
-    if (this._isUpKeyPressed) {
-
-        this._gameField.getGameFieldTower().addPixel();
-        this._isUpKeyPressed = false;
-    }
-
-    if (this._isDownKeyPressed) {
-
-        this._gameField.getGameFieldTower().minusPixel();
-        this._isDownKeyPressed = false;
-    }
-
-    if (this._isLeftKeyPressed) {
-
-        this._mainMonster.moveLeft();
-        this._isLeftKeyPressed = false;
-    }
-
-    if (this._isRightKeyPressed) {
-
-        this._mainMonster.moveRight();
-        this._isRightKeyPressed = false;
-    }
-
-    this._animationFrameManager.runAtFPS(function () {
- 
         /* Start Logic */
 
-        this._gameField.getGameFieldBackground().getGameFieldBackgroundCloudsLayer().moveBackgroundPositition();
-        this._gameField.getGameFieldBackground().getGameFieldBackgroundStarsLayer().moveBackgroundPositition();
+        if (this._isEscPressed) {
 
-        this._gameField.getGameFieldTower().getVisibleTricksters().forEach(function (trickster) { trickster.rotate(); });
-        this._gameField.getGameFieldTower().getVisibleTricksters().forEach(function (trickster) { trickster.levitate(); });
-        this._gameField.getGameFieldTower().getVisibleMonsters().forEach(function (monster) { monster.rotate(); });
+            if (this._gameField.getGameFieldMenu().isVisible()) {
 
-        /* End Logic */
+                this._gameField.getGameFieldMenu().makeHidden();
+            } else {
 
-        /* Start Repaint */
+                this._gameField.getGameFieldMenu().makeVisible();
+            }
 
-        this._gameField.repaint();
-        this._mainMonster.repaint();
+            this._isEscPressed = false;
+        }
 
-        /* End Repaint */
 
-    }.bind(this), 10);
+        this._animationFrameManager.runAtFPS(function () {
+
+            if (this._gamer.getIsFalling()) {
+
+                this._gamer.fall();
+            }
+            else if (this._gamer.getIsJumping()) {
+                
+                this._gamer.jump();
+            }
+            else if (this._isSpaceKeyPressed) {
+                
+                this._gamer.jump();
+            }
+
+            //if (this._isUpKeyPressed) {
+
+            //    this._gameField.getGameFieldTower().addPixel();
+            //    this._isUpKeyPressed = false;
+            //}
+
+            //if (this._isDownKeyPressed) {
+
+            //    this._gameField.getGameFieldTower().minusPixel();
+            //    this._isDownKeyPressed = false;
+            //}
+
+            if (this._isLeftKeyPressed) {
+
+                this._gamer.moveLeft();
+
+            }
+            
+            if (this._isRightKeyPressed) {
+
+                this._gamer.moveRight();
+            }
+
+            if (!this._isLeftKeyPressed && !this._isRightKeyPressed) {
+
+                this._gamer.standStill();
+            }
+
+            if (this._gamer.getY() <= 0) {
+
+                this._isGameOver = true;
+            }
+
+            this._gameField.getGameFieldBackground().getGameFieldBackgroundCloudsLayer().moveBackgroundPositition();
+            this._gameField.getGameFieldBackground().getGameFieldBackgroundStarsLayer().moveBackgroundPositition();
+
+            this._gameField.getGameFieldTower().getVisibleTricksters().forEach(function (trickster) { trickster.rotate(); });
+            this._gameField.getGameFieldTower().getVisibleTricksters().forEach(function (trickster) { trickster.levitate(); });
+            this._gameField.getGameFieldTower().getVisibleMonsters().forEach(function (monster) { monster.rotate(); });
+
+            /* End Logic */
+
+            /* Start Repaint */
+
+            this._gameField.repaint();
+            this._gamer.repaint();
+
+            /* End Repaint */
+
+
+        }.bind(this), 20);
+
+    }
 
     this._animationFrameManager.requestAnimationFrame(this.runGameLoop.bind(this));
 }
@@ -236,13 +285,18 @@ Game.prototype.stop = function () {
     this._animationFrameManager.cancelAnimationFrame();
 }
 
+Game.prototype.over = function () {
+
+    this._animationFrameManager.cancelAnimationFrame();
+}
+
 Game.prototype.resume = function () {
 
     this._animationFrameManager.requestAnimationFrame(this.runGameLoop.bind(this));
 }
 
 Game.prototype.reset = function () {
-    
+
     this._animationFrameManager.requestAnimationFrame(this.runGameLoop.bind(this));
 }
 

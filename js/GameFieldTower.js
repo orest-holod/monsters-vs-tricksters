@@ -13,7 +13,6 @@ function GameFieldTower(parentDOMElement, appendToParentDOMElement) {
     this._steps = [];
     this._tricksters = [];
     this._monsters = [];
-    this._gamer = null;
 }
 
 GameFieldTower.prototype = Object.create(GameFieldLayer.prototype);
@@ -155,6 +154,11 @@ GameFieldTower.prototype.getVisibleMonsters = function () {
     return this._monsters.filter(function (monster) { return monster.isAppendedToParentDOMElement(); });;
 }
 
+GameFieldTower.prototype.getGamer = function() {
+
+    return this._gamer;
+}
+
 GameFieldTower.prototype.repaint = function () {
 
     GameFieldLayer.prototype.repaint.call(this);
@@ -188,16 +192,16 @@ GameFieldTower.prototype.repaint = function () {
     });
 }
 
-GameFieldTower.prototype.addPixel = function () {
+GameFieldTower.prototype.addPixel = function (value) {
 
-    this._pixel += 0.01 * this._maxY;
-    this.setHeight(this.getHeight() + 0.01 * this._maxY);
+    this._pixel += value;
+    this.setHeight(this.getHeight() + value);
 }
 
-GameFieldTower.prototype.minusPixel = function () {
+GameFieldTower.prototype.minusPixel = function (value) {
 
-    this._pixel -= 0.01 * this._maxY;
-    this.setHeight(this.getHeight() - 0.01 * this._maxY);
+    this._pixel -= value;
+    this.setHeight(this.getHeight() - value);
 }
 
 /* End Public Methods */
