@@ -1,8 +1,4 @@
-﻿/* Connect with server*/
-var wsUrl = 'ws://185.69.152.203:4871';
-var ws = new WebSocket(wsUrl);
-
-/* Start Main Function */
+﻿/* Start Main Function */
 
 var gameWrapper = document.getElementById('game-wrapper');
 
@@ -15,6 +11,11 @@ document.addEventListener('keyup', game.keyUpEventHandler.bind(game), false);
 document.addEventListener('click', game.mouseClickEventHandler.bind(game), false);
 
 /* End Event Listeners */
+
+/* Connect with server*/
+var wsUrl = 'ws://185.69.152.203:4871';
+var ws = new WebSocket(wsUrl);
+
 /* Start initialize callback function*/
 ws.onopen = function() { console.log('connected!') }
 ws.onclose = function(event) { console.log('closed'+event.code) }
