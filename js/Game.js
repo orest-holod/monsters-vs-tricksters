@@ -205,54 +205,45 @@ Game.prototype.runGameLoop = function () {
 
         this._animationFrameManager.runAtFPS(function () {
 
+            if (this._gamer.getIsFalling()) {
 
-            if (this._isUpKeyPressed) {
-
-                this._gameField.getGameFieldTower().addPixel();
-                this._isUpKeyPressed = false;
+                this._gamer.fall();
+            }
+            else if (this._gamer.getIsJumping()) {
+                
+                this._gamer.jump();
+            }
+            else if (this._isSpaceKeyPressed) {
+                
+                this._gamer.jump();
             }
 
-            if (this._isDownKeyPressed) {
+            //if (this._isUpKeyPressed) {
 
-                this._gameField.getGameFieldTower().minusPixel();
-                this._isDownKeyPressed = false;
-            }
+            //    this._gameField.getGameFieldTower().addPixel();
+            //    this._isUpKeyPressed = false;
+            //}
+
+            //if (this._isDownKeyPressed) {
+
+            //    this._gameField.getGameFieldTower().minusPixel();
+            //    this._isDownKeyPressed = false;
+            //}
 
             if (this._isLeftKeyPressed) {
 
                 this._gamer.moveLeft();
 
-                if (this._gamer.getX() - this._gamer.getDX() + this._gamer.getWidth() < this._gamer.getTargetStep().getX()) {
-
-                    this._gamer.fall();
-                }
             }
             
             if (this._isRightKeyPressed) {
 
                 this._gamer.moveRight();
-
-                if (this._gamer.getX() + this._gamer.getDX() > this._gamer.getTargetStep().getX() + this._gamer.getTargetStep().getWidth()) {
-
-                    this._gamer.fall();
-                }
             }
 
             if (!this._isLeftKeyPressed && !this._isRightKeyPressed) {
 
                 this._gamer.standStill();
-            }
-            
-
-            if (this._isSpaceKeyPressed) {
-
-                this._gamer.jump();
-                this._isSpaceKeyPressed = false;
-            }
-
-            if (this._gamer.getIsFalling()) {
-
-                this._gamer.fall();
             }
 
             if (this._gamer.getY() <= 0) {

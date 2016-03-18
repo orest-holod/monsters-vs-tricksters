@@ -347,6 +347,34 @@ GameEntity.prototype.isAppendedToParentDOMElement = function() {
     return this._appendedToParentDOMElement;
 }
 
+GameEntity.prototype.checkIfTouches = function (otherGameEntity) {
+
+    var isTouches = false;
+
+    if (otherGameEntity instanceof GameEntity) {
+
+        function getPositions(entity) {
+
+            return [[entity.getX(), entity.getX() + entity.getWidth()], [entity.getY(), entity.getY() + entity.getHeight()]];
+        }
+
+        function comparePositions(p1, p2) {
+            
+            var r1 = p1[0] < p2[0] ? p1 : p2;
+            var r2 = p1[0] < p2[0] ? p2 : p1;
+
+            return r1[1] > r2[0] || r1[0] === r2[0];
+        }
+
+        var pos1 = getPositions(this);
+        var pos2 = getPositions(otherGameEntity);
+
+        isTouches = comparePositions(pos1[0], pos2[0]) && comparePositions(pos1[1], pos2[1]);
+    }
+
+    return isTouches;
+}
+
 GameEntity.prototype.repaint = function () {
 
     if (this._appendedToParentDOMElement) {

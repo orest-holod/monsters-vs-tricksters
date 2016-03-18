@@ -4,23 +4,29 @@ function Gamer(gameField) {
 
     GameEntity.call(this, 'div', gameField.getGameFieldTower().getDOMElement(), true, 'gamer', ['monster'], 'Q');
 
+    this.setDX(20);
+    this.setDY(10);
+    this.setDAngle(10);
+
     this._gameField = gameField;
     this._gameFieldTower = gameField.getGameFieldTower();
 
     this._targetStep = gameField.getGameFieldTower().getSteps()[10];
+    this.setX(this._targetStep.getX());
+    this.setY(this._targetStep.getY() + this._targetStep.getHeight());
 
     this._isFalling = false;
-    this._isJumping = false;
     this._fallingCounter = 0;
     this._nearestTargetBottomStep = null;
+
+    this._isJumping = false;
+    this._jumpingCounter = 0;
+    this._currentDY = this.getDY();
+
     this._ddy = 10;
+    this._jumpDY = 30;
 
-    this.setX(this._targetStep.getX());
-    this.setY(this._targetStep.getY());
-
-    this.setDX(10);
-    this.setDY(10);
-    this.setDAngle(10);
+    this._dJump = 150;
 }
 
 Gamer.prototype = Object.create(GameEntity.prototype);
@@ -30,6 +36,8 @@ Gamer.prototype = Object.create(GameEntity.prototype);
 Gamer.prototype.setTargetStep = function (value) {
 
     this._targetStep = value;
+
+    this.setY(this._targetStep.getY() + this._targetStep.getHeight());
 }
 
 Gamer.prototype.getTargetStep = function () {
@@ -68,7 +76,7 @@ Gamer.prototype.getNearestBottomTargetStep = function () {
 
         var firstTime = true;
 
-        if (step !== that.getTargetStep() && that.getY() >= step.getY() && that.getX() + that.getWidth() > step.getX() && that.getX() < step.getX() + step.getWidth()) {
+        if (that.getY() >= step.getY() && that.getX() + that.getWidth() > step.getX() && that.getX() < step.getX() + step.getWidth()) {
 
             if (that.getTargetStep().getY() < step.getY() || firstTime) {
 
@@ -82,18 +90,80 @@ Gamer.prototype.getNearestBottomTargetStep = function () {
     return nearestBottomTargetStep;
 }
 
+Gamer.prototype.getTouchedTopStep = function () {
+
+    var that = this;
+
+    var touchedTopStep = null;
+
+    this._gameFieldTower.getVisibleSteps().filter(function (step) { return that.getY() < step.getY() }).forEach(function (step) {
+
+        if (that.checkIfTouches(step)) {
+
+            touchedTopStep = step;
+
+        }
+
+    });
+
+    return touchedTopStep;
+}
+
+Gamer.prototype.checkIfTouchesTrickster = function () {
+
+    var that = this;
+
+    var result = false;
+
+    this._gameFieldTower.getVisibleTricksters().forEach(function (trickster) {
+
+        if (that.checkIfTouches(trickster)) {
+
+            result = true;
+        }
+
+    });
+
+    return result;
+
+}
+
+Gamer.prototype.checkIfTouchesMonster = function () {
+
+    var that = this;
+
+    var result = false;
+
+    this._gameFieldTower.getVisibleTricksters().forEach(function (monster) {
+
+        if (that.checkIfTouches(monster)) {
+
+            result = true;
+        }
+
+    });
+
+    return result;
+
+}
+
 Gamer.prototype.moveLeft = function () {
 
-        if (this.getAngle() < 0) {
+    if (this.getAngle() < 0) {
 
-            this.setAngle(this.getAngle() + this.getDAngle());
-        }
-        else {
+        this.setAngle(this.getAngle() + this.getDAngle());
+    }
+    else {
 
-            this.setAngle(this.getAngle() - this.getDAngle());
-        }
+        this.setAngle(this.getAngle() - this.getDAngle());
+    }
 
     this.setX(this.getX() - this.getDX());
+
+    if (this.getX() - this.getDX() + this.getWidth() < this.getTargetStep().getX()) {
+
+        this._isFalling = true;
+    }
 }
 
 Gamer.prototype.moveRight = function () {
@@ -106,58 +176,91 @@ Gamer.prototype.moveRight = function () {
 
         this.setAngle(this.getAngle() + this.getDAngle());
     }
-    
+
     this.setX(this.getX() + this.getDX());
+
+    if (this.getX() + this.getDX() > this.getTargetStep().getX() + this.getTargetStep().getWidth()) {
+
+        this._isFalling = true;
+    }
 }
 
-Gamer.prototype.standStill = function() {
-    
+Gamer.prototype.standStill = function () {
+
     if (this.getAngle() !== 0) {
 
         this.setAngle(0);
     }
-
 }
 
 Gamer.prototype.jump = function () {
 
-    this.setY(this.getY() + this.getDY());
-    this.fall();
+    var yBeforeJump = this.getY();
+
+    if (this.getY() < this.getTargetStep().getY() + this._dJump) {
+
+        var dy = this.getDY() + this._ddy * this._jumpingCounter;
+
+        this.setY(this.getY() + dy);
+
+
+        this._isJumping = true;
+        this._jumpingCounter++;
+    }
+    else {
+        this._isJumping = false;
+        this._jumpingCounter = 0;
+        this._isFalling = true;
+    }
+
+    var touchedTopStep = this.getTouchedTopStep();
+
+    if (touchedTopStep) {
+
+        this.setY(touchedTopStep.getY() - this.getHeight());
+
+        this._isJumping = false;
+        this._jumpingCounter = 0;
+        this._isFalling = true;
+    }
+
+    var deltaAfterJump = Math.abs(this.getY() - yBeforeJump);
+
+    if (deltaAfterJump) {
+
+        this._gameFieldTower.addPixel(deltaAfterJump);
+    }
 
 }
 
 Gamer.prototype.fall = function () {
 
-    if (!this._isFalling) {
+    var yBeforeFall = this.getY();
+
+    if (!this._nearestTargetBottomStep) {
 
         this._nearestTargetBottomStep = this.getNearestBottomTargetStep();
-        this._isFalling = true;
     }
 
-    this.setY(this.getY() - this.getDY() * Math.pow(this._ddy, this._fallingCounter));
+    var dy = this.getDY() + this._ddy * this._fallingCounter;
+
+    this.setY(this.getY() - dy);
+
     this._fallingCounter++;
 
-    if (this._isFalling) {
+    if (this._nearestTargetBottomStep && this.getY() <= this._nearestTargetBottomStep.getY()) {
 
-        if (this._nearestTargetBottomStep) {
+        this.setTargetStep(this._nearestTargetBottomStep);
+        this._nearestTargetBottomStep = null;
+        this._isFalling = false;
+        this._fallingCounter = 0;
+    }
 
-            if (this.getY() <= this._nearestTargetBottomStep.getY()) {
+    var deltaAfterFall = Math.abs(this.getY() - yBeforeFall);
 
-                this._isFalling = false;
-                this._fallingCounter = 0;
-                this.setTargetStep(this._nearestTargetBottomStep);
-                this.setY(this.getTargetStep().getY());
-            }
-        }
-        else {
+    if (deltaAfterFall) {
 
-            if (this.getY() < 0) {
-
-                this._isFalling = false;
-                this._fallingCounter = 0;
-            }
-
-        }
+        this._gameFieldTower.minusPixel(deltaAfterFall);
     }
 }
 
