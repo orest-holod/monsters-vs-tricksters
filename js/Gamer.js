@@ -4,14 +4,14 @@ function Gamer(gameField) {
 
     GameEntity.call(this, 'div', gameField.getGameFieldTower().getDOMElement(), true, 'gamer', ['monster'], 'Q');
 
-    this.setDX(20);
-    this.setDY(10);
-    this.setDAngle(10);
-
     this._gameField = gameField;
     this._gameFieldTower = gameField.getGameFieldTower();
-
     this._targetStep = gameField.getGameFieldTower().getSteps()[10];
+
+    this.setDX(20);
+    this.setDY(20);
+    this.setDAngle(10);
+
     this.setX(this._targetStep.getX());
     this.setY(this._targetStep.getY() + this._targetStep.getHeight());
 
@@ -23,10 +23,7 @@ function Gamer(gameField) {
     this._jumpingCounter = 0;
     this._currentDY = this.getDY();
 
-    this._ddy = 10;
-    this._jumpDY = 30;
-
-    this._dJump = 150;
+    this._ddy = 20;
 }
 
 Gamer.prototype = Object.create(GameEntity.prototype);
@@ -72,13 +69,13 @@ Gamer.prototype.getNearestBottomTargetStep = function () {
 
     var nearestBottomTargetStep = null;
 
-    this._gameFieldTower.getVisibleSteps().forEach(function (step) {
+    var firstTime = true;
 
-        var firstTime = true;
+    this._gameFieldTower.getVisibleSteps().filter(function (step) { return step.getY() <= that.getY(); }).forEach(function (step) {
 
-        if (that.getY() >= step.getY() && that.getX() + that.getWidth() > step.getX() && that.getX() < step.getX() + step.getWidth()) {
+        if (step.getX() < that.getX() + that.getWidth() && step.getX() + step.getWidth() > that.getX()) {
 
-            if (that.getTargetStep().getY() < step.getY() || firstTime) {
+            if (firstTime || nearestBottomTargetStep.getY() < step.getY()) {
 
                 nearestBottomTargetStep = step;
             }
@@ -90,60 +87,65 @@ Gamer.prototype.getNearestBottomTargetStep = function () {
     return nearestBottomTargetStep;
 }
 
-Gamer.prototype.getTouchedTopStep = function () {
+Gamer.prototype.getNearestTopTargetStep = function () {
 
     var that = this;
 
-    var touchedTopStep = null;
+    var nearestTopTargetStep = null;
 
-    this._gameFieldTower.getVisibleSteps().filter(function (step) { return that.getY() < step.getY() }).forEach(function (step) {
+    var firstTime = true;
 
-        if (that.checkIfTouches(step)) {
+    this._gameFieldTower.getVisibleSteps().filter(function (step) { return step.getY() >= that.getY(); }).forEach(function (step) {
 
-            touchedTopStep = step;
+        if (step.getX() < that.getX() + that.getWidth() && step.getX() + step.getWidth() > that.getX()) {
 
+            if (firstTime || nearestTopTargetStep.getY() > step.getY()) {
+
+                nearestTopTargetStep = step;
+            }
+
+            firstTime = false;
         }
-
     });
 
-    return touchedTopStep;
+    return nearestTopTargetStep;
 }
 
-Gamer.prototype.checkIfTouchesTrickster = function () {
+Gamer.prototype.getTouchedTrickster = function () {
 
     var that = this;
 
-    var result = false;
+    var touchedTrickster = false;
 
     this._gameFieldTower.getVisibleTricksters().forEach(function (trickster) {
 
         if (that.checkIfTouches(trickster)) {
 
-            result = true;
+            touchedTrickster = true;
         }
 
     });
 
-    return result;
+    return touchedTrickster;
 
 }
 
-Gamer.prototype.checkIfTouchesMonster = function () {
+Gamer.prototype.getTouchedMonster = function () {
 
     var that = this;
 
-    var result = false;
+    var touchedMonster = false;
 
-    this._gameFieldTower.getVisibleTricksters().forEach(function (monster) {
+    this._gameFieldTower.getVisibleMonsters().forEach(function (monster) {
 
         if (that.checkIfTouches(monster)) {
 
-            result = true;
+            touchedMonster = monster;
         }
 
     });
 
-    return result;
+    return touchedMonster;
 
 }
 
@@ -197,50 +199,41 @@ Gamer.prototype.jump = function () {
 
     var yBeforeJump = this.getY();
 
-    if (this.getY() < this.getTargetStep().getY() + this._dJump) {
-
-        var dy = this.getDY() + this._ddy * this._jumpingCounter;
-
-        this.setY(this.getY() + dy);
-
+    if (!this._isJumping) {
 
         this._isJumping = true;
-        this._jumpingCounter++;
     }
-    else {
+
+    var nearestTopTargetStep = this.getNearestTopTargetStep();
+
+    var dy = this.getDY() + this._ddy * this._jumpingCounter;
+
+    this.setY(this.getY() + dy);
+
+    this._jumpingCounter++;
+  
+    if (nearestTopTargetStep && this.getY() >= nearestTopTargetStep.getY()) {
+
+        this.setTargetStep(nearestTopTargetStep);
         this._isJumping = false;
         this._jumpingCounter = 0;
-        this._isFalling = true;
     }
-
-    var touchedTopStep = this.getTouchedTopStep();
-
-    if (touchedTopStep) {
-
-        this.setY(touchedTopStep.getY() - this.getHeight());
-
-        this._isJumping = false;
-        this._jumpingCounter = 0;
-        this._isFalling = true;
-    }
-
+  
     var deltaAfterJump = Math.abs(this.getY() - yBeforeJump);
 
     if (deltaAfterJump) {
 
         this._gameFieldTower.addPixel(deltaAfterJump);
     }
-
 }
 
 Gamer.prototype.fall = function () {
 
+    this._isJumping = false;
+
     var yBeforeFall = this.getY();
 
-    if (!this._nearestTargetBottomStep) {
-
-        this._nearestTargetBottomStep = this.getNearestBottomTargetStep();
-    }
+    var nearestBottomTargetStep = this.getNearestBottomTargetStep();
 
     var dy = this.getDY() + this._ddy * this._fallingCounter;
 
@@ -248,10 +241,9 @@ Gamer.prototype.fall = function () {
 
     this._fallingCounter++;
 
-    if (this._nearestTargetBottomStep && this.getY() <= this._nearestTargetBottomStep.getY()) {
+    if (nearestBottomTargetStep && this.getY() <= nearestBottomTargetStep.getY()) {
 
-        this.setTargetStep(this._nearestTargetBottomStep);
-        this._nearestTargetBottomStep = null;
+        this.setTargetStep(nearestBottomTargetStep);
         this._isFalling = false;
         this._fallingCounter = 0;
     }

@@ -8,7 +8,7 @@ function GameFieldTower(parentDOMElement, appendToParentDOMElement) {
     this._maxX = this.getWidth();
     this._maxY = this.getHeight();
     this._widthX = Math.floor(this._maxX / 5);
-    this._heightY = Math.floor(this._maxY / 10);
+    this._heightY = Math.floor(this._maxY / 12);
 
     this._steps = [];
     this._tricksters = [];
@@ -21,7 +21,7 @@ GameFieldTower.prototype = Object.create(GameFieldLayer.prototype);
 
 GameFieldTower.prototype.generateSteps = function (colors) {
 
-    for (var y = 0; y < 30; y++) {
+    for (var y = 0; y < 100; y++) {
         for (var x = 0; x < 5; x++) {
 
             if ((x + y) % 3 === 0) {
@@ -157,6 +157,11 @@ GameFieldTower.prototype.getVisibleMonsters = function () {
 GameFieldTower.prototype.getGamer = function() {
 
     return this._gamer;
+}
+
+GameFieldTower.prototype.saveMonster = function (monster) {
+
+    monster.removeFromParentDOMElement();
 }
 
 GameFieldTower.prototype.repaint = function () {

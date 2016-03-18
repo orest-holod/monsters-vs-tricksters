@@ -50,8 +50,7 @@ Game.prototype.keyDownEventHandler = function (e) {
 
     switch (e.keyCode) {
 
-        case 27:
-            {
+        case 27: {
                 if (!this._isEscPressed) {
 
                     this._isEscPressed = true;
@@ -84,13 +83,9 @@ Game.prototype.keyDownEventHandler = function (e) {
             break;
         }
 
-        case 32:
-            {
-                if (!this._isSpaceKeyPressed) {
-
-                    this._isSpaceKeyPressed = true;
-                }
-
+        case 32: {
+   
+                this._isSpaceKeyPressed = true;
                 break;
             }
     }
@@ -100,8 +95,7 @@ Game.prototype.keyUpEventHandler = function (e) {
 
     switch (e.keyCode) {
 
-        case 27:
-            {
+        case 27: {
                 if (this._isEscPressed) {
 
                     this._isEscPressed = false;
@@ -134,13 +128,8 @@ Game.prototype.keyUpEventHandler = function (e) {
             break;
         }
 
-        case 32:
-            {
-                if (this._isSpaceKeyPressed) {
-
-                    this._isSpaceKeyPressed = false;
-                }
-
+        case 32: {
+                this._isSpaceKeyPressed = false;
                 break;
             }
     }
@@ -216,19 +205,9 @@ Game.prototype.runGameLoop = function () {
             else if (this._isSpaceKeyPressed) {
                 
                 this._gamer.jump();
+
+                this._isSpaceKeyPressed = false;
             }
-
-            //if (this._isUpKeyPressed) {
-
-            //    this._gameField.getGameFieldTower().addPixel();
-            //    this._isUpKeyPressed = false;
-            //}
-
-            //if (this._isDownKeyPressed) {
-
-            //    this._gameField.getGameFieldTower().minusPixel();
-            //    this._isDownKeyPressed = false;
-            //}
 
             if (this._isLeftKeyPressed) {
 
@@ -251,6 +230,20 @@ Game.prototype.runGameLoop = function () {
                 this._isGameOver = true;
             }
 
+            var touchedMonster = this._gamer.getTouchedMonster();
+
+            if (touchedMonster) {
+
+                this._gameField.getGameFieldTower().saveMonster(touchedMonster);
+            }
+
+            var touchedTrickster = this._gamer.getTouchedTrickster();
+
+            if (touchedTrickster) {
+                
+                this._isGameOver = true;
+            }
+
             this._gameField.getGameFieldBackground().getGameFieldBackgroundCloudsLayer().moveBackgroundPositition();
             this._gameField.getGameFieldBackground().getGameFieldBackgroundStarsLayer().moveBackgroundPositition();
 
@@ -268,7 +261,7 @@ Game.prototype.runGameLoop = function () {
             /* End Repaint */
 
 
-        }.bind(this), 20);
+        }.bind(this), 10);
 
     }
 
