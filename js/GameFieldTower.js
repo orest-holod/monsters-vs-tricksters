@@ -192,16 +192,16 @@ GameFieldTower.prototype.repaint = function () {
     });
 }
 
-GameFieldTower.prototype.addPixel = function () {
+GameFieldTower.prototype.addPixel = function (value) {
 
-    this._pixel += 0.01 * this._maxY;
-    this.setHeight(this.getHeight() + 0.01 * this._maxY);
+    this._pixel += value;
+    this.setHeight(this.getHeight() + value);
 }
 
-GameFieldTower.prototype.minusPixel = function () {
+GameFieldTower.prototype.minusPixel = function (value) {
 
-    this._pixel -= 0.01 * this._maxY;
-    this.setHeight(this.getHeight() - 0.01 * this._maxY);
+    this._pixel -= value;
+    this.setHeight(this.getHeight() - value);
 }
 
 /* End Public Methods */
