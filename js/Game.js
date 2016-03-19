@@ -55,8 +55,8 @@ Game.prototype.keyDownEventHandler = function (e) {
                     menuEventHandler(false);
                     this._isEscPressed = true;
                 }
-
                 break;
+
             }
 
         case 38: {
@@ -84,10 +84,10 @@ Game.prototype.keyDownEventHandler = function (e) {
         }
 
         case 32: {
-   
-                this._isSpaceKeyPressed = true;
-                break;
-            }
+
+            this._isSpaceKeyPressed = true;
+            break;
+        }
     }
 }
 
@@ -96,12 +96,12 @@ Game.prototype.keyUpEventHandler = function (e) {
     switch (e.keyCode) {
 
         case 27: {
+
                 if (this._isEscPressed) {
                     this._isEscPressed = false;
                 }
-
-                break;
-            }
+            break;
+        }
 
         case 38: {
 
@@ -128,9 +128,9 @@ Game.prototype.keyUpEventHandler = function (e) {
         }
 
         case 32: {
-                this._isSpaceKeyPressed = false;
-                break;
-            }
+            this._isSpaceKeyPressed = false;
+            break;
+        }
     }
 }
 
@@ -154,8 +154,8 @@ Game.prototype.mouseClickEventHandler = function (e) {
 
         case 'resume-game-menu-item':
             {
-
                 this._isEscPressed = (this._isEscPressed) ? false : true;
+                //this.resume();
                 break;
             }
         case 'facebook-menu-item':
@@ -163,7 +163,7 @@ Game.prototype.mouseClickEventHandler = function (e) {
                 FacebookLogIn();
                 break;
             }
-        case 'google-menu-item' :
+        case 'google-menu-item':
             {
                 GoogleLogIn();
                 break;
@@ -173,8 +173,109 @@ Game.prototype.mouseClickEventHandler = function (e) {
             this._isEscPressed = (this._isEscPressed) ? false : true;
             break;
         }
-
     }
+}
+
+Game.prototype.touchStartEventHandler = function (e) {
+
+    switch (e.target.id) {
+
+        case 'game-field-touch-left':
+            {
+                this._isLeftKeyPressed = true;
+                break;
+            }
+        case 'game-field-touch-right':
+            {
+                this._isRightKeyPressed = true;
+                break;
+            }
+        case 'game-field-touch-space':
+            {
+                this._isSpaceKeyPressed = true;
+                break;
+            }
+        case 'play-game-menu-item':
+            {
+
+                this.start();
+                break;
+            }
+
+        case 'stop-game-menu-item':
+            {
+
+                this.stop();
+                break;
+            }
+
+        case 'facebook-menu-item':
+            {
+                FacebookLogIn();
+                break;
+            }
+        case 'google-menu-item':
+            {
+                GoogleLogIn();
+                break;
+            }
+
+        default:
+            {
+                this._gameField.getGameFieldMenu().makeHidden();
+            }
+    }
+
+}
+
+Game.prototype.touchEndEventHandler = function (e) {
+
+    switch (e.target.id) {
+
+        case 'game-field-touch-left':
+            {
+                this._isLeftKeyPressed = false;
+                break;
+            }
+        case 'game-field-touch-right':
+            {
+                this._isRightKeyPressed = false;
+                break;
+            }
+        case 'game-field-touch-space':
+            {
+                this._isSpaceKeyPressed = false;
+                break;
+            }
+    }
+
+}
+
+Game.prototype.resizeEventHandler = function (e) {
+
+    //var windowWidth = window.innerWidth;
+    //var windowHeight = window.innerHeight;
+
+    //var widthIndex = this._gameField.getWidth() / windowWidth;
+    //var heightIndex = this._gameField.getHeight() / windowHeight;
+
+    //console.log(widthIndex);
+    //console.log(heightIndex);
+
+    //this._gameField.setWidth(windowWidth);
+    //this._gameField.setHeight(windowHeight);
+
+    ///* Game Field Background */
+
+    //this._gameField.getGameFieldBackground.setWidth(this._gameField.getGameFieldBackground.getWidth() * widthIndex);
+    //this._gameField.getGameFieldBackground.setHeight(this._gameField.getGameFieldBackground.getHeight() * heightIndex);
+
+    //var gameFieldBackgroundTowerLayer = this._gameField.getGameFieldBackground().getGameFieldBackgroundTowerLayer();
+    //gameFieldBackgroundTowerLayer.setWidth(gameFieldBackgroundTowerLayer.getWidth() * widthIndex);
+
+    //this._gameField.getGameFieldTower().setWidth(this._gameField.getGameFieldTower().getDOMElement().innerWidth);
+    //this._gameField.getGameFieldTower().setWidth(this._gameField.getGameFieldTower().getDOMElement().innerHeight);
+
 }
 
 Game.prototype.runGameLoop = function () {
@@ -204,11 +305,11 @@ Game.prototype.runGameLoop = function () {
                 this._gamer.fall();
             }
             else if (this._gamer.getIsJumping()) {
-                
+
                 this._gamer.jump();
             }
             else if (this._isSpaceKeyPressed) {
-                
+
                 this._gamer.jump();
 
                 this._isSpaceKeyPressed = false;
@@ -219,7 +320,7 @@ Game.prototype.runGameLoop = function () {
                 this._gamer.moveLeft();
 
             }
-            
+
             if (this._isRightKeyPressed) {
 
                 this._gamer.moveRight();
@@ -245,7 +346,7 @@ Game.prototype.runGameLoop = function () {
             var touchedTrickster = this._gamer.getTouchedTrickster();
 
             if (touchedTrickster) {
-                
+
                 this._isGameOver = true;
             }
 
