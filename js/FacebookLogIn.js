@@ -60,5 +60,5 @@ function FacebookShare(text) {
             alert('Error while posting.');
           }
         });
-  } catch (e) {}
+  } catch(e) {}
 }
