@@ -7,27 +7,14 @@ function AnimationFrameManager() {
     this._now = Date.now();
     this._then = this._now;
     this._delta = 0;
-    this._availableFPS = 0;
-
-    this._usedNow = this._now;
-    this._usedThen = this._then;
-    this._usedDelta = 0;
-    this._usedFPS = 0;
+    this._second = 0;
+    this._animationFrameCounter = 0;
+    this._currentFPS = 0;
 }
 
 /* Start Public Methods */
 
-AnimationFrameManager.prototype.requestAnimationFrame = function (callback) {
-
-    this._now = Date.now();
-    this._delta = this._now - this._then;
-    this._availableFPS = Math.floor(1000 / this._delta);
-    this._then = this._now;
-
-    this._animationFrameId = requestAnimationFrame(callback);
-}
-
-AnimationFrameManager.prototype.cancelAnimationFrame = function () {
+AnimationFrameManager.prototype.stop = function () {
 
     if (this._animationFrameId) {
 
@@ -35,27 +22,46 @@ AnimationFrameManager.prototype.cancelAnimationFrame = function () {
     }
 }
 
-AnimationFrameManager.prototype.getAvailableFPS = function () {
+AnimationFrameManager.prototype.getCurrentFPS = function () {
 
-    return this._availableFPS;
-}
-
-AnimationFrameManager.prototype.getUsedFPS = function () {
-
-    return this._usedFPS;
+    return this._currentFPS;
 }
 
 AnimationFrameManager.prototype.runAtFPS = function (fn, fps) {
 
-    this._usedNow = Date.now();
-    this._usedDelta = this._usedNow - this._usedThen;
-    this._usedFPS = Math.floor(1000 / this._usedDelta);
+    var that = this;
 
-    if (this._usedDelta >= (1000 / fps) || this._availableFPS <= fps) {
+    var then = performance.now();
 
-        fn();
-        this._usedThen = this._usedNow;
-    }
+    fps = fps || 60;
+
+    var interval = 1000 / fps;
+
+    return (function loop() {
+
+        that._animationFrameId = requestAnimationFrame(loop);
+
+        var now = performance.now();
+        var delta = now - then;
+
+        if (delta > interval) {
+
+            then = now - (delta % interval);
+
+            that._second += delta;
+
+            if (that._second >= 1000) {
+
+                that._currentFPS = that._animationFrameCounter;
+                that._animationFrameCounter = 0;
+                that._second = 0;
+            }
+
+            that._animationFrameCounter++;
+
+            fn();
+        }
+    }());
 }
 
 /* End Public Methods */

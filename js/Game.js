@@ -12,6 +12,7 @@ function Game(parentDOMElement) {
     this._animationFrameManager = new AnimationFrameManager();
 
     this._gameField = initializeGameField();
+    this._gameFieldBackgroundFPSLayer = this._gameField.getGameFieldBackground().getGameFieldBackgroundFPSLayer();
     this._gamer = new Gamer(this._gameField);
 
     this._isEscPressed = false;
@@ -283,6 +284,9 @@ Game.prototype.runGameLoop = function () {
 
     if (!this._isGameOver) {
 
+        this._gameFieldBackgroundFPSLayer
+            .setTextContent('{currentFPS}fps'.replace('{currentFPS}', this._animationFrameManager.getCurrentFPS()));
+
         /* Start Logic */
 
         if (this._isEscPressed) {
@@ -298,106 +302,97 @@ Game.prototype.runGameLoop = function () {
             this._isEscPressed = false;
         }
 
+        if (this._gamer.getIsFalling()) {
 
-        this._animationFrameManager.runAtFPS(function () {
+            this._gamer.fall();
+        }
+        else if (this._gamer.getIsJumping()) {
 
-            if (this._gamer.getIsFalling()) {
+            this._gamer.jump();
+        }
+        else if (this._isSpaceKeyPressed) {
 
-                this._gamer.fall();
-            }
-            else if (this._gamer.getIsJumping()) {
+            this._gamer.jump();
 
-                this._gamer.jump();
-            }
-            else if (this._isSpaceKeyPressed) {
+            this._isSpaceKeyPressed = false;
+        }
 
-                this._gamer.jump();
+        if (this._isLeftKeyPressed) {
 
-                this._isSpaceKeyPressed = false;
-            }
+            this._gamer.moveLeft();
 
-            if (this._isLeftKeyPressed) {
+        }
 
-                this._gamer.moveLeft();
+        if (this._isRightKeyPressed) {
 
-            }
+            this._gamer.moveRight();
+        }
 
-            if (this._isRightKeyPressed) {
+        if (!this._isLeftKeyPressed && !this._isRightKeyPressed) {
 
-                this._gamer.moveRight();
-            }
+            this._gamer.standStill();
+        }
 
-            if (!this._isLeftKeyPressed && !this._isRightKeyPressed) {
+        if (this._gamer.getY() <= 0) {
 
-                this._gamer.standStill();
-            }
+            this._isGameOver = true;
+        }
 
-            if (this._gamer.getY() <= 0) {
+        var touchedMonster = this._gamer.getTouchedMonster();
 
-                this._isGameOver = true;
-            }
+        if (touchedMonster) {
 
-            var touchedMonster = this._gamer.getTouchedMonster();
+            this._gameField.getGameFieldTower().saveMonster(touchedMonster);
+        }
 
-            if (touchedMonster) {
+        var touchedTrickster = this._gamer.getTouchedTrickster();
 
-                this._gameField.getGameFieldTower().saveMonster(touchedMonster);
-            }
+        if (touchedTrickster) {
 
-            var touchedTrickster = this._gamer.getTouchedTrickster();
+            this._isGameOver = true;
+        }
 
-            if (touchedTrickster) {
+        this._gameField.getGameFieldBackground().getGameFieldBackgroundCloudsLayer().moveBackgroundPositition();
+        this._gameField.getGameFieldBackground().getGameFieldBackgroundStarsLayer().moveBackgroundPositition();
 
-                this._isGameOver = true;
-            }
+        this._gameField.getGameFieldTower().getVisibleTricksters().forEach(function (trickster) { trickster.rotate(); });
+        this._gameField.getGameFieldTower().getVisibleTricksters().forEach(function (trickster) { trickster.levitate(); });
+        this._gameField.getGameFieldTower().getVisibleMonsters().forEach(function (monster) { monster.rotate(); });
 
-            this._gameField.getGameFieldBackground().getGameFieldBackgroundCloudsLayer().moveBackgroundPositition();
-            this._gameField.getGameFieldBackground().getGameFieldBackgroundStarsLayer().moveBackgroundPositition();
+        /* End Logic */
 
-            this._gameField.getGameFieldTower().getVisibleTricksters().forEach(function (trickster) { trickster.rotate(); });
-            this._gameField.getGameFieldTower().getVisibleTricksters().forEach(function (trickster) { trickster.levitate(); });
-            this._gameField.getGameFieldTower().getVisibleMonsters().forEach(function (monster) { monster.rotate(); });
+        /* Start Repaint */
 
-            /* End Logic */
+        this._gameField.repaint();
+        this._gamer.repaint();
 
-            /* Start Repaint */
-
-            this._gameField.repaint();
-            this._gamer.repaint();
-
-            /* End Repaint */
-
-
-        }.bind(this), 10);
-
+        /* End Repaint */
     }
-
-    this._animationFrameManager.requestAnimationFrame(this.runGameLoop.bind(this));
 }
 
 Game.prototype.start = function () {
 
-    this._animationFrameManager.requestAnimationFrame(this.runGameLoop.bind(this));
+    this._animationFrameManager.runAtFPS(this.runGameLoop.bind(this), 7);
 }
 
 Game.prototype.stop = function () {
 
-    this._animationFrameManager.cancelAnimationFrame();
+    this._animationFrameManager.stop();
 }
 
 Game.prototype.over = function () {
 
-    this._animationFrameManager.cancelAnimationFrame();
+    this._animationFrameManager.stop();
 }
 
 Game.prototype.resume = function () {
 
-    this._animationFrameManager.requestAnimationFrame(this.runGameLoop.bind(this));
+    this._animationFrameManager.runAtFPS(this.runGameLoop.bind(this), 7);
 }
 
 Game.prototype.reset = function () {
 
-    this._animationFrameManager.requestAnimationFrame(this.runGameLoop.bind(this));
+    this._animationFrameManager.runAtFPS(this.runGameLoop.bind(this), 7);
 }
 
 /* End Public Methods */
