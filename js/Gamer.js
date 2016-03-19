@@ -162,7 +162,7 @@ Gamer.prototype.moveLeft = function () {
 
     this.setX(this.getX() - this.getDX());
 
-    if (this.getX() - this.getDX() + this.getWidth() < this.getTargetStep().getX()) {
+    if (!this._isFalling && !this._isJumping && this.getX() - this.getDX() + this.getWidth() < this.getTargetStep().getX()) {
 
         this._isFalling = true;
     }
@@ -181,7 +181,7 @@ Gamer.prototype.moveRight = function () {
 
     this.setX(this.getX() + this.getDX());
 
-    if (this.getX() + this.getDX() > this.getTargetStep().getX() + this.getTargetStep().getWidth()) {
+    if (!this._isFalling && !this._isJumping && this.getX() + this.getDX() > this.getTargetStep().getX() + this.getTargetStep().getWidth()) {
 
         this._isFalling = true;
     }
