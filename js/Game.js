@@ -52,7 +52,7 @@ Game.prototype.keyDownEventHandler = function (e) {
 
         case 27: {
                 if (!this._isEscPressed) {
-
+                    menuEventHandler(false);
                     this._isEscPressed = true;
                 }
 
@@ -97,7 +97,6 @@ Game.prototype.keyUpEventHandler = function (e) {
 
         case 27: {
                 if (this._isEscPressed) {
-
                     this._isEscPressed = false;
                 }
 
@@ -156,7 +155,7 @@ Game.prototype.mouseClickEventHandler = function (e) {
         case 'resume-game-menu-item':
             {
 
-                this.resume();
+                this._isEscPressed = (this._isEscPressed) ? false : true;
                 break;
             }
         case 'facebook-menu-item':
@@ -169,6 +168,12 @@ Game.prototype.mouseClickEventHandler = function (e) {
                 GoogleLogIn();
                 break;
             }
+        case 'start-new-game' :
+        {
+            this._isEscPressed = (this._isEscPressed) ? false : true;
+            break;
+        }
+
     }
 }
 
@@ -181,10 +186,10 @@ Game.prototype.runGameLoop = function () {
         if (this._isEscPressed) {
 
             if (this._gameField.getGameFieldMenu().isVisible()) {
-
+                $('#gamer').removeClass('disabled').addClass('visible');
                 this._gameField.getGameFieldMenu().makeHidden();
             } else {
-
+                $('#gamer').removeClass('visible').addClass('disabled');
                 this._gameField.getGameFieldMenu().makeVisible();
             }
 

@@ -216,3 +216,29 @@ body {
 
     /*border: 1px solid #fff;*/
 }
+
+.visible {
+    display: block;
+}
+.disabled {
+    display: none;
+}
+.facebookCreateUser {
+    bottom: 40% !important;
+}
+.googleCreateUser {
+    bottom: 25% !important;
+}
+
+#input-text {
+    background: linear-gradient(163deg, transparent 0px, transparent 1px, #222 1px, #222 14px, transparent 14px),   linear-gradient(161deg, transparent 0px, #181818 1px, #222 2px, #222 15px, transparent 15px), linear-gradient(343deg, transparent 0px, transparent 1px, #222 1px, #222 14px, transparent 14px), linear-gradient(343deg, transparent 0px, transparent 1px, #222 1px, #222 14px, transparent 14px);
+    text-shadow: 0 0 15px #ec7aec;
+    font-family: 'LuckiestGuy', cursive;
+    color: #d0c8c5;
+    top: 20%;
+
+}
+
+#start-new-game {
+    top: 40%;
+}

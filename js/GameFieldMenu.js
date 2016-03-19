@@ -6,6 +6,7 @@ function GameFieldMenu(parentDOMElement, appendToParentDOMElement) {
 
     this._menuHeader = new GameFieldMenuHeader(this.getDOMElement(), 'Monsters vs Tricksters');
     this._menuItems = [];
+    this._menuInputName =[];
 
     var playGameMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'play-game-menu-item', 'New Game');
     var stopGameMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'stop-game-menu-item', 'Stop Game');
@@ -13,6 +14,10 @@ function GameFieldMenu(parentDOMElement, appendToParentDOMElement) {
     var saveGameMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'save-game-menu-item', 'Save Game');
     var facebookMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'facebook-menu-item', 'FB');
     var googleMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'google-menu-item', 'G+');
+    var createAccountMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'create-account');
+    var startGameMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'start-new-game', 'Start Game');
+
+    var textGameCreateAccount = new MenuInputName(this.getDOMElement(), 'input-text', 'input text');
 
     googleMenuItem.setX(0);
     googleMenuItem.setY(this._menuHeader.getY() + this._menuHeader.getHeight() - 90);
@@ -38,6 +43,8 @@ function GameFieldMenu(parentDOMElement, appendToParentDOMElement) {
     this._menuItems.push(saveGameMenuItem);
     this._menuItems.push(facebookMenuItem);
     this._menuItems.push(googleMenuItem);
+    this._menuItems.push(createAccountMenuItem);
+    this._menuItems.push(startGameMenuItem);
 }
 
 GameFieldMenu.prototype = Object.create(GameFieldLayer.prototype);
@@ -57,8 +64,12 @@ function GameFieldMenuItem(parentDOMElement, id, textContent) {
 
     GameEntity.call(this, 'div', parentDOMElement, true, id, ['game-field-menu-item'], textContent);
 }
+function MenuInputName(parentDOMElement, id, textContent) {
 
+    GameEntity.call(this, 'input', parentDOMElement, true, id, ['game-field-menu-item'], textContent);
+}
 GameFieldMenuItem.prototype = Object.create(GameEntity.prototype);
+MenuInputName.prototype = Object.create(GameEntity.prototype);
 
 function GameFieldMenuHeader(parentDOMElement, textContent) {
 
@@ -67,5 +78,6 @@ function GameFieldMenuHeader(parentDOMElement, textContent) {
 }
 
 GameFieldMenuHeader.prototype = Object.create(GameEntity.prototype);
+
 
 /* End Game Field Menu Layer */
