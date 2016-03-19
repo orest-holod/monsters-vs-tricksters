@@ -6,6 +6,7 @@ function GameFieldMenu(parentDOMElement, appendToParentDOMElement) {
 
     this._menuHeader = new GameFieldMenuHeader(this.getDOMElement(), 'Monsters vs Tricksters');
     this._menuItems = [];
+    this._menuInputName =[];
 
     var playGameMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'play-game-menu-item', 'New Game');
     var stopGameMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'stop-game-menu-item', 'Stop Game');
@@ -13,31 +14,19 @@ function GameFieldMenu(parentDOMElement, appendToParentDOMElement) {
     var saveGameMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'save-game-menu-item', 'Save Game');
     var facebookMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'facebook-menu-item', 'FB');
     var googleMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'google-menu-item', 'G+');
+    var createAccountMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'create-account');
+    var startGameMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'start-new-game', 'Start Game');
 
-    googleMenuItem.setX(0);
-    googleMenuItem.setY(this._menuHeader.getY() + this._menuHeader.getHeight() - 90);
+    var textGameCreateAccount = new MenuInputName(this.getDOMElement(), 'input-text', 'input text');
 
-    facebookMenuItem.setX(0);
-    facebookMenuItem.setY(googleMenuItem.getY() + googleMenuItem.getHeight() + 15);
-
-    saveGameMenuItem.setX(0);
-    saveGameMenuItem.setY(facebookMenuItem.getY() + facebookMenuItem.getHeight() + 15);
-
-    resumeGameMenuItem.setX(0);
-    resumeGameMenuItem.setY(saveGameMenuItem.getY() + saveGameMenuItem.getHeight() + 15);
-
-    stopGameMenuItem.setX(0);
-    stopGameMenuItem.setY(resumeGameMenuItem.getY() + resumeGameMenuItem.getHeight() + 15);
-
-    playGameMenuItem.setX(0);
-    playGameMenuItem.setY(stopGameMenuItem.getY() + stopGameMenuItem.getHeight() + 15);
-    
     this._menuItems.push(playGameMenuItem);
     this._menuItems.push(stopGameMenuItem);
     this._menuItems.push(resumeGameMenuItem);
     this._menuItems.push(saveGameMenuItem);
     this._menuItems.push(facebookMenuItem);
     this._menuItems.push(googleMenuItem);
+    this._menuItems.push(createAccountMenuItem);
+    this._menuItems.push(startGameMenuItem);
 }
 
 GameFieldMenu.prototype = Object.create(GameFieldLayer.prototype);
@@ -57,8 +46,12 @@ function GameFieldMenuItem(parentDOMElement, id, textContent) {
 
     GameEntity.call(this, 'div', parentDOMElement, true, id, ['game-field-menu-item'], textContent);
 }
+function MenuInputName(parentDOMElement, id, textContent) {
 
+    GameEntity.call(this, 'input', parentDOMElement, true, id, ['game-field-menu-item'], textContent);
+}
 GameFieldMenuItem.prototype = Object.create(GameEntity.prototype);
+MenuInputName.prototype = Object.create(GameEntity.prototype);
 
 function GameFieldMenuHeader(parentDOMElement, textContent) {
 
@@ -67,5 +60,6 @@ function GameFieldMenuHeader(parentDOMElement, textContent) {
 }
 
 GameFieldMenuHeader.prototype = Object.create(GameEntity.prototype);
+
 
 /* End Game Field Menu Layer */

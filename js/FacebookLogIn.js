@@ -48,7 +48,7 @@ function FacebookLogIn() {
 
 
 function FacebookShare(text) {
-  if (FB) {
+  try {
     FB.ui({
       method: 'feed',
       link: 'http://orest-o-holod.github.io/monsters-vs-tricksters/',
@@ -60,5 +60,5 @@ function FacebookShare(text) {
             alert('Error while posting.');
           }
         });
-  }
+  } catch (e) {}
 }
