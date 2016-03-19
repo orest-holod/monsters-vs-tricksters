@@ -51,13 +51,13 @@ Game.prototype.keyDownEventHandler = function (e) {
     switch (e.keyCode) {
 
         case 27: {
-                if (!this._isEscPressed) {
-                    menuEventHandler(false);
-                    this._isEscPressed = true;
-                }
-                break;
+            if (!this._isEscPressed) {
 
+                this._isEscPressed = true;
             }
+
+            break;
+        }
 
         case 38: {
 
@@ -96,10 +96,11 @@ Game.prototype.keyUpEventHandler = function (e) {
     switch (e.keyCode) {
 
         case 27: {
+            if (this._isEscPressed) {
 
-                if (this._isEscPressed) {
-                    this._isEscPressed = false;
-                }
+                this._isEscPressed = false;
+            }
+
             break;
         }
 
@@ -154,8 +155,8 @@ Game.prototype.mouseClickEventHandler = function (e) {
 
         case 'resume-game-menu-item':
             {
-                this._isEscPressed = (this._isEscPressed) ? false : true;
-                //this.resume();
+
+                this.resume();
                 break;
             }
         case 'facebook-menu-item':
@@ -168,11 +169,6 @@ Game.prototype.mouseClickEventHandler = function (e) {
                 GoogleLogIn();
                 break;
             }
-        case 'start-new-game' :
-        {
-            this._isEscPressed = (this._isEscPressed) ? false : true;
-            break;
-        }
     }
 }
 
@@ -209,6 +205,12 @@ Game.prototype.touchStartEventHandler = function (e) {
                 break;
             }
 
+        case 'resume-game-menu-item':
+            {
+
+                this.resume();
+                break;
+            }
         case 'facebook-menu-item':
             {
                 FacebookLogIn();
@@ -219,7 +221,6 @@ Game.prototype.touchStartEventHandler = function (e) {
                 GoogleLogIn();
                 break;
             }
-
         default:
             {
                 this._gameField.getGameFieldMenu().makeHidden();
@@ -287,10 +288,10 @@ Game.prototype.runGameLoop = function () {
         if (this._isEscPressed) {
 
             if (this._gameField.getGameFieldMenu().isVisible()) {
-                $('#gamer').removeClass('disabled').addClass('visible');
+
                 this._gameField.getGameFieldMenu().makeHidden();
             } else {
-                $('#gamer').removeClass('visible').addClass('disabled');
+
                 this._gameField.getGameFieldMenu().makeVisible();
             }
 
