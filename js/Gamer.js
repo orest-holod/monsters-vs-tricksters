@@ -8,8 +8,8 @@ function Gamer(gameField) {
     this._gameFieldTower = gameField.getGameFieldTower();
     this._targetStep = gameField.getGameFieldTower().getSteps()[10];
 
-    this.setDX(20);
-    this.setDY(20);
+    this.setDX(25);
+    this.setDY(25);
     this.setDAngle(10);
 
     this.setX(this._targetStep.getX());
@@ -23,7 +23,7 @@ function Gamer(gameField) {
     this._jumpingCounter = 0;
     this._currentDY = this.getDY();
 
-    this._ddy = 20;
+    this._ddy = 25;
 }
 
 Gamer.prototype = Object.create(GameEntity.prototype);
