@@ -9,6 +9,9 @@ var game = new Game(gameWrapper);
 document.addEventListener('keydown', game.keyDownEventHandler.bind(game), false);
 document.addEventListener('keyup', game.keyUpEventHandler.bind(game), false);
 document.addEventListener('click', game.mouseClickEventHandler.bind(game), false);
+window.addEventListener('resize', debounce(game.resizeEventHandler.bind(game), 10), false);
+window.addEventListener('touchstart', game.touchStartEventHandler.bind(game), false);
+window.addEventListener('touchend', game.touchEndEventHandler.bind(game), false);
 
 /* End Event Listeners */
 
@@ -17,3 +20,26 @@ document.addEventListener('click', game.mouseClickEventHandler.bind(game), false
 game.start();
 
 /* End Main Function */
+
+/* Start Utility Functions */
+
+function debounce(func, timeToWait) {
+
+    var timeout;
+
+    return function () {
+
+        var context = this;
+        var args = arguments;
+
+        clearTimeout(timeout);
+
+        timeout = setTimeout(function () {
+
+            func.apply(context, args);
+
+        }, timeToWait);
+    };
+}
+
+/* End Utility Functions */
