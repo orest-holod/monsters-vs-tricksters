@@ -44,3 +44,21 @@ function FacebookLogIn() {
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));
 }
+
+
+
+function FacebookShare(text) {
+  if (FB) {
+    FB.ui({
+      method: 'feed',
+      link: 'http://orest-o-holod.github.io/monsters-vs-tricksters/',
+      caption: 'An example caption' + text,
+      }, function(response) {
+          if (response && !response.error_message) {
+            alert('Posting completed.');
+          } else {
+            alert('Error while posting.');
+          }
+        });
+  }
+}
