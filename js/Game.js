@@ -142,7 +142,7 @@ Game.prototype.mouseClickEventHandler = function (e) {
 
         case 'play-game-menu-item':
             {
-
+                this._gameField.getGameFieldMenu().makeHidden();
                 this.start();
                 break;
             }
@@ -374,7 +374,7 @@ Game.prototype.runGameLoop = function () {
 }
 
 Game.prototype.start = function () {
-
+  
     this._animationFrameManager.runAtFPS(this.runGameLoop.bind(this), 7);
 }
 
