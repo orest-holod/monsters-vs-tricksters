@@ -103,6 +103,7 @@ Trickster.prototype.rotate = function () {
 Trickster.prototype.setTargetStep = function (value) {
 
     this._targetStep = value;
+    value.setTargetTrickster(this);
     this.setX(this._targetStep.getX());
     this.setY(this._targetStep.getY() + this._targetStep.getHeight() * 3);
 }

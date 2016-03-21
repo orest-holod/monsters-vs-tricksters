@@ -275,7 +275,6 @@ body {
     font-size: 7rem;
     line-height: 5.1rem;
     color: #fff;
-    text-shadow: 0px 0px 3rem #fff;
     text-align: center;
 
     /*border: 1px solid #fff;*/
@@ -291,7 +290,6 @@ body {
     font-size: 5rem;
     line-height: 5rem;
     color: #fff;
-    text-shadow: 0px 0px 3rem #fff;
     box-shadow: 0px 0px 3.5rem 1rem #fff;
     text-align: center;
     border-radius: 50%;
@@ -306,7 +304,6 @@ body {
     font-size: 10rem;
     line-height: 6rem;
     box-shadow: none;
-    text-shadow: none;
 
     /*border: 1px solid #fff;*/
 }

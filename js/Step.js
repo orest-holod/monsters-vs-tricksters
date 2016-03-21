@@ -9,10 +9,31 @@
     this.setY(levelIndex * levelHeight);
     this.setHeight(5);
     this.setWidth(width);
+    this._targetMonster = null;
+    this._targetTrickster = null;
 }
 
 Step.prototype = Object.create(GameEntity.prototype);
 
+Step.prototype.setTargetMonster = function (value) {
+
+    this._targetMonster = value;
+}
+
+Step.prototype.getTargetMonster = function () {
+
+    return this._targetMonster;
+}
+
+Step.prototype.setTargetTrickster = function (value) {
+    
+    this._targetTrickster = value;
+}
+
+Step.prototype.getTargetTrickster = function () {
+
+    return this._targetTrickster;
+}
 
 Step.prototype.repaint = function () {
 

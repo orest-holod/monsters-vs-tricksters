@@ -19,6 +19,7 @@ Monster.prototype.rotate = function () {
 Monster.prototype.setTargetStep = function (value) {
 
     this._targetStep = value;
+    value.setTargetMonster(this);
     this.setX(this._targetStep.getX() + Math.floor(this._targetStep.getWidth() / 2));
     this.setY(this._targetStep.getY() + this._targetStep.getHeight() * 3);
 }
