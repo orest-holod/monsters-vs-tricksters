@@ -24,7 +24,8 @@
 
             steps: {
 
-                numberOfLevels: 1000
+                numberOfLevels: 1000,
+                heightOfLevel: 75
             },
 
             tricksters: {
