@@ -44,8 +44,18 @@
                 numberOfMonsters: 200,
 
                 arrayOfDAngle: [5, -5]
+            },
+
+            lifes: {
+                numberOfLifes: 300,
+
+                arrayOfDAngle: [5, -5]
             }
 
+        },
+        gameFieldScore: {
+
+            lifes: 3
         }
     },
 

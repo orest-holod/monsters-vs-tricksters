@@ -149,6 +149,25 @@ Gamer.prototype.getTouchedMonster = function () {
 
 }
 
+Gamer.prototype.getTouchedLife = function () {
+
+    var that = this;
+
+    var touchedLife = false;
+
+    this._gameFieldTower.getVisibleLifes().forEach(function (life) {
+
+        if (that.checkIfTouches(life)) {
+
+            touchedLife = life;
+        }
+
+    });
+
+    return touchedLife;
+
+}
+
 Gamer.prototype.moveLeft = function () {
 
     if (this.getAngle() < 0) {

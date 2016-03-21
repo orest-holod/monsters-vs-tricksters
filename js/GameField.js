@@ -8,6 +8,8 @@ function GameField(parentDOMElement, appendToParentDOMElement) {
     this._gameFieldTower = new GameFieldTower(this._DOMElement, true);
     this._gameFieldMenu = new GameFieldMenu(this._DOMElement, true);
     this._gameFieldTouch = new GameFieldTouch(this._DOMElement, true);
+    this._gameFieldScore = new GameFieldScore(this._DOMElement, true);
+
 }
 
 GameField.prototype = Object.create(GameEntity.prototype);
@@ -34,6 +36,10 @@ GameField.prototype.getGameFieldTouch = function () {
 
     return this._gameFieldTouch;
 }
+GameField.prototype.getGameFieldScore = function () {
+
+    return this._gameFieldScore;
+}
 
 GameField.prototype.repaint = function () {
 
@@ -43,6 +49,7 @@ GameField.prototype.repaint = function () {
     this._gameFieldTower.repaint();
     this._gameFieldMenu.repaint();
     this._gameFieldTouch.repaint();
+    this._gameFieldScore.repaint();
 }
 
 /* End Public Methods */

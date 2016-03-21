@@ -35,6 +35,16 @@ Step.prototype.getTargetTrickster = function () {
     return this._targetTrickster;
 }
 
+Step.prototype.setTargetLife = function (value) {
+
+    this._targetLife = value;
+}
+
+Step.prototype.getTargetLife = function () {
+
+    return this._targetLife;
+}
+
 Step.prototype.repaint = function () {
 
     GameEntity.prototype.repaint.call(this);
