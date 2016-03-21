@@ -16,24 +16,24 @@ Trickster.prototype = Object.create(GameEntity.prototype);
 
 /* Start Public Methods */
 
-Trickster.prototype.getLevitateDX = function() {
-
-    return this._levitateDX;
-}
-
 Trickster.prototype.setLevitateDX = function (value) {
 
-   this._levitateDX = value;
+    this._levitateDX = value;
 }
 
-Trickster.prototype.getLevitateDY = function () {
+Trickster.prototype.getLevitateDX = function () {
 
-    return this._levitateDY;
+    return this._levitateDX;
 }
 
 Trickster.prototype.setLevitateDY = function (value) {
 
     this._levitateDY = value;
+}
+
+Trickster.prototype.getLevitateDY = function () {
+
+    return this._levitateDY;
 }
 
 Trickster.prototype.levitate = function () {
@@ -50,9 +50,9 @@ Trickster.prototype.levitate = function () {
 
     if (this.getDX() >= 0) {
 
-        if (this.getX() + this.getDX() <= this._preLevitateX + this._levitateDX) {
+        if (this.getX() + this.getDX() * GameEntity.FPS_INDEX <= this._preLevitateX + this._levitateDX) {
 
-            this.setX(this.getX() + this.getDX());
+            this.setX(this.getX() + this.getDX() * GameEntity.FPS_INDEX);
         }
         else {
 
@@ -61,9 +61,9 @@ Trickster.prototype.levitate = function () {
     }
     else {
 
-        if (this.getX() + this.getDX() >= this._preLevitateX - this._levitateDX) {
+        if (this.getX() + this.getDX() * GameEntity.FPS_INDEX >= this._preLevitateX - this._levitateDX) {
 
-            this.setX(this.getX() + this.getDX());
+            this.setX(this.getX() + this.getDX() * GameEntity.FPS_INDEX);
         }
         else {
 
@@ -73,9 +73,9 @@ Trickster.prototype.levitate = function () {
 
     if (this.getDY() >= 0) {
 
-        if (this.getY() + this.getDY() <= this._preLevitateY + this._levitateDY) {
+        if (this.getY() + this.getDY() * GameEntity.FPS_INDEX <= this._preLevitateY + this._levitateDY) {
 
-            this.setY(this.getY() + this.getDY());
+            this.setY(this.getY() + this.getDY() * GameEntity.FPS_INDEX);
         }
         else {
 
@@ -84,9 +84,9 @@ Trickster.prototype.levitate = function () {
     }
     else {
 
-        if (this.getY() + this.getDY() >= this._preLevitateY - this._levitateDY) {
+        if (this.getY() + this.getDY() * GameEntity.FPS_INDEX >= this._preLevitateY - this._levitateDY) {
 
-            this.setY(this.getY() + this.getDY());
+            this.setY(this.getY() + this.getDY() * GameEntity.FPS_INDEX);
         }
         else {
 
@@ -97,12 +97,14 @@ Trickster.prototype.levitate = function () {
 
 Trickster.prototype.rotate = function () {
 
-    this.setAngle(this.getAngle() + this.getDAngle());
+    this.setAngle(this.getAngle() + this.getDAngle() * GameEntity.FPS_INDEX);
 }
 
-Trickster.prototype.setTargetStep = function(value) {
+Trickster.prototype.setTargetStep = function (value) {
 
     this._targetStep = value;
+    this.setX(this._targetStep.getX());
+    this.setY(this._targetStep.getY() + this._targetStep.getHeight() * 3);
 }
 
 Trickster.prototype.getTargetStep = function () {

@@ -11,8 +11,8 @@ GameFieldLayer.prototype = Object.create(GameEntity.prototype);
 
 GameFieldLayer.prototype.moveBackgroundPositition = function () {
 
-    this.setBackgroundPositionX(this.getBackgroundPositionX() + this.getBackgroundPositionDX());
-    this.setBackgroundPositionY(this.getBackgroundPositionY() + this.getBackgroundPositionDY());
+    this.setBackgroundPositionX(this.getBackgroundPositionX() + this.getBackgroundPositionDX() * GameEntity.FPS_INDEX);
+    this.setBackgroundPositionY(this.getBackgroundPositionY() + this.getBackgroundPositionDY() * GameEntity.FPS_INDEX);
 }
 
 /* End Public Methods */

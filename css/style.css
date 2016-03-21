@@ -142,7 +142,7 @@ body {
 
 }
 
-.game-field-touch-item {
+.game-field-touch-item {  
     width: calc(100%/3);
     height: 100%;
     float: left;
@@ -165,22 +165,22 @@ body {
     left: 0;
     right: auto;
 
-    border-top-right-radius: 50%;
+    border-top-right-radius: 50%; 
 }
 
 #game-field-touch-space {
     left: calc(100%/3);
     right: calc(100%/3);
 
-    border-top-left-radius: 50%;
-    border-top-right-radius: 50%;
+    border-top-left-radius: 50%; 
+    border-top-right-radius: 50%; 
 }
 
 #game-field-touch-right {
     right: 0;
     left: auto;
 
-    border-top-left-radius: 50%;
+    border-top-left-radius: 50%; 
 }
 
 /* Game Field Tower */
@@ -242,7 +242,7 @@ body {
 
 @media only screen and (max-width: 375px) {
     #game-field-menu {
-      width: 85%;
+      width: 90%;
     }
 
     #menu-header {

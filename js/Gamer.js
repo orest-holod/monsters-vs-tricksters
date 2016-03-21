@@ -8,9 +8,9 @@ function Gamer(gameField) {
     this._gameFieldTower = gameField.getGameFieldTower();
     this._targetStep = gameField.getGameFieldTower().getSteps()[10];
 
-    this.setDX(25);
-    this.setDY(25);
-    this.setDAngle(10);
+    this.setDX(gameConfigs.gamer.dx);
+    this.setDY(gameConfigs.gamer.dy);
+    this.setDAngle(gameConfigs.gamer.dAngle);
 
     this.setX(this._targetStep.getX());
     this.setY(this._targetStep.getY() + this._targetStep.getHeight());
@@ -23,7 +23,7 @@ function Gamer(gameField) {
     this._jumpingCounter = 0;
     this._currentDY = this.getDY();
 
-    this._ddy = 25;
+    this._ddy = gameConfigs.gamer.ddy;
 }
 
 Gamer.prototype = Object.create(GameEntity.prototype);
@@ -153,16 +153,16 @@ Gamer.prototype.moveLeft = function () {
 
     if (this.getAngle() < 0) {
 
-        this.setAngle(this.getAngle() + this.getDAngle());
+        this.setAngle(this.getAngle() + this.getDAngle() * GameEntity.FPS_INDEX);
     }
     else {
 
-        this.setAngle(this.getAngle() - this.getDAngle());
+        this.setAngle(this.getAngle() - this.getDAngle() * GameEntity.FPS_INDEX);
     }
 
-    this.setX(this.getX() - this.getDX());
+    this.setX(this.getX() - this.getDX() * GameEntity.FPS_INDEX);
 
-    if (!this._isFalling && !this._isJumping && this.getX() - this.getDX() + this.getWidth() < this.getTargetStep().getX()) {
+    if (!this._isFalling && !this._isJumping && this.getX() - this.getDX() * GameEntity.FPS_INDEX + this.getWidth() < this.getTargetStep().getX()) {
 
         this._isFalling = true;
     }
@@ -172,16 +172,16 @@ Gamer.prototype.moveRight = function () {
 
     if (this.getAngle() > 0) {
 
-        this.setAngle(this.getAngle() - this.getDAngle());
+        this.setAngle(this.getAngle() - this.getDAngle() * GameEntity.FPS_INDEX);
     }
     else {
 
-        this.setAngle(this.getAngle() + this.getDAngle());
+        this.setAngle(this.getAngle() + this.getDAngle() * GameEntity.FPS_INDEX);
     }
 
-    this.setX(this.getX() + this.getDX());
+    this.setX(this.getX() + this.getDX() * GameEntity.FPS_INDEX);
 
-    if (!this._isFalling && !this._isJumping && this.getX() + this.getDX() > this.getTargetStep().getX() + this.getTargetStep().getWidth()) {
+    if (!this._isFalling && !this._isJumping && this.getX() + this.getDX() * GameEntity.FPS_INDEX > this.getTargetStep().getX() + this.getTargetStep().getWidth()) {
 
         this._isFalling = true;
     }
@@ -206,7 +206,7 @@ Gamer.prototype.jump = function () {
 
     var nearestTopTargetStep = this.getNearestTopTargetStep();
 
-    var dy = this.getDY() + this._ddy * this._jumpingCounter;
+    var dy = this.getDY() * GameEntity.FPS_INDEX + this.getDDY() * GameEntity.FPS_INDEX * this._jumpingCounter;
 
     this.setY(this.getY() + dy);
 
@@ -235,7 +235,7 @@ Gamer.prototype.fall = function () {
 
     var nearestBottomTargetStep = this.getNearestBottomTargetStep();
 
-    var dy = this.getDY() + this._ddy * this._fallingCounter;
+    var dy = this.getDY() * GameEntity.FPS_INDEX + this.getDDY() * GameEntity.FPS_INDEX * this._fallingCounter;
 
     this.setY(this.getY() - dy);
 

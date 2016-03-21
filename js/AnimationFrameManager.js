@@ -1,6 +1,6 @@
 ﻿/* Start Animation Frame Manager */
 
-function AnimationFrameManager() {
+function AnimationFrameManager(wantedFPS) {
 
     this._animationFrameId = 0;
 
@@ -10,6 +10,7 @@ function AnimationFrameManager() {
     this._second = 0;
     this._animationFrameCounter = 0;
     this._currentFPS = 0;
+    this._wantedFPS = wantedFPS || 60;
 }
 
 /* Start Public Methods */
@@ -27,15 +28,13 @@ AnimationFrameManager.prototype.getCurrentFPS = function () {
     return this._currentFPS;
 }
 
-AnimationFrameManager.prototype.runAtFPS = function (fn, fps) {
+AnimationFrameManager.prototype.runAtWantedFPS = function (fn) {
 
     var that = this;
 
     var then = performance.now();
 
-    fps = fps || 60;
-
-    var interval = 1000 / fps;
+    var interval = 1000 / this._wantedFPS;
 
     return (function loop() {
 
@@ -62,6 +61,18 @@ AnimationFrameManager.prototype.runAtFPS = function (fn, fps) {
             fn();
         }
     }());
+}
+
+AnimationFrameManager.prototype.getFPSIndex = function() {
+
+    var fpsIndex = 1;
+
+    if (this._currentFPS) {
+
+        fpsIndex = (this._wantedFPS / this._currentFPS).toFixed(2);
+    }
+
+    return fpsIndex;
 }
 
 /* End Public Methods */

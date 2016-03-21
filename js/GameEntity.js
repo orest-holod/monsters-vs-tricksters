@@ -56,7 +56,7 @@ function GameEntity(DOMElementTagName, parentDOMElement, appendToParentDOMElemen
     this._display = 'block';
     this._textContent = '';
     this._opacity = 1;
-   
+
     this._needRepaint = {
         x: false,
         y: false,
@@ -81,7 +81,7 @@ function GameEntity(DOMElementTagName, parentDOMElement, appendToParentDOMElemen
 
 GameEntity.prototype.CSS_UNIT = 'px';
 
-GameEntity.prototype.FPS_INDEX = 1;
+GameEntity.FPS_INDEX = 1;
 
 /* End Static Constants */
 
