@@ -8,7 +8,7 @@ function GameFieldTower(parentDOMElement, appendToParentDOMElement) {
     this._maxX = this.getWidth();
     this._maxY = this.getHeight();
     this._widthX = Math.floor(this._maxX / 5);
-    this._heightY = Math.floor(this._maxY / 12);
+    this._heightY = gameConfigs.gameField.gameFieldTower.steps.heightOfLevel;
 
     this._steps = [];
     this._tricksters = [];
