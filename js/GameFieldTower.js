@@ -13,16 +13,19 @@ function GameFieldTower(parentDOMElement, appendToParentDOMElement) {
     this._steps = [];
     this._tricksters = [];
     this._monsters = [];
+    this._lifes = [];
 
     this._visibleSteps = [];
     this._visibleTricksters = [];
     this._visibleMonsters = [];
+    this._visibleLifes = [];
 
     /* Start Init */
 
     this.generateSteps();
     this.generateTricksters();
     this.generateMonsters();
+    this.generateLifes();
 
     /* End Init */
 }
@@ -112,7 +115,31 @@ GameFieldTower.prototype.generateMonsters = function () {
     });
 
 }
+GameFieldTower.prototype.generateLifes = function () {
 
+    var that = this;
+
+    var numberOfSteps = this._steps.length;
+
+    var numberOfLifes = Math.min(gameConfigs.gameField.gameFieldTower.lifes.numberOfLifes, numberOfSteps);
+
+    var indexOfLifes = Math.floor(numberOfSteps / numberOfLifes);
+
+    this._steps.filter(function (step, index) {
+
+        return index % indexOfLifes === 0;
+
+    }).forEach(function (step) {
+
+        var life = new Life(that._DOMElement, false);
+
+        life.setDAngle(gameConfigs.gameField.gameFieldTower.lifes.arrayOfDAngle[Math.floor(Math.random() * gameConfigs.gameField.gameFieldTower.lifes.arrayOfDAngle.length)]);
+        life.setTargetStep(step);
+        that._lifes.push(life);
+
+    });
+
+}
 GameFieldTower.prototype.getSteps = function () {
 
     return this._steps;
@@ -126,6 +153,10 @@ GameFieldTower.prototype.getTricksters = function () {
 GameFieldTower.prototype.getMonsters = function () {
 
     return this._monsters;
+}
+GameFieldTower.prototype.getLifes = function () {
+
+    return this._lifes;
 }
 
 GameFieldTower.prototype.getVisibleSteps = function () {
@@ -142,6 +173,10 @@ GameFieldTower.prototype.getVisibleMonsters = function () {
 
     return this._visibleMonsters;
 }
+GameFieldTower.prototype.getVisibleLifes = function () {
+
+    return this._visibleLifes;
+}
 
 GameFieldTower.prototype.getGamer = function () {
 
@@ -153,6 +188,10 @@ GameFieldTower.prototype.saveMonster = function (monster) {
     monster.removeFromParentDOMElement();
 }
 
+GameFieldTower.prototype.pickUpLife = function (life) {
+
+    life.removeFromParentDOMElement();
+}
 GameFieldTower.prototype.repaint = function () {
 
     GameFieldLayer.prototype.repaint.call(this);
@@ -163,6 +202,7 @@ GameFieldTower.prototype.repaint = function () {
 
         var trickster = step.getTargetTrickster();
         var monster = step.getTargetMonster();
+        var life = step.getTargetLife();
 
         if ((step.getY() <= that._pixel + that._maxY && !step.getDOMElement().parentNode && step.getY() >= that._pixel)) {
 
@@ -177,6 +217,10 @@ GameFieldTower.prototype.repaint = function () {
             if (monster) {
                 monster.appendToParentDOMElement();
                 that._visibleMonsters.push(monster);
+            }
+            if (life) {
+                life.appendToParentDOMElement();
+                that._visibleLifes.push(life);
             }
             
             
@@ -195,6 +239,10 @@ GameFieldTower.prototype.repaint = function () {
                 monster.removeFromParentDOMElement();
                 that._visibleMonsters.splice(that._visibleMonsters.indexOf(monster), 1);
             }
+            if (life) {
+                life.removeFromParentDOMElement();
+                that._visibleLifes.splice(that._visibleLifes.indexOf(life), 1);
+            }
             
             
         }
@@ -207,6 +255,9 @@ GameFieldTower.prototype.repaint = function () {
         
         if (monster) {
             monster.repaint();
+        }
+        if (life) {
+            life.repaint();
         }
        
 
