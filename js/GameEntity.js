@@ -47,7 +47,6 @@ function GameEntity(DOMElementTagName, parentDOMElement, appendToParentDOMElemen
     this._dAngle = 0;
     this._color = '';
     this._backgroundColor = '';
-    this._textShadow = '';
     this._boxShadow = '';
     this._backgroundPositionX = 0;
     this._backgroundPositionY = 0;
@@ -65,7 +64,6 @@ function GameEntity(DOMElementTagName, parentDOMElement, appendToParentDOMElemen
         height: false,
         color: false,
         backgroudColor: false,
-        textShadow: false,
         boxShadow: false,
         backgroundPositionX: false,
         backgroundPositionY: false,
@@ -451,14 +449,6 @@ GameEntity.prototype.repaint = function () {
                 .replace('{background-color}', this._backgroundColor);
 
             this._needRepaint.backgroundColor = false;
-        }
-
-        if (this._needRepaint.textShadow) {
-
-            this._DOMElement.style.textShadow = '{text-shadow}'
-                .replace('{text-shadow}', this._textShadow);
-
-            this._needRepaint.textShadow = false;
         }
 
         if (this._needRepaint.boxShadow) {

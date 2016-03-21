@@ -14,6 +14,10 @@ function GameFieldTower(parentDOMElement, appendToParentDOMElement) {
     this._tricksters = [];
     this._monsters = [];
 
+    this._visibleSteps = [];
+    this._visibleTricksters = [];
+    this._visibleMonsters = [];
+
     /* Start Init */
 
     this.generateSteps();
@@ -109,38 +113,6 @@ GameFieldTower.prototype.generateMonsters = function () {
 
 }
 
-GameFieldTower.prototype.getTrickstersByTargetStep = function (targetStep) {
-
-    var tricksters = [];
-
-    this._tricksters.forEach(function (trickster) {
-
-        if (trickster.getTargetStep() === targetStep) {
-            tricksters.push(trickster);
-        }
-
-    });
-
-    return tricksters;
-
-}
-
-GameFieldTower.prototype.getMonstersByTargetStep = function (targetStep) {
-
-    var monsters = [];
-
-    this._monsters.forEach(function (monster) {
-
-        if (monster.getTargetStep() === targetStep) {
-            monsters.push(monster);
-        }
-
-    });
-
-    return monsters;
-
-}
-
 GameFieldTower.prototype.getSteps = function () {
 
     return this._steps;
@@ -158,17 +130,17 @@ GameFieldTower.prototype.getMonsters = function () {
 
 GameFieldTower.prototype.getVisibleSteps = function () {
 
-    return this._steps.filter(function (step) { return step.isAppendedToParentDOMElement(); });
+    return this._visibleSteps;
 }
 
 GameFieldTower.prototype.getVisibleTricksters = function () {
 
-    return this._tricksters.filter(function (trickster) { return trickster.isAppendedToParentDOMElement(); });;
+    return this._visibleTricksters;
 }
 
 GameFieldTower.prototype.getVisibleMonsters = function () {
 
-    return this._monsters.filter(function (monster) { return monster.isAppendedToParentDOMElement(); });;
+    return this._visibleMonsters;
 }
 
 GameFieldTower.prototype.getGamer = function () {
@@ -189,27 +161,54 @@ GameFieldTower.prototype.repaint = function () {
 
     this._steps.forEach(function (step) {
 
-        var trickstersByTargetStep = that.getTrickstersByTargetStep(step);
-        var monstersByTargetStep = that.getMonstersByTargetStep(step);
+        var trickster = step.getTargetTrickster();
+        var monster = step.getTargetMonster();
 
         if ((step.getY() <= that._pixel + that._maxY && !step.getDOMElement().parentNode && step.getY() >= that._pixel)) {
 
             step.appendToParentDOMElement();
+            that._visibleSteps.push(step);
 
-            trickstersByTargetStep.forEach(function (trickster) { trickster.appendToParentDOMElement(); });
-            monstersByTargetStep.forEach(function (monster) { monster.appendToParentDOMElement(); });
+            if (trickster) {
+                trickster.appendToParentDOMElement();
+                that._visibleTricksters.push(trickster);
+            }
+
+            if (monster) {
+                monster.appendToParentDOMElement();
+                that._visibleMonsters.push(monster);
+            }
+            
+            
 
         } else if ((step.getY() < that._pixel || step.getY() > that._pixel + that._maxY) && step.getDOMElement().parentNode) {
 
             step.removeFromParentDOMElement();
+            that._visibleSteps.splice(that._visibleSteps.indexOf(step), 1);
 
-            trickstersByTargetStep.forEach(function (trickster) { trickster.removeFromParentDOMElement(); });
-            monstersByTargetStep.forEach(function (monster) { monster.removeFromParentDOMElement(); });
+            if (trickster) {
+                trickster.removeFromParentDOMElement();
+                that._visibleTricksters.splice(that._visibleTricksters.indexOf(trickster), 1);
+            }
+
+            if (monster) {
+                monster.removeFromParentDOMElement();
+                that._visibleMonsters.splice(that._visibleMonsters.indexOf(monster), 1);
+            }
+            
+            
         }
 
         step.repaint();
-        trickstersByTargetStep.forEach(function (trickster) { trickster.repaint(); });
-        monstersByTargetStep.forEach(function (monster) { monster.repaint(); });
+
+        if (trickster) {
+            trickster.repaint();
+        }
+        
+        if (monster) {
+            monster.repaint();
+        }
+       
 
     });
 }
