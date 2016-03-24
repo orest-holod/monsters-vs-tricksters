@@ -67,13 +67,14 @@ function TelphoneControl() {
     
     function DeviceOrient (event) {
         if (event.beta < -6 && !isGo) {
-            leftUpButton();
+            leftDownButton();
             isGo = true;
         } else if (event.beta > 6 && !isGo) {
-            rightUpButton();
+            rightDownButton();
             isGo = true;
         } else if (event.beta > -6 && event.beta < 6 && isGo) {
-            alert('stop');
+            rightUpButton();
+            leftUpButton();
             isGo = false;
         }
     }
