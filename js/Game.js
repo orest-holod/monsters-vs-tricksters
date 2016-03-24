@@ -312,26 +312,29 @@ Game.prototype.runGameLoop = function () {
         var touchedMonster = this._gamer.getTouchedMonster();
 
         if (touchedMonster) {
-            this._gamer.jump();
-            this._gameField.getGameFieldScore().pickUpMonster();
-            this._gameField.getGameFieldTower().saveMonster(touchedMonster);
+           
+            this._gameField.getGameFieldScore().addMonsters();
+
+            this._gameField.getGameFieldTower().pickUpMonster(touchedMonster);
         }
 
         var touchedLife = this._gamer.getTouchedLife();
 
         if (touchedLife && this._gameField.getGameFieldScore().getLifes() < 3 ) {
 
-            this._gamer.jump();
             this._gameField.getGameFieldScore().addLifes();
+
             this._gameField.getGameFieldTower().pickUpLife(touchedLife);
         }
 
         var touchedTrickster = this._gamer.getTouchedTrickster();
 
         if (touchedTrickster) {
-            this._gamer.jump();
+            
             this._gameField.getGameFieldScore().removeLifes();
-            if (!this._gameField.getGameFieldScore().getLifes()){
+
+            if (!this._gameField.getGameFieldScore().getLifes()) {
+
                 this._isGameOver = true;
             }
         }

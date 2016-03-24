@@ -183,15 +183,29 @@ GameFieldTower.prototype.getGamer = function () {
     return this._gamer;
 }
 
-GameFieldTower.prototype.saveMonster = function (monster) {
+GameFieldTower.prototype.pickUpMonster = function (monster) {
 
     monster.removeFromParentDOMElement();
+
+    this._monsters.splice(this._monsters.indexOf(monster), 1);
+    this._visibleMonsters.splice(this._visibleMonsters.indexOf(monster), 1);
+
+    var targetStep = monster.getTargetStep();
+    targetStep.setTargetMonster(null);
+
 }
 
 GameFieldTower.prototype.pickUpLife = function (life) {
 
     life.removeFromParentDOMElement();
+
+    this._lifes.splice(this._lifes.indexOf(life), 1);
+    this._visibleLifes.splice(this._visibleLifes.indexOf(life), 1);
+
+    var targetStep = life.getTargetStep();
+    targetStep.setTargetLife(null);
 }
+
 GameFieldTower.prototype.repaint = function () {
 
     GameFieldLayer.prototype.repaint.call(this);
