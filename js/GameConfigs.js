@@ -47,7 +47,7 @@
             },
 
             lifes: {
-                numberOfLifes: 300,
+                numberOfLifes: 42,
 
                 arrayOfDAngle: [5, -5]
             }
