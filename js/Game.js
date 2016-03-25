@@ -332,7 +332,11 @@ Game.prototype.runGameLoop = function () {
         var touchedMonster = this._gamer.getTouchedMonster();
 
         if (touchedMonster) {
+<<<<<<< HEAD
 
+=======
+           
+>>>>>>> origin/master
             this._gameField.getGameFieldScore().addMonsters();
 
             this._gameField.getGameFieldTower().pickUpMonster(touchedMonster);
@@ -350,8 +354,19 @@ Game.prototype.runGameLoop = function () {
         var touchedTrickster = this._gamer.getTouchedTrickster();
 
         if (touchedTrickster) {
+<<<<<<< HEAD
 
             this._gameField.getGameFieldScore().removeLifes();
+=======
+            
+            this._gameField.getGameFieldScore().removeLifes();
+
+            if (!this._gameField.getGameFieldScore().getLifes()) {
+
+                this._isGameOver = true;
+            }
+        }
+>>>>>>> origin/master
 
             if (!this._gameField.getGameFieldScore().getLifes()) {
 
