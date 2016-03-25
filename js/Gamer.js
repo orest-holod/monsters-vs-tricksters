@@ -6,7 +6,7 @@ function Gamer(gameField) {
 
     this._gameField = gameField;
     this._gameFieldTower = gameField.getGameFieldTower();
-    this._targetStep = gameField.getGameFieldTower().getSteps()[10];
+    this._targetStep = gameField.getGameFieldTower().getSteps()[Math.floor(window.innerHeight / gameConfigs.gameField.gameFieldTower.steps.heightOfLevel)];
 
     this.setDX(gameConfigs.gamer.dx);
     this.setDY(gameConfigs.gamer.dy);
@@ -230,14 +230,14 @@ Gamer.prototype.jump = function () {
     this.setY(this.getY() + dy);
 
     this._jumpingCounter++;
-  
+
     if (nearestTopTargetStep && this.getY() >= nearestTopTargetStep.getY()) {
 
         this.setTargetStep(nearestTopTargetStep);
         this._isJumping = false;
         this._jumpingCounter = 0;
     }
-  
+
     var deltaAfterJump = Math.abs(this.getY() - yBeforeJump);
 
     if (deltaAfterJump) {
