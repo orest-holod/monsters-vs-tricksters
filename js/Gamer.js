@@ -24,6 +24,8 @@ function Gamer(gameField) {
     this._currentDY = this.getDY();
 
     this._ddy = gameConfigs.gamer.ddy;
+
+    this._lastTouchedTrickster = null;
 }
 
 Gamer.prototype = Object.create(GameEntity.prototype);
@@ -115,7 +117,7 @@ Gamer.prototype.getTouchedTrickster = function () {
 
     var that = this;
 
-    var touchedTrickster = false;
+    var touchedTrickster = null;
 
     this._gameFieldTower.getVisibleTricksters().forEach(function (trickster) {
 
@@ -126,6 +128,18 @@ Gamer.prototype.getTouchedTrickster = function () {
 
     });
 
+    if (touchedTrickster !== this._lastTouchedTrickster) {
+
+        this._lastTouchedTrickster = touchedTrickster;
+    }
+    else if (!touchedTrickster) {
+
+        this._lastTouchedTrickster = null;
+    }
+    else {
+        touchedTrickster = null;
+    }
+
     return touchedTrickster;
 
 }
@@ -134,7 +148,7 @@ Gamer.prototype.getTouchedMonster = function () {
 
     var that = this;
 
-    var touchedMonster = false;
+    var touchedMonster = null;
 
     this._gameFieldTower.getVisibleMonsters().forEach(function (monster) {
 
@@ -146,14 +160,13 @@ Gamer.prototype.getTouchedMonster = function () {
     });
 
     return touchedMonster;
-
 }
 
 Gamer.prototype.getTouchedLife = function () {
 
     var that = this;
 
-    var touchedLife = false;
+    var touchedLife = null;
 
     this._gameFieldTower.getVisibleLifes().forEach(function (life) {
 
@@ -224,6 +237,13 @@ Gamer.prototype.jump = function () {
     }
 
     var nearestTopTargetStep = this.getNearestTopTargetStep();
+
+    if (!nearestTopTargetStep) {
+
+        this._isJumping = false;
+        this._jumpingCounter = 0;
+        this._isFalling = true;
+    }
 
     var dy = this.getDY() * GameEntity.FPS_INDEX + this.getDDY() * GameEntity.FPS_INDEX * this._jumpingCounter;
 

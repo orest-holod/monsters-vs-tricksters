@@ -22,10 +22,10 @@ function GameFieldTower(parentDOMElement, appendToParentDOMElement) {
 
     /* Start Init */
 
-    this.generateSteps();
-    this.generateTricksters();
-    this.generateMonsters();
-    this.generateLifes();
+    this._steps = this.generateSteps();
+    this._tricksters = this.generateTricksters(this._steps);
+    this._monsters = this.generateMonsters(this._steps);
+    this._lifes = this.generateLifes(this._steps);
 
     /* End Init */
 }
@@ -34,9 +34,20 @@ GameFieldTower.prototype = Object.create(GameFieldLayer.prototype);
 
 /* Start Public Methods */
 
-GameFieldTower.prototype.generateSteps = function () {
+GameFieldTower.prototype.generateSteps = function (previousSteps) {
 
-    for (var y = 0; y < gameConfigs.gameField.gameFieldTower.steps.numberOfLevels; y++) {
+    var steps = [];
+
+    var startLevel = 0;
+    var endLevel = gameConfigs.gameField.gameFieldTower.steps.numberOfLevels;
+
+    if (previousSteps) {
+
+        startLevel = previousSteps[previousSteps.length - 1].getLevelIndex() + 1;
+        endLevel = startLevel + gameConfigs.gameField.gameFieldTower.steps.numberOfLevels;
+    }
+
+    for (var y = startLevel; y < endLevel; y++) {
 
         for (var x = 0; x < 5; x++) {
 
@@ -50,23 +61,27 @@ GameFieldTower.prototype.generateSteps = function () {
 
                 var stepColor = gameConfigs.colors[Math.floor(Math.random() * gameConfigs.colors.length)];
 
-                this._steps.push(new Step(this._DOMElement, false, x * this._widthX, y, (this._widthX + randX), this._heightY, stepColor));
+                steps.push(new Step(this._DOMElement, false, x * this._widthX, y, (this._widthX + randX), this._heightY, stepColor));
             }
         }
     }
+
+    return steps;
 }
 
-GameFieldTower.prototype.generateTricksters = function () {
+GameFieldTower.prototype.generateTricksters = function (steps) {
+
+    var tricksters = [];
 
     var that = this;
 
-    var numberOfSteps = this._steps.length;
+    var numberOfSteps = steps.length;
 
     var numberOfTricksters = Math.min(gameConfigs.gameField.gameFieldTower.tricksters.numberOfTricksters, numberOfSteps);
 
     var indexOfTricksters = Math.floor(numberOfSteps / numberOfTricksters);
 
-    this._steps.filter(function (step, index) {
+    steps.filter(function (step, index) {
 
         return index % indexOfTricksters === 0;
 
@@ -83,21 +98,25 @@ GameFieldTower.prototype.generateTricksters = function () {
         trickster.setLevitateDY(gameConfigs.gameField.gameFieldTower.tricksters.arrayOfLevitateDY[Math.floor(Math.random() * gameConfigs.gameField.gameFieldTower.tricksters.arrayOfLevitateDY.length)]);
 
         trickster.setTargetStep(step);
-        that._tricksters.push(trickster);
+        tricksters.push(trickster);
     });
+
+    return tricksters;
 }
 
-GameFieldTower.prototype.generateMonsters = function () {
+GameFieldTower.prototype.generateMonsters = function (steps) {
+
+    var monsters = [];
 
     var that = this;
 
-    var numberOfSteps = this._steps.length;
+    var numberOfSteps = steps.length;
 
     var numberOfMonsters = Math.min(gameConfigs.gameField.gameFieldTower.monsters.numberOfMonsters, numberOfSteps);
 
     var indexOfMonsters = Math.floor(numberOfSteps / numberOfMonsters);
 
-    this._steps.filter(function (step, index) {
+    steps.filter(function (step, index) {
 
         return index % indexOfMonsters === 0;
 
@@ -110,22 +129,25 @@ GameFieldTower.prototype.generateMonsters = function () {
         monster.setTextShadow('0px 0px 3rem ' + color);
         monster.setDAngle(gameConfigs.gameField.gameFieldTower.monsters.arrayOfDAngle[Math.floor(Math.random() * gameConfigs.gameField.gameFieldTower.monsters.arrayOfDAngle.length)]);
         monster.setTargetStep(step);
-        that._monsters.push(monster);
+        monsters.push(monster);
 
     });
 
+    return monsters;
 }
-GameFieldTower.prototype.generateLifes = function () {
+GameFieldTower.prototype.generateLifes = function (steps) {
+
+    var lifes = [];
 
     var that = this;
 
-    var numberOfSteps = this._steps.length;
+    var numberOfSteps = steps.length;
 
     var numberOfLifes = Math.min(gameConfigs.gameField.gameFieldTower.lifes.numberOfLifes, numberOfSteps);
 
     var indexOfLifes = Math.floor(numberOfSteps / numberOfLifes);
 
-    this._steps.filter(function (step, index) {
+    steps.filter(function (step, index) {
 
         return index % indexOfLifes === 0;
 
@@ -135,9 +157,11 @@ GameFieldTower.prototype.generateLifes = function () {
 
         life.setDAngle(gameConfigs.gameField.gameFieldTower.lifes.arrayOfDAngle[Math.floor(Math.random() * gameConfigs.gameField.gameFieldTower.lifes.arrayOfDAngle.length)]);
         life.setTargetStep(step);
-        that._lifes.push(life);
+        lifes.push(life);
 
     });
+
+    return lifes;
 
 }
 GameFieldTower.prototype.getSteps = function () {
@@ -210,6 +234,15 @@ GameFieldTower.prototype.repaint = function () {
 
     GameFieldLayer.prototype.repaint.call(this);
 
+    if (this._visibleSteps.length && this._visibleSteps[this._visibleSteps.length - 1].getLevelIndex() === this._steps[this._steps.length - 1].getLevelIndex()) {
+
+        var additionalSteps = this.generateSteps(this._steps);
+        this._steps = this._steps.concat(additionalSteps);
+        this._tricksters = this._tricksters.concat(this.generateTricksters(additionalSteps));
+        this._monsters = this._monsters.concat(this.generateMonsters(additionalSteps));
+        this._lifes = this._lifes.concat(this.generateLifes(additionalSteps));
+    }
+
     var that = this;
 
     this._steps.forEach(function (step) {
@@ -224,20 +257,31 @@ GameFieldTower.prototype.repaint = function () {
             that._visibleSteps.push(step);
 
             if (trickster) {
+
                 trickster.appendToParentDOMElement();
+                var tricksterCR = trickster.getDOMElement().getBoundingClientRect();
+                trickster.setWidth(tricksterCR.width);
+                trickster.setHeight(tricksterCR.height);
                 that._visibleTricksters.push(trickster);
             }
 
             if (monster) {
+
                 monster.appendToParentDOMElement();
+                var monsterCR = monster.getDOMElement().getBoundingClientRect();
+                monster.setWidth(monsterCR.width);
+                monster.setHeight(monsterCR.height);
                 that._visibleMonsters.push(monster);
             }
+
             if (life) {
+
                 life.appendToParentDOMElement();
+                var lifeCR = life.getDOMElement().getBoundingClientRect();
+                life.setWidth(lifeCR.width);
+                life.setHeight(lifeCR.height);
                 that._visibleLifes.push(life);
             }
-            
-            
 
         } else if ((step.getY() < that._pixel || step.getY() > that._pixel + that._maxY) && step.getDOMElement().parentNode) {
 
@@ -257,8 +301,8 @@ GameFieldTower.prototype.repaint = function () {
                 life.removeFromParentDOMElement();
                 that._visibleLifes.splice(that._visibleLifes.indexOf(life), 1);
             }
-            
-            
+
+
         }
 
         step.repaint();
@@ -266,14 +310,14 @@ GameFieldTower.prototype.repaint = function () {
         if (trickster) {
             trickster.repaint();
         }
-        
+
         if (monster) {
             monster.repaint();
         }
         if (life) {
             life.repaint();
         }
-       
+
 
     });
 }
