@@ -15,6 +15,11 @@
 
 Step.prototype = Object.create(GameEntity.prototype);
 
+Step.prototype.getLevelIndex = function() {
+
+    return this._levelIndex;
+}
+
 Step.prototype.setTargetMonster = function (value) {
 
     this._targetMonster = value;
