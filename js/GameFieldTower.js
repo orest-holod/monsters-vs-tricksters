@@ -259,27 +259,42 @@ GameFieldTower.prototype.repaint = function () {
             if (trickster) {
 
                 trickster.appendToParentDOMElement();
-                var tricksterCR = trickster.getDOMElement().getBoundingClientRect();
-                trickster.setWidth(tricksterCR.width);
-                trickster.setHeight(tricksterCR.height);
+
+                if (!trickster.getWidth()) {
+
+                    var tricksterCR = trickster.getDOMElement().getBoundingClientRect();
+                    trickster.setWidth(tricksterCR.width);
+                    trickster.setHeight(tricksterCR.height);
+                }
+
                 that._visibleTricksters.push(trickster);
             }
 
             if (monster) {
 
                 monster.appendToParentDOMElement();
-                var monsterCR = monster.getDOMElement().getBoundingClientRect();
-                monster.setWidth(monsterCR.width);
-                monster.setHeight(monsterCR.height);
+
+                if (!monster.getWidth()) {
+
+                    var monsterCR = monster.getDOMElement().getBoundingClientRect();
+                    monster.setWidth(monsterCR.width);
+                    monster.setHeight(monsterCR.height);
+                }
+               
                 that._visibleMonsters.push(monster);
             }
 
             if (life) {
 
                 life.appendToParentDOMElement();
-                var lifeCR = life.getDOMElement().getBoundingClientRect();
-                life.setWidth(lifeCR.width);
-                life.setHeight(lifeCR.height);
+
+                if (!life.getWidth()) {
+
+                    var lifeCR = life.getDOMElement().getBoundingClientRect();
+                    life.setWidth(lifeCR.width);
+                    life.setHeight(lifeCR.height);                   
+                }
+
                 that._visibleLifes.push(life);
             }
 
