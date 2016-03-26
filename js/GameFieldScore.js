@@ -55,6 +55,10 @@ GameFieldScore.prototype.addMonsters = function () {
     this._gameFieldScoreMonsters.setTextContent('F ' + this._monsters);
 }
 
+GameFieldScore.prototype.getMonsters = function () {
+    return this._monsters;
+}
+
 GameFieldScore.prototype.repaint = function () {
 
     GameEntity.prototype.repaint.call(this);

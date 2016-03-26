@@ -290,7 +290,8 @@ body {
         margin-bottom: 12px;
     }
 
-    #menu-header {
+    #menu-header,
+    #menu-game-over {
         font-size: 50px;
         text-align: center;
         position: relative;
@@ -308,11 +309,13 @@ body {
 
 
 @media only screen and (max-width: 375px) {
+
     #game-field-menu {
       width: 90%;
     }
 
-    #menu-header {
+    #menu-header,
+    #menu-game-over {
       font-size: 45px;
       line-height: 50px;
     }
