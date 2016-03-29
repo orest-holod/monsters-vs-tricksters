@@ -13,6 +13,15 @@ function Game(parentDOMElement) {
     this._gameField = new GameField(that._parentDOMElement, true);
     this._gamer = new Gamer(that._gameField);
 
+    this._backgroundSound = new SoundManager(this._gameField.getDOMElement());
+    this._backgroundSound.src(0);
+    this._backgroundSound.loop(true);
+    this._backgroundSound.play();
+
+    this._stepSound = new SoundManager(this._gameField.getDOMElement());
+    this._jumpSound = new SoundManager(this._gameField.getDOMElement());
+    this._gameOverSound = new SoundManager(this._gameField.getDOMElement());
+
     this._isEscPressed = false;
     this._isRightKeyPressed = false;
     this._isLeftKeyPressed = false;
@@ -317,9 +326,15 @@ Game.prototype.runGameLoop = function () {
 
         } else if (this._gamer.getIsJumping()) {
 
+            this._stepSound.src(3);
+            this._stepSound.play();
+
             this._gamer.jump();
 
         } else if (this._isSpaceKeyPressed) {
+
+            this._stepSound.src(3);
+            this._stepSound.play();
 
             this._gamer.jump();
 
@@ -328,10 +343,16 @@ Game.prototype.runGameLoop = function () {
 
         if (this._isLeftKeyPressed) {
 
+            this._stepSound.src(2);
+            this._stepSound.play();
+
             this._gamer.moveLeft();
         }
 
         if (this._isRightKeyPressed) {
+
+            this._stepSound.src(2);
+            this._stepSound.play();
 
             this._gamer.moveRight();
         }
@@ -342,6 +363,9 @@ Game.prototype.runGameLoop = function () {
         }
 
         if (this._gamer.getY() <= 0) {
+
+            this._gameOverSound.src(1);
+            this._gameOverSound.play();
 
             this._isGameOver = true;
         }
@@ -371,6 +395,9 @@ Game.prototype.runGameLoop = function () {
             this._gameField.getGameFieldScore().removeLifes();
 
             if (!this._gameField.getGameFieldScore().getLifes()) {
+
+                this._gameOverSound.src(1);
+                this._gameOverSound.play();
 
                 this._isGameOver = true;
             }
@@ -413,6 +440,11 @@ Game.prototype.reset = function () {
 
     this._gameField = new GameField(this._parentDOMElement, true);
     this._gamer = new Gamer(this._gameField);
+    this._backgroundSound = new SoundManager(this._gameField.getDOMElement());
+
+    this._backgroundSound.src(0);
+    this._backgroundSound.loop(true);
+    this._backgroundSound.play();
 
     this._isEscPressed = false;
     this._isRightKeyPressed = false;
