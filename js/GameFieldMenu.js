@@ -18,10 +18,7 @@ function GameFieldMenu(parentDOMElement, appendToParentDOMElement) {
     this._menuItems.push(resumeGameMenuItem);
     this._menuItems.push(facebookMenuItem);
     this._menuItems.push(googleMenuItem);
-<<<<<<< HEAD
     this._menuItems.push(connectComputerMenuItem);
-=======
->>>>>>> origin/master
 
     this._menuGameOver.makeHidden();
     this.makeHidden();
@@ -39,13 +36,10 @@ GameFieldMenu.prototype.getGameFieldMenuResumeItem = function() {
     return this._menuItems[1];
 }
 
-<<<<<<< HEAD
 GameFieldMenu.prototype.getGameFieldMenuConnectComputerItem = function() {
     return this._menuItems[4];
 }
 
-=======
->>>>>>> origin/master
 GameFieldMenu.prototype.repaint = function () {
 
     GameEntity.prototype.repaint.call(this);

@@ -137,12 +137,7 @@ Game.prototype.mouseClickEventHandler = function (e) {
         }
 
         case 'facebook-menu-item': {
-
-<<<<<<< HEAD
             FacebookShare(this._gameField.getGameFieldScore().getMonsters());
-=======
-            FacebookLogIn();
->>>>>>> origin/master
             break;
         }
 
@@ -152,7 +147,7 @@ Game.prototype.mouseClickEventHandler = function (e) {
             break;
         }
 
-<<<<<<< HEAD
+
         case 'connect-menu-item': {
 
             this._gameField.getGameFieldMenu().getGameFieldMenuConnectComputerItem().makeHidden();
@@ -160,29 +155,19 @@ Game.prototype.mouseClickEventHandler = function (e) {
             break;
         }
 
-=======
->>>>>>> origin/master
         default: {
 
             if (this._gameField.getGameFieldMenu().isVisible()) {
 
                 this._gameField.getGameFieldMenu().makeHidden();
                 this._isGameStop = false;
-<<<<<<< HEAD
+
             }
             else {
 
                 this._gameField.getGameFieldMenu().makeVisible();
                 this._isGameStop = true;
             }
-=======
-            }
-            else {
-
-                this._gameField.getGameFieldMenu().makeVisible();
-                this._isGameStop = true;
-            }
->>>>>>> origin/master
         }
     }
 }
@@ -224,11 +209,7 @@ Game.prototype.touchStartEventHandler = function (e) {
 
         case 'facebook-menu-item': {
 
-<<<<<<< HEAD
             FacebookShare(this._gameField.getGameFieldScore().getMonsters());
-=======
-            FacebookLogIn();
->>>>>>> origin/master
             break;
         }
 
@@ -238,7 +219,7 @@ Game.prototype.touchStartEventHandler = function (e) {
             break;
         }
 
-<<<<<<< HEAD
+
         case 'connect-menu-item': {
 
             this._gameField.getGameFieldMenu().getGameFieldMenuConnectComputerItem().makeHidden();
@@ -246,8 +227,7 @@ Game.prototype.touchStartEventHandler = function (e) {
             break;
         }
 
-=======
->>>>>>> origin/master
+
         default: {
 
             if (this._gameField.getGameFieldMenu().isVisible()) {
