@@ -1,6 +1,6 @@
 function SoundManager(parentDOMElement){
 
-  var sounds = ['sounds/Brave_World.wav', 'sounds/game_over.wav', 'sounds/2_steps.wav', 'sounds/1_jump.wav'];
+  var sounds = ['sounds/Brave_World.wav', 'sounds/game_over.wav', 'sounds/2_steps.wav', 'sounds/1_jump.wav', 'sounds/got _life.wav', 'sounds/pop.wav', 'sounds/laughter.wav'];
 
   this.sound = document.createElement('audio');
 

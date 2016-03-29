@@ -21,6 +21,9 @@ function Game(parentDOMElement) {
     this._stepSound = new SoundManager(this._gameField.getDOMElement());
     this._jumpSound = new SoundManager(this._gameField.getDOMElement());
     this._gameOverSound = new SoundManager(this._gameField.getDOMElement());
+    this._lifeSound = new SoundManager(this._gameField.getDOMElement());
+    this._touchedMonsterSound = new SoundManager(this._gameField.getDOMElement());
+    this._touchedTricksterSound = new SoundManager(this._gameField.getDOMElement());
 
     this._isEscPressed = false;
     this._isRightKeyPressed = false;
@@ -374,6 +377,9 @@ Game.prototype.runGameLoop = function () {
 
         if (touchedMonster) {
 
+            this._lifeSound.src(5);
+            this._lifeSound.play();
+
             this._gameField.getGameFieldScore().addMonsters();
 
             this._gameField.getGameFieldTower().pickUpMonster(touchedMonster);
@@ -383,6 +389,9 @@ Game.prototype.runGameLoop = function () {
 
         if (touchedLife && this._gameField.getGameFieldScore().getLifes() < 3) {
 
+            this._lifeSound.src(4);
+            this._lifeSound.play();
+
             this._gameField.getGameFieldScore().addLifes();
 
             this._gameField.getGameFieldTower().pickUpLife(touchedLife);
@@ -391,6 +400,9 @@ Game.prototype.runGameLoop = function () {
         var touchedTrickster = this._gamer.getTouchedTrickster();
 
         if (touchedTrickster) {
+
+            this._touchedTricksterSound.src(6);
+            this._touchedTricksterSound.play();
 
             this._gameField.getGameFieldScore().removeLifes();
 
