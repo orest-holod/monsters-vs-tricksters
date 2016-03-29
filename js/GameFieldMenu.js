@@ -12,11 +12,13 @@ function GameFieldMenu(parentDOMElement, appendToParentDOMElement) {
     var resumeGameMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'resume-game-menu-item', 'Resume Game');
     var facebookMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'facebook-menu-item', 'FB');
     var googleMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'google-menu-item', 'G+');
+    var connectComputerMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'connect-menu-item', 'Connect Computer')
 
     this._menuItems.push(playGameMenuItem);
     this._menuItems.push(resumeGameMenuItem);
     this._menuItems.push(facebookMenuItem);
     this._menuItems.push(googleMenuItem);
+    this._menuItems.push(connectComputerMenuItem);
 
     this._menuGameOver.makeHidden();
     this.makeHidden();
@@ -32,6 +34,10 @@ GameFieldMenu.prototype.getGameFieldMenuGameOver = function () {
 GameFieldMenu.prototype.getGameFieldMenuResumeItem = function() {
 
     return this._menuItems[1];
+}
+
+GameFieldMenu.prototype.getGameFieldMenuConnectComputerItem = function() {
+    return this._menuItems[4];
 }
 
 GameFieldMenu.prototype.repaint = function () {

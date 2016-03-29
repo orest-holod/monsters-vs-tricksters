@@ -1,23 +1,17 @@
-function FacebookLogIn() {
+function FacebookShare(score) {
   function statusChangeCallback(response) {
     if (response.status === 'connected') {
-      FB.api('/me', function(response){
-        console.log(response.name);
-      });
+      sharePost(score)
     } else if (response.status === 'not_authorized') {
       // The person is logged into Facebook, but not your app.
       FB.login(function(response) {
-        FB.api('/me', function(response){
-          console.log(response.name);
-        });
+        sharePost(score);
       });
     } else {
       // The person is not logged into Facebook, so we're not sure if
       // they are logged into this app or not.
       FB.login(function(response) {
-        FB.api('/me', function(response){
-          console.log(response.name);
-        });
+        sharePost(score);
       });
     }
   }
@@ -43,16 +37,15 @@ function FacebookLogIn() {
     js.src = "//connect.facebook.net/en_US/sdk.js";
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));
-}
 
-
-
-function FacebookShare(text) {
-  try {
+  function sharePost(score) {
     FB.ui({
       method: 'feed',
       link: 'http://orest-o-holod.github.io/monsters-vs-tricksters/',
-      caption: 'An example caption' + text,
+      picture: 'https://pp.vk.me/c629405/v629405403/3f301/iP02mTEe4lk.jpg',
+      name: 'Monsters-VS-Tricksters',
+      description: 'I scored: ' + score + ' points in a game monsters-vs-tricksters. Betcha can\'t score more point!',
+      caption: 'Monsters-VS-Tricksters - pure Javascript DOM based game',
       }, function(response) {
           if (response && !response.error_message) {
             alert('Posting completed.');
@@ -60,5 +53,5 @@ function FacebookShare(text) {
             alert('Error while posting.');
           }
         });
-  } catch(e) {}
+  } 
 }

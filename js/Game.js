@@ -137,8 +137,7 @@ Game.prototype.mouseClickEventHandler = function (e) {
         }
 
         case 'facebook-menu-item': {
-
-            FacebookLogIn();
+            FacebookShare(this._gameField.getGameFieldScore().getMonsters());
             break;
         }
 
@@ -148,12 +147,21 @@ Game.prototype.mouseClickEventHandler = function (e) {
             break;
         }
 
+
+        case 'connect-menu-item': {
+
+            this._gameField.getGameFieldMenu().getGameFieldMenuConnectComputerItem().makeHidden();
+            ConnectComputer();
+            break;
+        }
+
         default: {
 
             if (this._gameField.getGameFieldMenu().isVisible()) {
 
                 this._gameField.getGameFieldMenu().makeHidden();
                 this._isGameStop = false;
+
             }
             else {
 
@@ -201,7 +209,7 @@ Game.prototype.touchStartEventHandler = function (e) {
 
         case 'facebook-menu-item': {
 
-            FacebookLogIn();
+            FacebookShare(this._gameField.getGameFieldScore().getMonsters());
             break;
         }
 
@@ -210,6 +218,15 @@ Game.prototype.touchStartEventHandler = function (e) {
             GoogleLogIn();
             break;
         }
+
+
+        case 'connect-menu-item': {
+
+            this._gameField.getGameFieldMenu().getGameFieldMenuConnectComputerItem().makeHidden();
+            ConnectComputer();
+            break;
+        }
+
 
         default: {
 
