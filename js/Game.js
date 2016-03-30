@@ -293,6 +293,11 @@ Game.prototype.resizeEventHandler = function (e) {
 
     var towerWidthIndex = towerWidthAfterResize / towerWidthBeforeResize;
 
+    var towerHeightBeforeResize = gameFieldBackgroundTowerLayer.getHeight();
+    var towerHeightAfterResize = towerClientRect.height;
+
+    var towerHeightIndex = towerHeightAfterResize / towerHeightBeforeResize;
+
     if (towerWidthIndex !== 1) {
 
         var steps = gameFieldTower.getSteps();
@@ -326,6 +331,27 @@ Game.prototype.resizeEventHandler = function (e) {
 
         gameFieldBackgroundTowerLayer.setWidth(towerWidthAfterResize, false);
     }
+
+    if (towerHeightIndex !== 1) {
+
+
+        if (towerHeightIndex > 1) {
+
+            gameFieldTower.addPixel(towerHeightAfterResize - towerHeightBeforeResize);
+        }
+        else {
+
+            gameFieldTower.minusPixel(towerHeightBeforeResize - towerHeightAfterResize);
+        }
+
+        var middleStep = gameFieldTower.getSteps()[Math.floor(window.innerHeight / gameConfigs.gameField.gameFieldTower.steps.heightOfLevel)];
+        this._gamer.setTargetStep(middleStep);
+        this._gamer.setX(this._gamer.getTargetStep().getX());
+
+        gameFieldBackgroundTowerLayer.setHeight(towerHeightAfterResize, false);
+
+    }
+
 }
 
 /* End Event Handlers */
