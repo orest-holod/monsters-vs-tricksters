@@ -282,6 +282,52 @@ Game.prototype.touchEndEventHandler = function (e) {
 
 }
 
+Game.prototype.resizeEventHandler = function (e) {
+
+    var gameFieldTower = this._gameField.getGameFieldTower();
+    var gameFieldBackgroundTowerLayer = this._gameField.getGameFieldBackground().getGameFieldBackgroundTowerLayer();
+
+    var towerClientRect = gameFieldBackgroundTowerLayer.getDOMElement().getBoundingClientRect();
+    var towerWidthBeforeResize = gameFieldBackgroundTowerLayer.getWidth();
+    var towerWidthAfterResize = towerClientRect.width;
+
+    var towerWidthIndex = towerWidthAfterResize / towerWidthBeforeResize;
+
+    if (towerWidthIndex !== 1) {
+
+        var steps = gameFieldTower.getSteps();
+
+        steps.forEach(function (step) {
+
+            step.setWidth(step.getWidth() * towerWidthIndex);
+            step.setX(step.getX() * towerWidthIndex);
+
+            var targetMonster = step.getTargetMonster();
+
+            if (targetMonster) {
+                targetMonster.setTargetStep(step);
+            }
+
+            var targetTrickster = step.getTargetTrickster();
+
+            if (targetTrickster) {
+                targetTrickster.setTargetStep(step);
+            }
+
+            var targetLife = step.getTargetLife();
+
+            if (targetLife) {
+                targetLife.setTargetStep(step);
+            }
+
+            this._gamer.setX(this._gamer.getTargetStep().getX());
+
+        }, this);
+
+        gameFieldBackgroundTowerLayer.setWidth(towerWidthAfterResize, false);
+    }
+}
+
 /* End Event Handlers */
 
 /* Start Public Methods */

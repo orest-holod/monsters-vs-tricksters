@@ -379,12 +379,12 @@ body {
 .life:after {
     position: absolute;
     content: "";
-    left: 25px;
-    top: 2px;
-    width: 25px;
-    height: 40px;
+    left: 2.5rem;
+    top: 0.2rem;
+    width: 2.5rem;
+    height: 4rem;
     background: red;
-    border-radius: 25px 25px 0 0;
+    border-radius: 2.5rem 2.5rem 0 0;
     transform: rotate(-45deg);
     transform-origin: 0 100%;
 }
@@ -405,6 +405,54 @@ body {
 
     /*border: 1px solid #fff;*/
 }
+
+/*@media only screen  and (max-width : 750px) {
+
+    #gamer {
+    width: 2.2rem;
+    height: 4.8rem;
+    font-size: 6.67rem;
+    line-height: 4rem;
+    }
+
+    .trickster {
+    width: 3.33rem;
+    height: 3.4rem;
+    font-size: 4.67rem;
+    line-height: 3.4rem;
+}
+
+.monster {
+    width: 3.33rem;
+    height: 3.33rem;
+    font-size: 3.33rem;
+    line-height: 3.33rem;
+    box-shadow: 0px 0px 2.33rem 0.67rem #fff;
+}
+
+.life {
+    width: 3.33rem;
+    height: 3.33rem;
+}
+
+.life:before,
+.life:after {
+    left: 1.67rem;
+    top: 0.13rem;
+    width: 1.67rem;
+    height: 2.67rem;
+    border-radius: 1.67rem 1.67rem 0 0;
+}
+
+.life:after {
+    left: 0;
+    transform: rotate(45deg);
+    transform-origin :100% 100%;
+}
+
+}*/
+
+/* Remote Control */
 
 .message {
   -webkit-user-select:none;
