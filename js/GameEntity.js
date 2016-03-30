@@ -90,11 +90,11 @@ GameEntity.prototype.getX = function () {
     return this._x;
 }
 
-GameEntity.prototype.setX = function (value) {
+GameEntity.prototype.setX = function (value, needRepaint) {
 
     this._x = value;
 
-    this._needRepaint.x = true;
+    this._needRepaint.x = needRepaint === undefined ? true : needRepaint;
 }
 
 GameEntity.prototype.getY = function () {
@@ -102,11 +102,11 @@ GameEntity.prototype.getY = function () {
     return this._y;
 }
 
-GameEntity.prototype.setY = function (value) {
+GameEntity.prototype.setY = function (value, needRepaint) {
 
     this._y = value;
 
-    this._needRepaint.y = true;
+    this._needRepaint.y = needRepaint === undefined ? true : needRepaint;
 }
 
 GameEntity.prototype.getWidth = function () {
@@ -114,11 +114,11 @@ GameEntity.prototype.getWidth = function () {
     return this._width;
 }
 
-GameEntity.prototype.setWidth = function (value) {
+GameEntity.prototype.setWidth = function (value, needRepaint) {
 
     this._width = value;
 
-    this._needRepaint.width = true;
+    this._needRepaint.width = needRepaint === undefined ? true : needRepaint;
 }
 
 GameEntity.prototype.getHeight = function () {
@@ -126,11 +126,11 @@ GameEntity.prototype.getHeight = function () {
     return this._height;
 }
 
-GameEntity.prototype.setHeight = function (value) {
+GameEntity.prototype.setHeight = function (value, needRepaint) {
 
     this._height = value;
 
-    this._needRepaint.height = true;
+    this._needRepaint.height = needRepaint === undefined ? true : needRepaint;
 }
 
 GameEntity.prototype.getDX = function () {
@@ -158,11 +158,11 @@ GameEntity.prototype.getAngle = function () {
     return this._angle;
 }
 
-GameEntity.prototype.setAngle = function (value) {
+GameEntity.prototype.setAngle = function (value, needRepaint) {
 
     this._angle = value;
 
-    this._needRepaint.angle = true;
+    this._needRepaint.angle = needRepaint === undefined ? true : needRepaint;
 }
 
 GameEntity.prototype.getDAngle = function () {
@@ -190,11 +190,11 @@ GameEntity.prototype.getColor = function () {
     return this._color;
 }
 
-GameEntity.prototype.setColor = function (value) {
+GameEntity.prototype.setColor = function (value, needRepaint) {
 
     this._color = value;
 
-    this._needRepaint.color = true;
+    this._needRepaint.color = needRepaint === undefined ? true : needRepaint;
 }
 
 GameEntity.prototype.getBackgroundColor = function () {
@@ -202,11 +202,11 @@ GameEntity.prototype.getBackgroundColor = function () {
     return this._backgroundColor;
 }
 
-GameEntity.prototype.setBackgroundColor = function (value) {
+GameEntity.prototype.setBackgroundColor = function (value, needRepaint) {
 
     this._backgroundColor = value;
 
-    this._needRepaint.backgroudColor = true;
+    this._needRepaint.backgroudColor = needRepaint === undefined ? true : needRepaint;
 }
 
 GameEntity.prototype.getTextShadow = function () {
@@ -214,11 +214,11 @@ GameEntity.prototype.getTextShadow = function () {
     return this._textShadow;
 }
 
-GameEntity.prototype.setTextShadow = function (value) {
+GameEntity.prototype.setTextShadow = function (value, needRepaint) {
 
     this._textShadow = value;
 
-    this._needRepaint.textShadow = true;
+    this._needRepaint.textShadow = needRepaint === undefined ? true : needRepaint;
 }
 
 GameEntity.prototype.getBoxShadow = function () {
@@ -226,11 +226,11 @@ GameEntity.prototype.getBoxShadow = function () {
     return this._boxShadow;
 }
 
-GameEntity.prototype.setBoxShadow = function (value) {
+GameEntity.prototype.setBoxShadow = function (value, needRepaint) {
 
     this._boxShadow = value;
 
-    this._needRepaint.boxShadow = true;
+    this._needRepaint.boxShadow = needRepaint === undefined ? true : needRepaint;
 }
 
 GameEntity.prototype.getBackgroundPositionX = function () {
@@ -238,11 +238,11 @@ GameEntity.prototype.getBackgroundPositionX = function () {
     return this._backgroundPositionX;
 }
 
-GameEntity.prototype.setBackgroundPositionX = function (value) {
+GameEntity.prototype.setBackgroundPositionX = function (value, needRepaint) {
 
     this._backgroundPositionX = value;
 
-    this._needRepaint.backgroundPositionX = true;
+    this._needRepaint.backgroundPositionX = needRepaint === undefined ? true : needRepaint;
 }
 
 GameEntity.prototype.getBackgroundPositionY = function () {
@@ -250,11 +250,11 @@ GameEntity.prototype.getBackgroundPositionY = function () {
     return this._backgroundPositionY;
 }
 
-GameEntity.prototype.setBackgroundPositionY = function (value) {
+GameEntity.prototype.setBackgroundPositionY = function (value, needRepaint) {
 
     this._backgroundPositionY = value;
 
-    this._needRepaint.backgroundPositionY = true;
+    this._needRepaint.backgroundPositionY = needRepaint === undefined ? true : needRepaint;
 }
 
 GameEntity.prototype.getBackgroundPositionDX = function () {
@@ -282,11 +282,11 @@ GameEntity.prototype.getTextContent = function () {
     return this._textContent;
 }
 
-GameEntity.prototype.setTextContent = function (value) {
+GameEntity.prototype.setTextContent = function (value, needRepaint) {
 
     this._textContent = value;
 
-    this._needRepaint.textContent = true;
+    this._needRepaint.textContent = needRepaint === undefined ? true : needRepaint;
 }
 
 GameEntity.prototype.getOpacity = function () {
@@ -294,11 +294,11 @@ GameEntity.prototype.getOpacity = function () {
     return this._opacity;
 }
 
-GameEntity.prototype.setOpacity = function (value) {
+GameEntity.prototype.setOpacity = function (value, needRepaint) {
 
     this._opacity = value;
 
-    this._needRepaint.opacity = true;
+    this._needRepaint.opacity = needRepaint === undefined ? true : needRepaint;
 }
 
 GameEntity.prototype.makeHidden = function () {

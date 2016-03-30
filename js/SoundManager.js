@@ -8,7 +8,7 @@ function SoundManager(parentDOMElement){
     this.sound.src = sounds[index];
   };
 
-  this.sound.setAttribute("preload", "auto");
+  this.sound.setAttribute('preload', 'auto');
 
   this.sound.autoplay = function(){
     this.sound.setAttribute('autoplay', 'autoplay');
