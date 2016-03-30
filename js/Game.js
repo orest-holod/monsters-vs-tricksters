@@ -19,11 +19,30 @@ function Game(parentDOMElement) {
     this._backgroundSound.play();
 
     this._stepSound = new SoundManager(this._gameField.getDOMElement());
+    this._stepSound.src(2);
+    this._stepSound.stop();
+
     this._jumpSound = new SoundManager(this._gameField.getDOMElement());
+    this._jumpSound.src(3);
+    this._jumpSound.stop();
+
+
     this._gameOverSound = new SoundManager(this._gameField.getDOMElement());
+    this._gameOverSound.src(1);
+    this._gameOverSound.stop();
+
+
     this._lifeSound = new SoundManager(this._gameField.getDOMElement());
+    this._lifeSound.src(4);
+    this._lifeSound.stop();
+
     this._touchedMonsterSound = new SoundManager(this._gameField.getDOMElement());
+    this._touchedMonsterSound.src(5);
+    this._touchedMonsterSound.stop();
+
     this._touchedTricksterSound = new SoundManager(this._gameField.getDOMElement());
+    this._touchedTricksterSound.src(6);
+    this._touchedTricksterSound.stop();
 
     this._isEscPressed = false;
     this._isRightKeyPressed = false;
@@ -401,15 +420,13 @@ Game.prototype.runGameLoop = function () {
 
         } else if (this._gamer.getIsJumping()) {
 
-            this._stepSound.src(3);
-            this._stepSound.play();
+            this._jumpSound.play();
 
             this._gamer.jump();
 
         } else if (this._isSpaceKeyPressed) {
 
-            this._stepSound.src(3);
-            this._stepSound.play();
+            this._jumpSound.play();
 
             this._gamer.jump();
 
@@ -418,7 +435,6 @@ Game.prototype.runGameLoop = function () {
 
         if (this._isLeftKeyPressed) {
 
-            this._stepSound.src(2);
             this._stepSound.play();
 
             this._gamer.moveLeft();
@@ -426,7 +442,6 @@ Game.prototype.runGameLoop = function () {
 
         if (this._isRightKeyPressed) {
 
-            this._stepSound.src(2);
             this._stepSound.play();
 
             this._gamer.moveRight();
@@ -439,7 +454,6 @@ Game.prototype.runGameLoop = function () {
 
         if (this._gamer.getY() <= 0) {
 
-            this._gameOverSound.src(1);
             this._gameOverSound.play();
 
             this._isGameOver = true;
@@ -449,8 +463,7 @@ Game.prototype.runGameLoop = function () {
 
         if (touchedMonster) {
 
-            this._lifeSound.src(5);
-            this._lifeSound.play();
+            this._touchedMonsterSound.play();
 
             this._gameField.getGameFieldScore().addMonsters();
 
@@ -461,7 +474,6 @@ Game.prototype.runGameLoop = function () {
 
         if (touchedLife && this._gameField.getGameFieldScore().getLifes() < 3) {
 
-            this._lifeSound.src(4);
             this._lifeSound.play();
 
             this._gameField.getGameFieldScore().addLifes();
@@ -473,14 +485,12 @@ Game.prototype.runGameLoop = function () {
 
         if (touchedTrickster) {
 
-            this._touchedTricksterSound.src(6);
             this._touchedTricksterSound.play();
 
             this._gameField.getGameFieldScore().removeLifes();
 
             if (!this._gameField.getGameFieldScore().getLifes()) {
 
-                this._gameOverSound.src(1);
                 this._gameOverSound.play();
 
                 this._isGameOver = true;
