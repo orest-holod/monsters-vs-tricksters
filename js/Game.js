@@ -13,6 +13,18 @@ function Game(parentDOMElement) {
     this._gameField = new GameField(that._parentDOMElement, true);
     this._gamer = new Gamer(that._gameField);
 
+    this._backgroundSound = new SoundManager(this._gameField.getDOMElement());
+    this._backgroundSound.src(0);
+    this._backgroundSound.loop(true);
+    this._backgroundSound.play();
+
+    this._stepSound = new SoundManager(this._gameField.getDOMElement());
+    this._jumpSound = new SoundManager(this._gameField.getDOMElement());
+    this._gameOverSound = new SoundManager(this._gameField.getDOMElement());
+    this._lifeSound = new SoundManager(this._gameField.getDOMElement());
+    this._touchedMonsterSound = new SoundManager(this._gameField.getDOMElement());
+    this._touchedTricksterSound = new SoundManager(this._gameField.getDOMElement());
+
     this._isEscPressed = false;
     this._isRightKeyPressed = false;
     this._isLeftKeyPressed = false;
@@ -317,9 +329,15 @@ Game.prototype.runGameLoop = function () {
 
         } else if (this._gamer.getIsJumping()) {
 
+            this._stepSound.src(3);
+            this._stepSound.play();
+
             this._gamer.jump();
 
         } else if (this._isSpaceKeyPressed) {
+
+            this._stepSound.src(3);
+            this._stepSound.play();
 
             this._gamer.jump();
 
@@ -328,10 +346,16 @@ Game.prototype.runGameLoop = function () {
 
         if (this._isLeftKeyPressed) {
 
+            this._stepSound.src(2);
+            this._stepSound.play();
+
             this._gamer.moveLeft();
         }
 
         if (this._isRightKeyPressed) {
+
+            this._stepSound.src(2);
+            this._stepSound.play();
 
             this._gamer.moveRight();
         }
@@ -343,12 +367,18 @@ Game.prototype.runGameLoop = function () {
 
         if (this._gamer.getY() <= 0) {
 
+            this._gameOverSound.src(1);
+            this._gameOverSound.play();
+
             this._isGameOver = true;
         }
 
         var touchedMonster = this._gamer.getTouchedMonster();
 
         if (touchedMonster) {
+
+            this._lifeSound.src(5);
+            this._lifeSound.play();
 
             this._gameField.getGameFieldScore().addMonsters();
 
@@ -359,6 +389,9 @@ Game.prototype.runGameLoop = function () {
 
         if (touchedLife && this._gameField.getGameFieldScore().getLifes() < 3) {
 
+            this._lifeSound.src(4);
+            this._lifeSound.play();
+
             this._gameField.getGameFieldScore().addLifes();
 
             this._gameField.getGameFieldTower().pickUpLife(touchedLife);
@@ -368,9 +401,15 @@ Game.prototype.runGameLoop = function () {
 
         if (touchedTrickster) {
 
+            this._touchedTricksterSound.src(6);
+            this._touchedTricksterSound.play();
+
             this._gameField.getGameFieldScore().removeLifes();
 
             if (!this._gameField.getGameFieldScore().getLifes()) {
+
+                this._gameOverSound.src(1);
+                this._gameOverSound.play();
 
                 this._isGameOver = true;
             }
@@ -413,6 +452,11 @@ Game.prototype.reset = function () {
 
     this._gameField = new GameField(this._parentDOMElement, true);
     this._gamer = new Gamer(this._gameField);
+    this._backgroundSound = new SoundManager(this._gameField.getDOMElement());
+
+    this._backgroundSound.src(0);
+    this._backgroundSound.loop(true);
+    this._backgroundSound.play();
 
     this._isEscPressed = false;
     this._isRightKeyPressed = false;
