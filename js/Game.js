@@ -186,6 +186,12 @@ Game.prototype.mouseClickEventHandler = function (e) {
             break;
         }
 
+        case 'remote-control-menu-item': {
+
+            window.location = 'telephonecontrol.html';
+            break;
+        }
+
         default: {
 
             if (this._gameField.getGameFieldMenu().isVisible()) {
@@ -255,6 +261,12 @@ Game.prototype.touchStartEventHandler = function (e) {
 
             this._gameField.getGameFieldMenu().getGameFieldMenuConnectComputerItem().makeHidden();
             ConnectComputer();
+            break;
+        }
+        
+        case 'remote-control-menu-item': {
+
+            window.location = 'telephonecontrol.html';
             break;
         }
 

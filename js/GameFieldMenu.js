@@ -12,13 +12,15 @@ function GameFieldMenu(parentDOMElement, appendToParentDOMElement) {
     var resumeGameMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'resume-game-menu-item', 'Resume Game');
     var facebookMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'facebook-menu-item', 'FB');
     var googleMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'google-menu-item', 'G+');
-    var connectComputerMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'connect-menu-item', 'Connect Computer')
+    var connectComputerMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'connect-menu-item', 'Connect Computer');
+    var remoteControlMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'remote-control-menu-item', 'Remote control page');
 
     this._menuItems.push(playGameMenuItem);
     this._menuItems.push(resumeGameMenuItem);
     this._menuItems.push(facebookMenuItem);
     this._menuItems.push(googleMenuItem);
     this._menuItems.push(connectComputerMenuItem);
+    this._menuItems.push(remoteControlMenuItem);
 
     this._menuGameOver.makeHidden();
     this.makeHidden();
