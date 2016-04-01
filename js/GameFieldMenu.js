@@ -13,7 +13,7 @@ function GameFieldMenu(parentDOMElement, appendToParentDOMElement) {
     var facebookMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'facebook-menu-item', 'FB');
     var googleMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'google-menu-item', 'G+');
     var connectComputerMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'connect-menu-item', 'Connect Computer');
-    var remoteControlMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'remote-control-menu-item', 'Remote control page');
+    var remoteControlMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'remote-control-menu-item', 'Remote control');
 
     this._menuItems.push(playGameMenuItem);
     this._menuItems.push(resumeGameMenuItem);
