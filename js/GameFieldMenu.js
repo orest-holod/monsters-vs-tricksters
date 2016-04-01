@@ -10,6 +10,8 @@ function GameFieldMenu(parentDOMElement, appendToParentDOMElement) {
 
     var playGameMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'play-game-menu-item', 'New Game');
     var resumeGameMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'resume-game-menu-item', 'Resume Game');
+    var musicOnOff = new GameFieldMenuItem(this.getDOMElement(), 'music-on-off-menu-item', 'Music OFF');
+    var soundOnOff = new GameFieldMenuItem(this.getDOMElement(), 'sound-on-off-menu-item', 'Sound OFF');
     var facebookMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'facebook-menu-item', 'FB');
     var googleMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'google-menu-item', 'G+');
     var connectComputerMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'connect-menu-item', 'Connect Computer');

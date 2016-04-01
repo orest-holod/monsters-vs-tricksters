@@ -299,6 +299,18 @@ body {
         line-height: 5.5rem;
     }
 
+    #music-on-off-menu-item, #sound-on-off-menu-item, #facebook-menu-item, #google-menu-item {
+      width: 44%;
+      display: inline-block;
+    }
+
+    #music-on-off-menu-item, #facebook-menu-item {
+      margin-left: 4.5%;
+    }
+    #sound-on-off-menu-item, #google-menu-item {
+      margin-left: 2%;
+    }
+
 #game-field-menu > div:hover {
     background: linear-gradient(to bottom, rgba(224,184,219,0.8) 0%, rgba(219,180,214,0) 24%, rgba(147,119,142,0.76) 84%, rgba(147,119,142,0.8) 100%);
 }
