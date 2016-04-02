@@ -11,8 +11,30 @@ GameFieldLayer.prototype = Object.create(GameEntity.prototype);
 
 GameFieldLayer.prototype.moveBackgroundPositition = function () {
 
-    this.setBackgroundPositionX(this.getBackgroundPositionX() + this.getBackgroundPositionDX() * GameEntity.FPS_INDEX);
-    this.setBackgroundPositionY(this.getBackgroundPositionY() + this.getBackgroundPositionDY() * GameEntity.FPS_INDEX);
+    if (this.getBackgroundPositionDX() > 0 && this.getBackgroundPositionX() >= 0) {
+
+        this.setBackgroundPositionX(-this.getWidth() + window.innerWidth);
+    }
+    else if (this.getBackgroundPositionDX() < 0 && this.getBackgroundPositionX() + this.getWidth() <= window.innerWidth) {
+
+        this.setBackgroundPositionX(0);
+    } else {
+        
+        this.setBackgroundPositionX(this.getBackgroundPositionX() + this.getBackgroundPositionDX() * GameEntity.FPS_INDEX);
+    }
+
+
+    if (this.getBackgroundPositionDY() > 0 && this.getBackgroundPositionY() >= 0) {
+
+        this.setBackgroundPositionY(-this.getHeight() + window.innerHeight);
+    }
+    else if (this.getBackgroundPositionDY() < 0 && this.getBackgroundPositionY() + this.getHeight() <= window.innerHeight) {
+
+        this.setBackgroundPositionY(0);
+    } else {
+
+        this.setBackgroundPositionY(this.getBackgroundPositionY() + this.getBackgroundPositionDY() * GameEntity.FPS_INDEX);
+    }
 }
 
 /* End Public Methods */

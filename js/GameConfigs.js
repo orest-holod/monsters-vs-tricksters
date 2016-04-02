@@ -1,6 +1,6 @@
 ﻿var gameConfigs = {
 
-    fps: 7,
+    fps: 8,
 
     fpsDelta: 0.25,
 
@@ -62,9 +62,9 @@
     gamer: {
 
         dx: 25,
-        dy: 25,
+        dy: 35,
         dAngle: 10,
-        ddy: 25
+        ddy: 35
     },
 
     colors: [

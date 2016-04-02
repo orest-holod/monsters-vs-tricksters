@@ -415,22 +415,18 @@ GameEntity.prototype.repaint = function () {
             this._needRepaint.height = false;
         }
 
-        if (this._needRepaint.angle) {
+        /* Transform */
 
-            this._DOMElement.style.transform = 'rotate({angle}deg)'
-                .replace('{angle}', this._angle);
+        if (this._needRepaint.angle || this._needRepaint.backgroundPositionX || this._needRepaint.backgroundPositionY) {
 
-            this._needRepaint.angle = false;
-        }
-
-        if (this._needRepaint.backgroundPositionX || this._needRepaint.backgroundPositionY) {
-
-            this._DOMElement.style.backgroundPosition = '{x}{CSS_UNIT} {y}{CSS_UNIT}'
+            this._DOMElement.style.transform = 'rotate({angle}deg) translate3d({x}{CSS_UNIT}, {y}{CSS_UNIT}, 0)'
+                .replace('{angle}', this._angle)
                 .replace('{x}', this._backgroundPositionX)
                 .replace('{y}', this._backgroundPositionY)
                 .replace('{CSS_UNIT}', GameEntity.prototype.CSS_UNIT)
                 .replace('{CSS_UNIT}', GameEntity.prototype.CSS_UNIT);
 
+            this._needRepaint.angle = false;
             this._needRepaint.backgroundPositionX = false;
             this._needRepaint.backgroundPositionY = false;
         }

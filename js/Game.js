@@ -351,7 +351,8 @@ Game.prototype.touchEndEventHandler = function (e) {
 Game.prototype.resizeEventHandler = function (e) {
 
     var gameFieldTower = this._gameField.getGameFieldTower();
-    var gameFieldBackgroundTowerLayer = this._gameField.getGameFieldBackground().getGameFieldBackgroundTowerLayer();
+    var gameFieldBackground = this._gameField.getGameFieldBackground();
+    var gameFieldBackgroundTowerLayer = gameFieldBackground.getGameFieldBackgroundTowerLayer();
 
     var towerClientRect = gameFieldBackgroundTowerLayer.getDOMElement().getBoundingClientRect();
     var towerWidthBeforeResize = gameFieldBackgroundTowerLayer.getWidth();
@@ -417,7 +418,6 @@ Game.prototype.resizeEventHandler = function (e) {
         gameFieldBackgroundTowerLayer.setHeight(towerHeightAfterResize, false);
 
     }
-
 }
 
 /* End Event Handlers */
@@ -466,10 +466,6 @@ Game.prototype.runGameLoop = function () {
             this._gamer.fall();
 
         } else if (this._gamer.getIsJumping()) {
-
-            if (this._isSoundOn){
-              this.soundManager.getJumpSound().play();
-            }
 
             this._gamer.jump();
 
