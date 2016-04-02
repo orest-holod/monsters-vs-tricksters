@@ -29,6 +29,8 @@ function Game(parentDOMElement) {
     this._isGameOver = false;
     this._isGameStop = false;
     this._isGameWin = false;
+
+    this._isTouchDevice = false;
 }
 
 /* Start Event Handlers */
@@ -127,94 +129,108 @@ Game.prototype.keyUpEventHandler = function (e) {
 
 Game.prototype.mouseClickEventHandler = function (e) {
 
-    switch (e.target.id) {
+    if (!this._isTouchDevice) {
 
-        case 'play-game-menu-item': {
+        switch (e.target.id) {
 
-            this.reset();
-            break;
-        }
+            case 'play-game-menu-item':
+                {
 
-        case 'resume-game-menu-item': {
+                    this.reset();
+                    break;
+                }
 
-            this._gameField.getGameFieldMenu().makeHidden();
-            this._isGameStop = false;
-            break;
-        }
+            case 'resume-game-menu-item':
+                {
 
-        case 'music-on-off-menu-item': {
+                    this._gameField.getGameFieldMenu().makeHidden();
+                    this._isGameStop = false;
+                    break;
+                }
 
-          if (this._isMusicOn){
-            this.soundManager.getBackgroundSound().pause();
-            this._isMusicOn = false;
-            document.getElementById('music-on-off-menu-item').innerHTML = 'Music ON';
-          }
-          else {
-            this.soundManager.getBackgroundSound().play();
-            this._isMusicOn = true;
-            document.getElementById('music-on-off-menu-item').innerHTML = 'Music OFF';
-          }
+            case 'music-on-off-menu-item':
+                {
 
-          break;
-        }
+                    if (this._isMusicOn) {
+                        this.soundManager.getBackgroundSound().pause();
+                        this._isMusicOn = false;
+                        document.getElementById('music-on-off-menu-item').innerHTML = 'Music ON';
+                    } else {
+                        this.soundManager.getBackgroundSound().play();
+                        this._isMusicOn = true;
+                        document.getElementById('music-on-off-menu-item').innerHTML = 'Music OFF';
+                    }
 
-        case 'sound-on-off-menu-item': {
+                    break;
+                }
 
-          if (this._isSoundOn){
-            this._isSoundOn = false;
-            document.getElementById('sound-on-off-menu-item').innerHTML = 'Sound ON';
-          }
-          else {
-            this._isSoundOn = true;
-            document.getElementById('sound-on-off-menu-item').innerHTML = 'Sound OFF';
-          }
+            case 'sound-on-off-menu-item':
+                {
 
-          break;
-        }
+                    if (this._isSoundOn) {
+                        this._isSoundOn = false;
+                        document.getElementById('sound-on-off-menu-item').innerHTML = 'Sound ON';
+                    } else {
+                        this._isSoundOn = true;
+                        document.getElementById('sound-on-off-menu-item').innerHTML = 'Sound OFF';
+                    }
 
-        case 'facebook-menu-item': {
-            FacebookShare(this._gameField.getGameFieldScore().getMonsters());
-            break;
-        }
+                    break;
+                }
 
-        case 'google-menu-item': {
+            case 'facebook-menu-item':
+                {
+                    FacebookShare(this._gameField.getGameFieldScore().getMonsters());
+                    break;
+                }
 
-            GoogleLogIn();
-            break;
-        }
+            case 'google-menu-item':
+                {
+
+                    GoogleLogIn();
+                    break;
+                }
 
 
-        case 'connect-menu-item': {
+            case 'connect-menu-item':
+                {
 
-            this._gameField.getGameFieldMenu().getGameFieldMenuConnectComputerItem().makeHidden();
-            ConnectComputer();
-            break;
-        }
+                    this._gameField.getGameFieldMenu().getGameFieldMenuConnectComputerItem().makeHidden();
+                    ConnectComputer();
+                    break;
+                }
 
-        case 'remote-control-menu-item': {
+            case 'remote-control-menu-item':
+                {
 
-            window.location = 'telephonecontrol.html';
-            break;
-        }
+                    window.location = 'telephonecontrol.html';
+                    break;
+                }
 
-        default: {
+            default:
+                {
 
-            if (this._gameField.getGameFieldMenu().isVisible()) {
+                    if (this._gameField.getGameFieldMenu().isVisible()) {
 
-                this._gameField.getGameFieldMenu().makeHidden();
-                this._isGameStop = false;
+                        this._gameField.getGameFieldMenu().makeHidden();
+                        this._isGameStop = false;
 
-            }
-            else {
+                    } else {
 
-                this._gameField.getGameFieldMenu().makeVisible();
-                this._isGameStop = true;
-            }
+                        this._gameField.getGameFieldMenu().makeVisible();
+                        this._isGameStop = true;
+                    }
+                }
         }
     }
 }
 
 Game.prototype.touchStartEventHandler = function (e) {
+
+    if (!this._isTouchDevice) {
+
+        this._isTouchDevice = true;
+    }
 
     switch (e.target.id) {
 
@@ -251,32 +267,32 @@ Game.prototype.touchStartEventHandler = function (e) {
 
         case 'music-on-off-menu-item': {
 
-          if (this._isMusicOn){
-            this.soundManager.getBackgroundSound().pause();
-            this._isMusicOn = false;
-            document.getElementById('music-on-off-menu-item').innerHTML = 'Music ON';
-          }
-          else {
-            this.soundManager.getBackgroundSound().play();
-            this._isMusicOn = true;
-            document.getElementById('music-on-off-menu-item').innerHTML = 'Music OFF';
-          }
+            if (this._isMusicOn) {
+                this.soundManager.getBackgroundSound().pause();
+                this._isMusicOn = false;
+                document.getElementById('music-on-off-menu-item').innerHTML = 'Music ON';
+            }
+            else {
+                this.soundManager.getBackgroundSound().play();
+                this._isMusicOn = true;
+                document.getElementById('music-on-off-menu-item').innerHTML = 'Music OFF';
+            }
 
-          break;
+            break;
         }
 
         case 'sound-on-off-menu-item': {
 
-          if (this._isSoundOn){
-            this._isSoundOn = false;
-            document.getElementById('sound-on-off-menu-item').innerHTML = 'Sound ON';
-          }
-          else {
-            this._isSoundOn = true;
-            document.getElementById('sound-on-off-menu-item').innerHTML = 'Sound OFF';
-          }
+            if (this._isSoundOn) {
+                this._isSoundOn = false;
+                document.getElementById('sound-on-off-menu-item').innerHTML = 'Sound ON';
+            }
+            else {
+                this._isSoundOn = true;
+                document.getElementById('sound-on-off-menu-item').innerHTML = 'Sound OFF';
+            }
 
-          break;
+            break;
         }
 
         case 'facebook-menu-item': {
@@ -471,8 +487,8 @@ Game.prototype.runGameLoop = function () {
 
         } else if (this._isSpaceKeyPressed) {
 
-            if (this._isSoundOn){
-              this.soundManager.getJumpSound().play();
+            if (this._isSoundOn) {
+                this.soundManager.getJumpSound().play();
             }
 
             this._gamer.jump();
@@ -482,8 +498,8 @@ Game.prototype.runGameLoop = function () {
 
         if (this._isLeftKeyPressed) {
 
-            if (this._isSoundOn){
-              this.soundManager.getStepSound().play();
+            if (this._isSoundOn) {
+                this.soundManager.getStepSound().play();
             }
 
             this._gamer.moveLeft();
@@ -491,8 +507,8 @@ Game.prototype.runGameLoop = function () {
 
         if (this._isRightKeyPressed) {
 
-            if (this._isSoundOn){
-              this.soundManager.getStepSound().play();
+            if (this._isSoundOn) {
+                this.soundManager.getStepSound().play();
             }
 
             this._gamer.moveRight();
@@ -505,9 +521,9 @@ Game.prototype.runGameLoop = function () {
 
         if (this._gamer.getY() <= 0) {
 
-          if (this._isSoundOn){
-            this.soundManager.getGameOverSound().play();
-          }
+            if (this._isSoundOn) {
+                this.soundManager.getGameOverSound().play();
+            }
 
             this._isGameOver = true;
         }
@@ -516,8 +532,8 @@ Game.prototype.runGameLoop = function () {
 
         if (touchedMonster) {
 
-            if (this._isSoundOn){
-              this.soundManager.getTouchedMonsterSound().play();
+            if (this._isSoundOn) {
+                this.soundManager.getTouchedMonsterSound().play();
             }
 
             this._gameField.getGameFieldScore().addMonsters();
@@ -529,8 +545,8 @@ Game.prototype.runGameLoop = function () {
 
         if (touchedLife && this._gameField.getGameFieldScore().getLifes() < 3) {
 
-            if (this._isSoundOn){
-              this.soundManager.getLifeSound().play();
+            if (this._isSoundOn) {
+                this.soundManager.getLifeSound().play();
             }
 
             this._gameField.getGameFieldScore().addLifes();
@@ -542,16 +558,16 @@ Game.prototype.runGameLoop = function () {
 
         if (touchedTrickster) {
 
-            if (this._isSoundOn){
-              this.soundManager.getTouchedTricksterSound().play();
+            if (this._isSoundOn) {
+                this.soundManager.getTouchedTricksterSound().play();
             }
 
             this._gameField.getGameFieldScore().removeLifes();
 
             if (!this._gameField.getGameFieldScore().getLifes()) {
 
-                if (this._isSoundOn){
-                  this.soundManager.getGameOverSound().play();
+                if (this._isSoundOn) {
+                    this.soundManager.getGameOverSound().play();
                 }
 
                 this._isGameOver = true;
@@ -596,12 +612,12 @@ Game.prototype.reset = function () {
     this._gameField = new GameField(this._parentDOMElement, true);
     this._gamer = new Gamer(this._gameField);
 
-    if (!this._isMusicOn){
-      document.getElementById('music-on-off-menu-item').innerHTML = 'Music ON';
+    if (!this._isMusicOn) {
+        document.getElementById('music-on-off-menu-item').innerHTML = 'Music ON';
     }
 
-    if (!this._isSoundOn){
-      document.getElementById('sound-on-off-menu-item').innerHTML = 'Sound ON';
+    if (!this._isSoundOn) {
+        document.getElementById('sound-on-off-menu-item').innerHTML = 'Sound ON';
     }
 
     this._isEscPressed = false;
