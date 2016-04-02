@@ -13,7 +13,7 @@ Monster.prototype = Object.create(GameEntity.prototype);
 
 Monster.prototype.rotate = function () {
 
-    this.setAngle(this.getAngle() + this.getDAngle() * GameEntity.FPS_INDEX);
+    this.setAngle(this.getAngle() + this.getDAngle());
 }
 
 Monster.prototype.setTargetStep = function (value) {
@@ -28,7 +28,6 @@ Monster.prototype.getTargetStep = function () {
 
     return this._targetStep;
 }
-
 
 /* End Public Methods */
 

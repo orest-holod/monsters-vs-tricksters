@@ -12,49 +12,49 @@ function GameFieldBackground(parentDOMElement, appendToParentDOMElement) {
 
     /* Start Init */
 
-    this._gameFieldBackgroundStarsLayer.setBackgroundPositionDX(gameConfigs.gameField.gameFieldBackground.gameFieldBackgroundStarsLayer.dx);
-    this._gameFieldBackgroundStarsLayer.setBackgroundPositionDY(gameConfigs.gameField.gameFieldBackground.gameFieldBackgroundStarsLayer.dy);
+    this._gameFieldBackgroundStarsLayer.setDX(gameConfigs.gameField.gameFieldBackground.gameFieldBackgroundStarsLayer.dx);
+    this._gameFieldBackgroundStarsLayer.setDY(gameConfigs.gameField.gameFieldBackground.gameFieldBackgroundStarsLayer.dy);
 
-    if (this._gameFieldBackgroundStarsLayer.getBackgroundPositionDX() !== 0) {
+    if (this._gameFieldBackgroundStarsLayer.getDX() !== 0) {
 
         this._gameFieldBackgroundStarsLayer.setWidth(this.getWidth() * 5);
 
-        if (this._gameFieldBackgroundStarsLayer.getBackgroundPositionDX() > 0) {
+        if (this._gameFieldBackgroundStarsLayer.getDX() > 0) {
 
-            this._gameFieldBackgroundStarsLayer.setBackgroundPositionX(-this._gameFieldBackgroundStarsLayer.getWidth() + this.getWidth());
+            this._gameFieldBackgroundStarsLayer.setTranslateX(-this._gameFieldBackgroundStarsLayer.getWidth() + this.getWidth());
         }
     }
 
-    if (this._gameFieldBackgroundStarsLayer.getBackgroundPositionDY() !== 0) {
+    if (this._gameFieldBackgroundStarsLayer.getDY() !== 0) {
 
         this._gameFieldBackgroundStarsLayer.setHeight(this.getHeight() * 5);
 
-        if (this._gameFieldBackgroundStarsLayer.getBackgroundPositionDY() > 0) {
+        if (this._gameFieldBackgroundStarsLayer.getDY() > 0) {
 
-            this._gameFieldBackgroundStarsLayer.setBackgroundPositionY(-this._gameFieldBackgroundStarsLayer.getHeight() + this.getHeight());
+            this._gameFieldBackgroundStarsLayer.setTranslateY(-this._gameFieldBackgroundStarsLayer.getHeight() + this.getHeight());
         }
     }
 
-    this._gameFieldBackgroundCloudsLayer.setBackgroundPositionDX(gameConfigs.gameField.gameFieldBackground.gameFieldBackgroundCloudsLayer.dx);
-    this._gameFieldBackgroundCloudsLayer.setBackgroundPositionDY(gameConfigs.gameField.gameFieldBackground.gameFieldBackgroundCloudsLayer.dy);
+    this._gameFieldBackgroundCloudsLayer.setDX(gameConfigs.gameField.gameFieldBackground.gameFieldBackgroundCloudsLayer.dx);
+    this._gameFieldBackgroundCloudsLayer.setDY(gameConfigs.gameField.gameFieldBackground.gameFieldBackgroundCloudsLayer.dy);
 
-    if (this._gameFieldBackgroundCloudsLayer.getBackgroundPositionDX() !== 0) {
+    if (this._gameFieldBackgroundCloudsLayer.getDX() !== 0) {
 
         this._gameFieldBackgroundCloudsLayer.setWidth(this.getWidth() * 5);
 
-        if (this._gameFieldBackgroundCloudsLayer.getBackgroundPositionDX() > 0) {
+        if (this._gameFieldBackgroundCloudsLayer.getDX() > 0) {
 
-            this._gameFieldBackgroundCloudsLayer.setBackgroundPositionX(-this._gameFieldBackgroundCloudsLayer.getWidth() + this.getWidth());
+            this._gameFieldBackgroundCloudsLayer.setTranslateX(-this._gameFieldBackgroundCloudsLayer.getWidth() + this.getWidth());
         } 
     }
 
-    if (this._gameFieldBackgroundCloudsLayer.getBackgroundPositionDY() !== 0) {
+    if (this._gameFieldBackgroundCloudsLayer.getDY() !== 0) {
 
         this._gameFieldBackgroundCloudsLayer.setHeight(this.getHeight() * 5);
 
-        if (this._gameFieldBackgroundCloudsLayer.getBackgroundPositionDY() > 0) {
+        if (this._gameFieldBackgroundCloudsLayer.getDY() > 0) {
 
-            this._gameFieldBackgroundCloudsLayer.setBackgroundPositionY(-this._gameFieldBackgroundCloudsLayer.getHeight() + this.getHeight());
+            this._gameFieldBackgroundCloudsLayer.setTranslateY(-this._gameFieldBackgroundCloudsLayer.getHeight() + this.getHeight());
         }
     }
 

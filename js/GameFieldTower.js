@@ -10,8 +10,6 @@ function GameFieldTower(parentDOMElement, appendToParentDOMElement) {
     this._widthX = Math.floor(this._maxX / 5);
     this._heightY = gameConfigs.gameField.gameFieldTower.steps.heightOfLevel;
 
-    this._widthIndex = this._width / gameConfigs.gameField.gameFieldTower.basicWidth;
-
     this._steps = [];
     this._tricksters = [];
     this._monsters = [];
@@ -92,12 +90,11 @@ GameFieldTower.prototype.generateTricksters = function (steps) {
         var trickster = new Trickster(that._DOMElement, false, gameConfigs.alphabet[Math.floor(Math.random() * (gameConfigs.alphabet.length))]);
         var color = gameConfigs.colors[Math.floor(Math.random() * gameConfigs.colors.length)];
         trickster.setColor(color);
-        trickster.setTextShadow('0px 0px 3rem ' + color);
-        trickster.setDX(this._widthIndex * gameConfigs.gameField.gameFieldTower.tricksters.arrayOfDX[Math.floor(Math.random() * gameConfigs.gameField.gameFieldTower.tricksters.arrayOfDX.length)]);
-        trickster.setDY(this._widthIndex * gameConfigs.gameField.gameFieldTower.tricksters.arrayOfDY[Math.floor(Math.random() * gameConfigs.gameField.gameFieldTower.tricksters.arrayOfDY.length)]);
+        trickster.setDX(gameConfigs.gameField.gameFieldTower.tricksters.arrayOfDX[Math.floor(Math.random() * gameConfigs.gameField.gameFieldTower.tricksters.arrayOfDX.length)]);
+        trickster.setDY(gameConfigs.gameField.gameFieldTower.tricksters.arrayOfDY[Math.floor(Math.random() * gameConfigs.gameField.gameFieldTower.tricksters.arrayOfDY.length)]);
         trickster.setDAngle(gameConfigs.gameField.gameFieldTower.tricksters.arrayOfDAngle[Math.floor(Math.random() * gameConfigs.gameField.gameFieldTower.tricksters.arrayOfDAngle.length)]);
-        trickster.setLevitateDX(this._widthIndex * gameConfigs.gameField.gameFieldTower.tricksters.arrayOfLevitateDX[Math.floor(Math.random() * gameConfigs.gameField.gameFieldTower.tricksters.arrayOfLevitateDX.length)]);
-        trickster.setLevitateDY(this._widthIndex * gameConfigs.gameField.gameFieldTower.tricksters.arrayOfLevitateDY[Math.floor(Math.random() * gameConfigs.gameField.gameFieldTower.tricksters.arrayOfLevitateDY.length)]);
+        trickster.setLevitateDX(gameConfigs.gameField.gameFieldTower.tricksters.arrayOfLevitateDX[Math.floor(Math.random() * gameConfigs.gameField.gameFieldTower.tricksters.arrayOfLevitateDX.length)]);
+        trickster.setLevitateDY(gameConfigs.gameField.gameFieldTower.tricksters.arrayOfLevitateDY[Math.floor(Math.random() * gameConfigs.gameField.gameFieldTower.tricksters.arrayOfLevitateDY.length)]);
 
         trickster.setTargetStep(step);
         tricksters.push(trickster);
@@ -128,7 +125,6 @@ GameFieldTower.prototype.generateMonsters = function (steps) {
 
         var color = gameConfigs.colors[Math.floor(Math.random() * gameConfigs.colors.length)];
         monster.setColor(color);
-        monster.setTextShadow('0px 0px 3rem ' + color);
         monster.setDAngle(gameConfigs.gameField.gameFieldTower.monsters.arrayOfDAngle[Math.floor(Math.random() * gameConfigs.gameField.gameFieldTower.monsters.arrayOfDAngle.length)]);
         monster.setTargetStep(step);
         monsters.push(monster);

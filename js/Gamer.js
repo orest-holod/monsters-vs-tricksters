@@ -8,15 +8,13 @@ function Gamer(gameField) {
     this._gameFieldTower = gameField.getGameFieldTower();
     this._targetStep = gameField.getGameFieldTower().getSteps()[Math.floor(window.innerHeight / gameConfigs.gameField.gameFieldTower.steps.heightOfLevel)];
 
-    this._widthIndex = gameField.getGameFieldTower().getWidth() / gameConfigs.gameField.gameFieldTower.basicWidth;
-
-    this.setDX(this._widthIndex * gameConfigs.gamer.dx);
-    this.setDY(gameConfigs.gamer.dy);
-    this._ddy = gameConfigs.gamer.ddy;
-    this.setDAngle(gameConfigs.gamer.dAngle);
-
     this.setX(this._targetStep.getX());
     this.setY(this._targetStep.getY() + this._targetStep.getHeight());
+    this.setDX(gameConfigs.gamer.dx);
+    this.setDY(gameConfigs.gamer.dy);
+    this.setDAngle(gameConfigs.gamer.dAngle);
+
+    this._ddy = gameConfigs.gamer.ddy;
 
     this._isFalling = false;
     this._fallingCounter = 0;
@@ -24,8 +22,7 @@ function Gamer(gameField) {
 
     this._isJumping = false;
     this._jumpingCounter = 0;
-    this._currentDY = this.getDY();
-
+  
     this._lastTouchedTrickster = null;
 }
 
@@ -186,16 +183,16 @@ Gamer.prototype.moveLeft = function () {
 
     if (this.getAngle() < 0) {
 
-        this.setAngle(this.getAngle() + this.getDAngle() * GameEntity.FPS_INDEX);
+        this.setAngle(this.getAngle() + this.getDAngle());
     }
     else {
 
-        this.setAngle(this.getAngle() - this.getDAngle() * GameEntity.FPS_INDEX);
+        this.setAngle(this.getAngle() - this.getDAngle());
     }
 
-    this.setX(this.getX() - this.getDX() * GameEntity.FPS_INDEX);
+    this.setX(this.getX() - this.getDX());
 
-    if (!this._isFalling && !this._isJumping && this.getX() - this.getDX() * GameEntity.FPS_INDEX + this.getWidth() < this.getTargetStep().getX()) {
+    if (!this._isFalling && !this._isJumping && this.getX() - this.getDX() + this.getWidth() < this.getTargetStep().getX()) {
 
         this._isFalling = true;
     }
@@ -205,16 +202,16 @@ Gamer.prototype.moveRight = function () {
 
     if (this.getAngle() > 0) {
 
-        this.setAngle(this.getAngle() - this.getDAngle() * GameEntity.FPS_INDEX);
+        this.setAngle(this.getAngle() - this.getDAngle());
     }
     else {
 
-        this.setAngle(this.getAngle() + this.getDAngle() * GameEntity.FPS_INDEX);
+        this.setAngle(this.getAngle() + this.getDAngle());
     }
 
-    this.setX(this.getX() + this.getDX() * GameEntity.FPS_INDEX);
+    this.setX(this.getX() + this.getDX());
 
-    if (!this._isFalling && !this._isJumping && this.getX() + this.getDX() * GameEntity.FPS_INDEX > this.getTargetStep().getX() + this.getTargetStep().getWidth()) {
+    if (!this._isFalling && !this._isJumping && this.getX() + this.getDX() > this.getTargetStep().getX() + this.getTargetStep().getWidth()) {
 
         this._isFalling = true;
     }
@@ -246,7 +243,7 @@ Gamer.prototype.jump = function () {
         this._isFalling = true;
     }
 
-    var dy = this.getDY() * GameEntity.FPS_INDEX + this.getDDY() * GameEntity.FPS_INDEX * this._jumpingCounter;
+    var dy = this.getDY() + this.getDDY() * this._jumpingCounter;
 
     this.setY(this.getY() + dy);
 
@@ -275,7 +272,7 @@ Gamer.prototype.fall = function () {
 
     var nearestBottomTargetStep = this.getNearestBottomTargetStep();
 
-    var dy = this.getDY() * GameEntity.FPS_INDEX + this.getDDY() * GameEntity.FPS_INDEX * this._fallingCounter;
+    var dy = this.getDY() + this.getDDY() * this._fallingCounter;
 
     this.setY(this.getY() - dy);
 
