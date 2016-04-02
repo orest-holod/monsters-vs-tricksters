@@ -1,13 +1,10 @@
 ﻿var gameConfigs = {
-
     fps: 8,
 
     fpsDelta: 0.25,
 
     gameField: {
-
         gameFieldBackground: {
-
             gameFieldBackgroundStarsLayer: {
                 dx: -1,
                 dy: -1
@@ -21,6 +18,9 @@
         },
 
         gameFieldTower: {
+
+            basicWidth: 600,
+            basicHeight: 800,
 
             steps: {
 

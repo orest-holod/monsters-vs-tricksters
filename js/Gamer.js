@@ -8,8 +8,11 @@ function Gamer(gameField) {
     this._gameFieldTower = gameField.getGameFieldTower();
     this._targetStep = gameField.getGameFieldTower().getSteps()[Math.floor(window.innerHeight / gameConfigs.gameField.gameFieldTower.steps.heightOfLevel)];
 
-    this.setDX(gameConfigs.gamer.dx);
+    this._widthIndex = gameField.getGameFieldTower().getWidth() / gameConfigs.gameField.gameFieldTower.basicWidth;
+
+    this.setDX(this._widthIndex * gameConfigs.gamer.dx);
     this.setDY(gameConfigs.gamer.dy);
+    this._ddy = gameConfigs.gamer.ddy;
     this.setDAngle(gameConfigs.gamer.dAngle);
 
     this.setX(this._targetStep.getX());
@@ -22,8 +25,6 @@ function Gamer(gameField) {
     this._isJumping = false;
     this._jumpingCounter = 0;
     this._currentDY = this.getDY();
-
-    this._ddy = gameConfigs.gamer.ddy;
 
     this._lastTouchedTrickster = null;
 }
