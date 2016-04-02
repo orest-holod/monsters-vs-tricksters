@@ -8,8 +8,6 @@ function Game(parentDOMElement) {
 
     this._animationFrameManager = new AnimationFrameManager(gameConfigs.fps);
 
-    this._fpsIndex = 1;
-
     this._gameField = new GameField(that._parentDOMElement, true);
     this._gamer = new Gamer(that._gameField);
 
@@ -144,6 +142,8 @@ Game.prototype.mouseClickEventHandler = function (e) {
                 {
 
                     this._gameField.getGameFieldMenu().makeHidden();
+                    this._gameField.getGameFieldTower().makeVisible();
+                    this._gameField.getGameFieldTouch().makeVisible();
                     this._isGameStop = false;
                     break;
                 }
@@ -213,11 +213,15 @@ Game.prototype.mouseClickEventHandler = function (e) {
                     if (this._gameField.getGameFieldMenu().isVisible()) {
 
                         this._gameField.getGameFieldMenu().makeHidden();
+                        this._gameField.getGameFieldTower().makeVisible();
+                        this._gameField.getGameFieldTouch().makeVisible();
                         this._isGameStop = false;
 
                     } else {
 
                         this._gameField.getGameFieldMenu().makeVisible();
+                        this._gameField.getGameFieldTower().makeHidden();
+                        this._gameField.getGameFieldTouch().makeHidden();
                         this._isGameStop = true;
                     }
                 }
@@ -261,6 +265,8 @@ Game.prototype.touchStartEventHandler = function (e) {
         case 'resume-game-menu-item': {
 
             this._gameField.getGameFieldMenu().makeHidden();
+            this._gameField.getGameFieldTower().makeVisible();
+            this._gameField.getGameFieldTouch().makeVisible();
             this._isGameStop = false;
             break;
         }
@@ -327,11 +333,15 @@ Game.prototype.touchStartEventHandler = function (e) {
             if (this._gameField.getGameFieldMenu().isVisible()) {
 
                 this._gameField.getGameFieldMenu().makeHidden();
+                this._gameField.getGameFieldTower().makeVisible();
+                this._gameField.getGameFieldTouch().makeVisible();
                 this._isGameStop = false;
             }
             else {
 
                 this._gameField.getGameFieldMenu().makeVisible();
+                this._gameField.getGameFieldTower().makeHidden();
+                this._gameField.getGameFieldTouch().makeHidden();
                 this._isGameStop = true;
             }
         }
@@ -395,29 +405,26 @@ Game.prototype.resizeEventHandler = function (e) {
             if (targetMonster) {
 
                 targetMonster.setTargetStep(step);
-                targetMonster.setDX(targetMonster.getDX() * towerWidthIndex);
-                targetMonster.setDY(targetMonster.getDY() * towerWidthIndex);
+
             }
 
             var targetTrickster = step.getTargetTrickster();
 
             if (targetTrickster) {
+
                 targetTrickster.setTargetStep(step);
-                targetTrickster.setDX(targetTrickster.getDX() * towerWidthIndex);
-                targetTrickster.setDY(targetTrickster.getDY() * towerWidthIndex);
             }
 
             var targetLife = step.getTargetLife();
 
             if (targetLife) {
+
                 targetLife.setTargetStep(step);
             }
 
             this._gamer.setX(this._gamer.getTargetStep().getX());
 
         }, this);
-
-        this._gamer.setDX(this._gamer.getDX() * towerWidthIndex);
 
         gameFieldBackgroundTowerLayer.setWidth(towerWidthAfterResize, false);
     }
@@ -454,31 +461,21 @@ Game.prototype.runGameLoop = function () {
         if (this._gameField.getGameFieldMenu().isVisible()) {
 
             this._gameField.getGameFieldMenu().makeHidden();
+            this._gameField.getGameFieldTower().makeVisible();
             this._isGameStop = false;
 
         } else {
 
             this._gameField.getGameFieldMenu().makeVisible();
+            this._gameField.getGameFieldTower().makeHidden();
             this._isGameStop = true;
         }
 
         this._isEscPressed = false;
-
     }
 
     this._gameField.getGameFieldBackground().getGameFieldBackgroundFPSLayer()
         .setTextContent('{currentFPS}fps'.replace('{currentFPS}', this._animationFrameManager.getCurrentFPS()));
-
-    /* Adjust speed */
-
-    var fpsIndex = this._animationFrameManager.getFPSIndex();
-
-    if (Math.abs(fpsIndex - this._fpsIndex) >= gameConfigs.fpsDelta) {
-
-        this._fpsIndex = fpsIndex;
-
-        GameEntity.FPS_INDEX = fpsIndex;
-    }
 
     /* Start Logic */
 
@@ -495,6 +492,7 @@ Game.prototype.runGameLoop = function () {
         } else if (this._isSpaceKeyPressed) {
 
             if (this._isSoundOn) {
+
                 this.soundManager.getJumpSound().play();
             }
 
@@ -506,6 +504,7 @@ Game.prototype.runGameLoop = function () {
         if (this._isLeftKeyPressed) {
 
             if (this._isSoundOn) {
+
                 this.soundManager.getStepSound().play();
             }
 
@@ -515,6 +514,7 @@ Game.prototype.runGameLoop = function () {
         if (this._isRightKeyPressed) {
 
             if (this._isSoundOn) {
+
                 this.soundManager.getStepSound().play();
             }
 
@@ -529,6 +529,7 @@ Game.prototype.runGameLoop = function () {
         if (this._gamer.getY() <= 0) {
 
             if (this._isSoundOn) {
+
                 this.soundManager.getGameOverSound().play();
             }
 
@@ -540,6 +541,7 @@ Game.prototype.runGameLoop = function () {
         if (touchedMonster) {
 
             if (this._isSoundOn) {
+
                 this.soundManager.getTouchedMonsterSound().play();
             }
 
@@ -553,6 +555,7 @@ Game.prototype.runGameLoop = function () {
         if (touchedLife && this._gameField.getGameFieldScore().getLifes() < 3) {
 
             if (this._isSoundOn) {
+
                 this.soundManager.getLifeSound().play();
             }
 
@@ -566,6 +569,7 @@ Game.prototype.runGameLoop = function () {
         if (touchedTrickster) {
 
             if (this._isSoundOn) {
+
                 this.soundManager.getTouchedTricksterSound().play();
             }
 
@@ -574,6 +578,7 @@ Game.prototype.runGameLoop = function () {
             if (!this._gameField.getGameFieldScore().getLifes()) {
 
                 if (this._isSoundOn) {
+
                     this.soundManager.getGameOverSound().play();
                 }
 
@@ -588,12 +593,18 @@ Game.prototype.runGameLoop = function () {
     else if (this._isGameOver) {
 
         this._gameField.getGameFieldMenu().makeVisible();
+        this._gameField.getGameFieldTower().makeHidden();
+        this._gameField.getGameFieldTouch().makeHidden();
         this._gameField.getGameFieldMenu().getGameFieldMenuGameOver().makeVisible();
         this._gameField.getGameFieldMenu().getGameFieldMenuResumeItem().makeHidden();
+        this._gameField.getGameFieldMenu().getGameFieldMenuGamePaused().makeHidden();
     }
-
-    this._gameField.getGameFieldBackground().getGameFieldBackgroundCloudsLayer().moveBackgroundPositition();
-    this._gameField.getGameFieldBackground().getGameFieldBackgroundStarsLayer().moveBackgroundPositition();
+    else if (this._isGameStop) {
+        this._gameField.getGameFieldMenu().getGameFieldMenuGamePaused().makeVisible();
+    }
+   
+    this._gameField.getGameFieldBackground().getGameFieldBackgroundCloudsLayer().move();
+    this._gameField.getGameFieldBackground().getGameFieldBackgroundStarsLayer().move();
 
     /* End Logic */
 

@@ -9,7 +9,6 @@ function GameField(parentDOMElement, appendToParentDOMElement) {
     this._gameFieldMenu = new GameFieldMenu(this._DOMElement, true);
     this._gameFieldTouch = new GameFieldTouch(this._DOMElement, true);
     this._gameFieldScore = new GameFieldScore(this._DOMElement, true);
-
 }
 
 GameField.prototype = Object.create(GameEntity.prototype);
@@ -20,7 +19,6 @@ GameField.prototype.getGameFieldBackground = function () {
 
     return this._gameFieldBackground;
 }
-
 
 GameField.prototype.getGameFieldTower = function () {
 

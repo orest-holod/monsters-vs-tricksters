@@ -4,8 +4,9 @@ function GameFieldMenu(parentDOMElement, appendToParentDOMElement) {
 
     GameEntity.call(this, 'div', parentDOMElement, appendToParentDOMElement, 'game-field-menu', ['game-field']);
 
-    this._menuHeader = new GameFieldMenuHeader(this.getDOMElement(), 'Monsters vs Tricksters');
-    this._menuGameOver = new GameFieldMenuGameOver(this.getDOMElement(), 'Game Over');
+    this._menuHeader = new GameFieldMenuHeader(this.getDOMElement(), 'Monsters<br/>vs<br/>Tricksters');
+    this._menuGameOver = new GameFieldMenuGameInfo(this.getDOMElement(),'menu-game-over', 'Game Over');
+    this._menuGamePaused = new GameFieldMenuGameInfo(this.getDOMElement(), 'menu-game-paused', 'Game Paused');
     this._menuItems = [];
 
     var playGameMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'play-game-menu-item', 'New Game');
@@ -25,6 +26,7 @@ function GameFieldMenu(parentDOMElement, appendToParentDOMElement) {
     this._menuItems.push(remoteControlMenuItem);
 
     this._menuGameOver.makeHidden();
+    this._menuGamePaused.makeHidden();
     this.makeHidden();
 }
 
@@ -33,6 +35,11 @@ GameFieldMenu.prototype = Object.create(GameFieldLayer.prototype);
 GameFieldMenu.prototype.getGameFieldMenuGameOver = function () {
 
     return this._menuGameOver;
+}
+
+GameFieldMenu.prototype.getGameFieldMenuGamePaused = function () {
+
+    return this._menuGamePaused;
 }
 
 GameFieldMenu.prototype.getGameFieldMenuResumeItem = function() {
@@ -50,10 +57,10 @@ GameFieldMenu.prototype.repaint = function () {
 
     this._menuHeader.repaint();
     this._menuGameOver.repaint();
+    this._menuGamePaused.repaint();
     this._menuItems.forEach(function (menuItem) {
         menuItem.repaint();
     });
-
 }
 
 function GameFieldMenuItem(parentDOMElement, id, textContent) {
@@ -66,17 +73,15 @@ GameFieldMenuItem.prototype = Object.create(GameEntity.prototype);
 function GameFieldMenuHeader(parentDOMElement, textContent) {
 
     GameEntity.call(this, 'h1', parentDOMElement, true, 'menu-header', ['game-field-menu-header'], textContent);
-
 }
 
 GameFieldMenuHeader.prototype = Object.create(GameEntity.prototype);
 
-function GameFieldMenuGameOver(parentDOMElement, textContent) {
+function GameFieldMenuGameInfo(parentDOMElement, id, textContent) {
 
-    GameEntity.call(this, 'h2', parentDOMElement, true, 'menu-game-over', ['game-field-menu-header'], textContent);
-
+    GameEntity.call(this, 'h2', parentDOMElement, true, id, ['game-field-menu-header'], textContent);
 }
 
-GameFieldMenuGameOver.prototype = Object.create(GameEntity.prototype);
+GameFieldMenuGameInfo.prototype = Object.create(GameEntity.prototype);
 
 /* End Game Field Menu Layer */

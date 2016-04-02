@@ -5,7 +5,6 @@
     this._gameFieldTouchLeft = new GameEntity('div', this.getDOMElement(), true, 'game-field-touch-left', ['game-field-touch-item']);
     this._gameFieldTouchSpace = new GameEntity('div', this.getDOMElement(), true, 'game-field-touch-space', ['game-field-touch-item']);
     this._gameFieldTouchRight = new GameEntity('div', this.getDOMElement(), true, 'game-field-touch-right', ['game-field-touch-item']);
-
 }
 
 GameFieldTouch.prototype = Object.create(GameEntity.prototype);

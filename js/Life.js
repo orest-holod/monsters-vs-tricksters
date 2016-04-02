@@ -24,7 +24,6 @@ Life.prototype.getTargetStep = function () {
     return this._targetStep;
 }
 
-
 /* End Public Methods */
 
 /* End Monster */

@@ -50,9 +50,9 @@ Trickster.prototype.levitate = function () {
 
     if (this.getDX() >= 0) {
 
-        if (this.getX() + this.getDX() * GameEntity.FPS_INDEX <= this._preLevitateX + this._levitateDX) {
+        if (this.getX() + this.getDX() <= this._preLevitateX + this._levitateDX) {
 
-            this.setX(this.getX() + this.getDX() * GameEntity.FPS_INDEX);
+            this.setX(this.getX() + this.getDX());
         }
         else {
 
@@ -61,9 +61,9 @@ Trickster.prototype.levitate = function () {
     }
     else {
 
-        if (this.getX() + this.getDX() * GameEntity.FPS_INDEX >= this._preLevitateX - this._levitateDX) {
+        if (this.getX() + this.getDX() >= this._preLevitateX - this._levitateDX) {
 
-            this.setX(this.getX() + this.getDX() * GameEntity.FPS_INDEX);
+            this.setX(this.getX() + this.getDX());
         }
         else {
 
@@ -73,9 +73,9 @@ Trickster.prototype.levitate = function () {
 
     if (this.getDY() >= 0) {
 
-        if (this.getY() + this.getDY() * GameEntity.FPS_INDEX <= this._preLevitateY + this._levitateDY) {
+        if (this.getY() + this.getDY() <= this._preLevitateY + this._levitateDY) {
 
-            this.setY(this.getY() + this.getDY() * GameEntity.FPS_INDEX);
+            this.setY(this.getY() + this.getDY());
         }
         else {
 
@@ -84,9 +84,9 @@ Trickster.prototype.levitate = function () {
     }
     else {
 
-        if (this.getY() + this.getDY() * GameEntity.FPS_INDEX >= this._preLevitateY - this._levitateDY) {
+        if (this.getY() + this.getDY() >= this._preLevitateY - this._levitateDY) {
 
-            this.setY(this.getY() + this.getDY() * GameEntity.FPS_INDEX);
+            this.setY(this.getY() + this.getDY());
         }
         else {
 
@@ -97,7 +97,7 @@ Trickster.prototype.levitate = function () {
 
 Trickster.prototype.rotate = function () {
 
-    this.setAngle(this.getAngle() + this.getDAngle() * GameEntity.FPS_INDEX);
+    this.setAngle(this.getAngle() + this.getDAngle());
 }
 
 Trickster.prototype.setTargetStep = function (value) {

@@ -1,26 +1,25 @@
 ﻿var gameConfigs = {
-    fps: 8,
 
-    fpsDelta: 0.25,
+    fps: 10,
 
     gameField: {
+
         gameFieldBackground: {
+
             gameFieldBackgroundStarsLayer: {
+
                 dx: -1,
                 dy: -1
-
             },
 
             gameFieldBackgroundCloudsLayer: {
+
                 dx: 3,
                 dy: 0
             }
         },
 
         gameFieldTower: {
-
-            basicWidth: 600,
-            basicHeight: 800,
 
             steps: {
 
@@ -32,11 +31,11 @@
 
                 numberOfTricksters: 250,
 
-                arrayOfDX: [0, 5, 10, 15, 20, 25, 30, 35, 0, -5, -10, -15, -20, -25, -30, -35],
-                arrayOfDY: [0, 5, 10, 15, 20, 25, 30, 35, 0, -5, -10, -15, -20, -25, -30, -35],
-                arrayOfDAngle: [0, 5, 10, 15, 20, 25, 30, 35, 0, -5, -10, -15, -20, -25, -30, -35],
-                arrayOfLevitateDX: [10, 40, 70, 100, 130, 160, 180, 210, 240, 270, 300, 330, 360, 390, 410],
-                arrayOfLevitateDY: [10, 40, 70, 100, 130, 160, 180, 210, 240, 270, 300, 330, 360, 390, 410]
+                arrayOfDX: [0, 5, 10, 15, 20, 0, -5, -10, -15, -20],
+                arrayOfDY: [0, 5, 10, 15, 20, 0, -5, -10, -15, -20],
+                arrayOfDAngle: [0, 5, 10, 15, 20, 0, -5, -10, -15, -20],
+                arrayOfLevitateDX: [10, 40, 70, 100, 130, 160, 180, 210, 240, 270, 300],
+                arrayOfLevitateDY: [10, 40, 70, 100, 130, 160, 180, 210, 240, 270, 300]
             },
 
             monsters: {
@@ -47,6 +46,7 @@
             },
 
             lifes: {
+
                 numberOfLifes: 42,
 
                 arrayOfDAngle: [5, -5]
@@ -61,7 +61,7 @@
 
     gamer: {
 
-        dx: 25,
+        dx: 20,
         dy: 35,
         dAngle: 10,
         ddy: 35

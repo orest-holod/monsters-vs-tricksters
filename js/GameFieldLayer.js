@@ -9,31 +9,33 @@ GameFieldLayer.prototype = Object.create(GameEntity.prototype);
 
 /* Start Public Methods */
 
-GameFieldLayer.prototype.moveBackgroundPositition = function () {
+GameFieldLayer.prototype.move = function () {
 
-    if (this.getBackgroundPositionDX() > 0 && this.getBackgroundPositionX() >= 0) {
+    if (this.getDX() > 0 && this.getTranslateX() >= 0) {
 
-        this.setBackgroundPositionX(-this.getWidth() + window.innerWidth);
+        this.setTranslateX(-this.getWidth() + window.innerWidth);
     }
-    else if (this.getBackgroundPositionDX() < 0 && this.getBackgroundPositionX() + this.getWidth() <= window.innerWidth) {
+    else if (this.getDX() < 0 && this.getTranslateX() + this.getWidth() <= window.innerWidth) {
 
-        this.setBackgroundPositionX(0);
+        this.setTranslateX(0);
+
     } else {
         
-        this.setBackgroundPositionX(this.getBackgroundPositionX() + this.getBackgroundPositionDX() * GameEntity.FPS_INDEX);
+        this.setTranslateX(this.getTranslateX() + this.getDX());
     }
 
 
-    if (this.getBackgroundPositionDY() > 0 && this.getBackgroundPositionY() >= 0) {
+    if (this.getDY() > 0 && this.getTranslateY() >= 0) {
 
-        this.setBackgroundPositionY(-this.getHeight() + window.innerHeight);
+        this.setTranslateY(-this.getHeight() + window.innerHeight);
     }
-    else if (this.getBackgroundPositionDY() < 0 && this.getBackgroundPositionY() + this.getHeight() <= window.innerHeight) {
+    else if (this.getDY() < 0 && this.getTranslateY() + this.getHeight() <= window.innerHeight) {
 
-        this.setBackgroundPositionY(0);
+        this.setTranslateY(0);
+
     } else {
 
-        this.setBackgroundPositionY(this.getBackgroundPositionY() + this.getBackgroundPositionDY() * GameEntity.FPS_INDEX);
+        this.setTranslateY(this.getTranslateY() + this.getDY());
     }
 }
 

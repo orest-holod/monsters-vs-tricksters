@@ -283,22 +283,34 @@ body {
     .game-field-menu-item {
         text-align: center;
         position: relative;
-        font-size: 3rem;
+        font-size: 2.5rem;
         border: 0.2rem solid #d0c8c5;
         border-radius: 25%;
         width: 90%;
         margin: 0 auto;
         box-shadow: 0 0 1rem white;
-        margin-bottom: 1.2rem;
+        margin-bottom: 1rem;
     }
 
-    #menu-header,
-    #menu-game-over {
+    #menu-header {
         font-size: 5rem;
         text-align: center;
         position: relative;
         width: 98%;
         line-height: 5.5rem;
+        margin-bottom: 1rem;
+        margin-top: 1rem;
+    }
+
+    #menu-game-over,
+    #menu-game-paused {
+        font-size: 3.5rem;
+        text-align: center;
+        position: relative;
+        width: 98%;
+        line-height: 4rem;
+        margin-bottom: 1rem;
+        margin-top: 1rem;
     }
 
     #music-on-off-menu-item, #sound-on-off-menu-item, #facebook-menu-item, #google-menu-item {
@@ -328,25 +340,49 @@ body {
       width: 90%;
     }
 
-    #menu-header,
-    #menu-game-over {
-      font-size: 4.5rem;
-      line-height: 5rem;
+    #menu-header {
+      font-size: 4rem;
+      line-height: 4.5rem;
+    }
+
+     #menu-game-over,
+    #menu-game-paused {
+      font-size: 3rem;
+      line-height: 3.5rem;
     }
 
     .game-field-menu-item {
-      font-size: 2.5rem;
+      font-size: 1.8rem;
     }
 }
 
+@media only screen and (max-width: 450px) {
+
+    #game-field-menu {
+      width: 90%;
+    }
+
+    #menu-header {
+      font-size: 2.8rem;
+      line-height: 3.3rem;
+    }
+
+    #menu-game-over,
+    #menu-game-paused {
+      font-size: 1.8rem;
+      line-height: 2.3rem;
+    }
+
+    .game-field-menu-item {
+      font-size: 1.5rem;
+    }
+}
 
 /* Step */
 
 .step {
     height: 0.5rem;
     border-radius: 0.3rem;
-
-    /*border: 1px solid #fff;*/
 }
 
 /* Trickster */
@@ -360,8 +396,6 @@ body {
     line-height: 5.1rem;
     color: #fff;
     text-align: center;
-
-    /*border: 1px solid #fff;*/
 }
 
 /* Monster */
@@ -377,8 +411,6 @@ body {
     box-shadow: 0px 0px 3.5rem 1rem #fff;
     text-align: center;
     border-radius: 50%;
-
-    /*border: 1px solid #fff;*/
 }
 
 /* Life */
@@ -416,55 +448,7 @@ body {
     font-size: 10rem;
     line-height: 6rem;
     box-shadow: none;
-
-    /*border: 1px solid #fff;*/
 }
-
-/*@media only screen  and (max-width : 750px) {
-
-    #gamer {
-    width: 2.2rem;
-    height: 4.8rem;
-    font-size: 6.67rem;
-    line-height: 4rem;
-    }
-
-    .trickster {
-    width: 3.33rem;
-    height: 3.4rem;
-    font-size: 4.67rem;
-    line-height: 3.4rem;
-}
-
-.monster {
-    width: 3.33rem;
-    height: 3.33rem;
-    font-size: 3.33rem;
-    line-height: 3.33rem;
-    box-shadow: 0px 0px 2.33rem 0.67rem #fff;
-}
-
-.life {
-    width: 3.33rem;
-    height: 3.33rem;
-}
-
-.life:before,
-.life:after {
-    left: 1.67rem;
-    top: 0.13rem;
-    width: 1.67rem;
-    height: 2.67rem;
-    border-radius: 1.67rem 1.67rem 0 0;
-}
-
-.life:after {
-    left: 0;
-    transform: rotate(45deg);
-    transform-origin :100% 100%;
-}
-
-}*/
 
 /* Remote Control */
 
