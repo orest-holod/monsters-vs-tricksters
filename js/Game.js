@@ -393,13 +393,18 @@ Game.prototype.resizeEventHandler = function (e) {
             var targetMonster = step.getTargetMonster();
 
             if (targetMonster) {
+
                 targetMonster.setTargetStep(step);
+                targetMonster.setDX(targetMonster.getDX() * towerWidthIndex);
+                targetMonster.setDY(targetMonster.getDY() * towerWidthIndex);
             }
 
             var targetTrickster = step.getTargetTrickster();
 
             if (targetTrickster) {
                 targetTrickster.setTargetStep(step);
+                targetTrickster.setDX(targetTrickster.getDX() * towerWidthIndex);
+                targetTrickster.setDY(targetTrickster.getDY() * towerWidthIndex);
             }
 
             var targetLife = step.getTargetLife();
@@ -411,6 +416,8 @@ Game.prototype.resizeEventHandler = function (e) {
             this._gamer.setX(this._gamer.getTargetStep().getX());
 
         }, this);
+
+        this._gamer.setDX(this._gamer.getDX() * towerWidthIndex);
 
         gameFieldBackgroundTowerLayer.setWidth(towerWidthAfterResize, false);
     }
@@ -427,13 +434,13 @@ Game.prototype.resizeEventHandler = function (e) {
             gameFieldTower.minusPixel(towerHeightBeforeResize - towerHeightAfterResize);
         }
 
-        var middleStep = gameFieldTower.getSteps()[Math.floor(window.innerHeight / gameConfigs.gameField.gameFieldTower.steps.heightOfLevel)];
-        this._gamer.setTargetStep(middleStep);
-        this._gamer.setX(this._gamer.getTargetStep().getX());
-
         gameFieldBackgroundTowerLayer.setHeight(towerHeightAfterResize, false);
 
     }
+
+    var middleStep = gameFieldTower.getSteps()[Math.floor(window.innerHeight / gameConfigs.gameField.gameFieldTower.steps.heightOfLevel)];
+    this._gamer.setTargetStep(middleStep);
+    this._gamer.setX(this._gamer.getTargetStep().getX());
 }
 
 /* End Event Handlers */
