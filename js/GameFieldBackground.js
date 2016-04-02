@@ -15,8 +15,48 @@ function GameFieldBackground(parentDOMElement, appendToParentDOMElement) {
     this._gameFieldBackgroundStarsLayer.setBackgroundPositionDX(gameConfigs.gameField.gameFieldBackground.gameFieldBackgroundStarsLayer.dx);
     this._gameFieldBackgroundStarsLayer.setBackgroundPositionDY(gameConfigs.gameField.gameFieldBackground.gameFieldBackgroundStarsLayer.dy);
 
+    if (this._gameFieldBackgroundStarsLayer.getBackgroundPositionDX() !== 0) {
+
+        this._gameFieldBackgroundStarsLayer.setWidth(this.getWidth() * 5);
+
+        if (this._gameFieldBackgroundStarsLayer.getBackgroundPositionDX() > 0) {
+
+            this._gameFieldBackgroundStarsLayer.setBackgroundPositionX(-this._gameFieldBackgroundStarsLayer.getWidth() + this.getWidth());
+        }
+    }
+
+    if (this._gameFieldBackgroundStarsLayer.getBackgroundPositionDY() !== 0) {
+
+        this._gameFieldBackgroundStarsLayer.setHeight(this.getHeight() * 5);
+
+        if (this._gameFieldBackgroundStarsLayer.getBackgroundPositionDY() > 0) {
+
+            this._gameFieldBackgroundStarsLayer.setBackgroundPositionY(-this._gameFieldBackgroundStarsLayer.getHeight() + this.getHeight());
+        }
+    }
+
     this._gameFieldBackgroundCloudsLayer.setBackgroundPositionDX(gameConfigs.gameField.gameFieldBackground.gameFieldBackgroundCloudsLayer.dx);
     this._gameFieldBackgroundCloudsLayer.setBackgroundPositionDY(gameConfigs.gameField.gameFieldBackground.gameFieldBackgroundCloudsLayer.dy);
+
+    if (this._gameFieldBackgroundCloudsLayer.getBackgroundPositionDX() !== 0) {
+
+        this._gameFieldBackgroundCloudsLayer.setWidth(this.getWidth() * 5);
+
+        if (this._gameFieldBackgroundCloudsLayer.getBackgroundPositionDX() > 0) {
+
+            this._gameFieldBackgroundCloudsLayer.setBackgroundPositionX(-this._gameFieldBackgroundCloudsLayer.getWidth() + this.getWidth());
+        } 
+    }
+
+    if (this._gameFieldBackgroundCloudsLayer.getBackgroundPositionDY() !== 0) {
+
+        this._gameFieldBackgroundCloudsLayer.setHeight(this.getHeight() * 5);
+
+        if (this._gameFieldBackgroundCloudsLayer.getBackgroundPositionDY() > 0) {
+
+            this._gameFieldBackgroundCloudsLayer.setBackgroundPositionY(-this._gameFieldBackgroundCloudsLayer.getHeight() + this.getHeight());
+        }
+    }
 
     /* End Init */
 }
