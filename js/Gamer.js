@@ -6,7 +6,7 @@ function Gamer(gameField) {
 
     this._gameField = gameField;
     this._gameFieldTower = gameField.getGameFieldTower();
-    this._targetStep = gameField.getGameFieldTower().getSteps()[Math.floor(window.innerHeight / gameConfigs.gameField.gameFieldTower.steps.heightOfLevel)];
+    this._targetStep = gameField.getGameFieldTower().getVisibleSteps()[Math.floor(window.innerHeight / gameConfigs.gameField.gameFieldTower.steps.heightOfLevel)];
 
     this.setX(this._targetStep.getX());
     this.setY(this._targetStep.getY() + this._targetStep.getHeight());

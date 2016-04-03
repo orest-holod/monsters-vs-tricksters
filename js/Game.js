@@ -15,6 +15,8 @@ function Game(parentDOMElement) {
     this.soundManager.getBackgroundSound().loop = true;
     this.soundManager.getBackgroundSound().play();
 
+    this._isFirstTouch = true;
+
     this._isMusicOn = true;
     this._isSoundOn = true;
     this._isEscPressed = false;
@@ -61,17 +63,32 @@ Game.prototype.keyDownEventHandler = function (e) {
 
         case 39: {
 
+            if (this._isSoundOn) {
+
+                this.soundManager.getStepSound().play();
+            }
+
             this._isRightKeyPressed = true;
             break;
         }
 
         case 37: {
 
+            if (this._isSoundOn) {
+
+                this.soundManager.getStepSound().play();
+            }
+
             this._isLeftKeyPressed = true;
             break;
         }
 
         case 32: {
+
+            if (this._isSoundOn) {
+
+                this.soundManager.getJumpSound().play();
+            }
 
             this._isSpaceKeyPressed = true;
             break;
@@ -143,7 +160,6 @@ Game.prototype.mouseClickEventHandler = function (e) {
 
                     this._gameField.getGameFieldMenu().makeHidden();
                     this._gameField.getGameFieldTower().makeVisible();
-                    this._gameField.getGameFieldTouch().makeVisible();
                     this._isGameStop = false;
                     break;
                 }
@@ -154,11 +170,11 @@ Game.prototype.mouseClickEventHandler = function (e) {
                     if (this._isMusicOn) {
                         this.soundManager.getBackgroundSound().pause();
                         this._isMusicOn = false;
-                        document.getElementById('music-on-off-menu-item').innerHTML = 'Music ON';
+                        this._gameField.getGameFieldMenu().getGameFieldMenuMusicOnOffItem().setTextContent('Music ON');
                     } else {
                         this.soundManager.getBackgroundSound().play();
                         this._isMusicOn = true;
-                        document.getElementById('music-on-off-menu-item').innerHTML = 'Music OFF';
+                        this._gameField.getGameFieldMenu().getGameFieldMenuMusicOnOffItem().setTextContent('Music OFF');
                     }
 
                     break;
@@ -169,10 +185,10 @@ Game.prototype.mouseClickEventHandler = function (e) {
 
                     if (this._isSoundOn) {
                         this._isSoundOn = false;
-                        document.getElementById('sound-on-off-menu-item').innerHTML = 'Sound ON';
+                        this._gameField.getGameFieldMenu().getGameFieldMenuSoundOnOffItem().setTextContent('Sound ON');
                     } else {
                         this._isSoundOn = true;
-                        document.getElementById('sound-on-off-menu-item').innerHTML = 'Sound OFF';
+                        this._gameField.getGameFieldMenu().getGameFieldMenuSoundOnOffItem().setTextContent('Sound OFF');
                     }
 
                     break;
@@ -209,19 +225,16 @@ Game.prototype.mouseClickEventHandler = function (e) {
 
             default:
                 {
-
                     if (this._gameField.getGameFieldMenu().isVisible()) {
 
                         this._gameField.getGameFieldMenu().makeHidden();
                         this._gameField.getGameFieldTower().makeVisible();
-                        this._gameField.getGameFieldTouch().makeVisible();
                         this._isGameStop = false;
 
                     } else {
 
                         this._gameField.getGameFieldMenu().makeVisible();
                         this._gameField.getGameFieldTower().makeHidden();
-                        this._gameField.getGameFieldTouch().makeHidden();
                         this._isGameStop = true;
                     }
                 }
@@ -230,6 +243,13 @@ Game.prototype.mouseClickEventHandler = function (e) {
 }
 
 Game.prototype.touchStartEventHandler = function (e) {
+
+    if (this._isFirstTouch) {
+
+        this.soundManager.getBackgroundSound().play();
+
+        this._isFirstTouch = false;
+    }
 
     if (!this._isTouchDevice) {
 
@@ -240,17 +260,32 @@ Game.prototype.touchStartEventHandler = function (e) {
 
         case 'game-field-touch-left': {
 
+            if (this._isSoundOn) {
+
+                this.soundManager.getStepSound().play();
+            }
+
             this._isLeftKeyPressed = true;
             break;
         }
 
         case 'game-field-touch-right': {
 
+            if (this._isSoundOn) {
+
+                this.soundManager.getStepSound().play();
+            }
+
             this._isRightKeyPressed = true;
             break;
         }
 
         case 'game-field-touch-space': {
+
+            if (this._isSoundOn) {
+
+                this.soundManager.getJumpSound().play();
+            }
 
             this._isSpaceKeyPressed = true;
             break;
@@ -273,30 +308,28 @@ Game.prototype.touchStartEventHandler = function (e) {
 
         case 'music-on-off-menu-item': {
 
-            if (this._isMusicOn) {
-                this.soundManager.getBackgroundSound().pause();
-                this._isMusicOn = false;
-                document.getElementById('music-on-off-menu-item').innerHTML = 'Music ON';
-            }
-            else {
-                this.soundManager.getBackgroundSound().play();
-                this._isMusicOn = true;
-                document.getElementById('music-on-off-menu-item').innerHTML = 'Music OFF';
-            }
+          if (this._isMusicOn) {
+              this.soundManager.getBackgroundSound().pause();
+              this._isMusicOn = false;
+              this._gameField.getGameFieldMenu().getGameFieldMenuMusicOnOffItem().setTextContent('Music ON');
+          } else {
+              this.soundManager.getBackgroundSound().play();
+              this._isMusicOn = true;
+              this._gameField.getGameFieldMenu().getGameFieldMenuMusicOnOffItem().setTextContent('Music OFF');
+          }
 
             break;
         }
 
         case 'sound-on-off-menu-item': {
 
-            if (this._isSoundOn) {
-                this._isSoundOn = false;
-                document.getElementById('sound-on-off-menu-item').innerHTML = 'Sound ON';
-            }
-            else {
-                this._isSoundOn = true;
-                document.getElementById('sound-on-off-menu-item').innerHTML = 'Sound OFF';
-            }
+          if (this._isSoundOn) {
+              this._isSoundOn = false;
+              this._gameField.getGameFieldMenu().getGameFieldMenuSoundOnOffItem().setTextContent('Sound ON');
+          } else {
+              this._isSoundOn = true;
+              this._gameField.getGameFieldMenu().getGameFieldMenuSoundOnOffItem().setTextContent('Sound OFF');
+          }
 
             break;
         }
@@ -313,7 +346,6 @@ Game.prototype.touchStartEventHandler = function (e) {
             break;
         }
 
-
         case 'connect-menu-item': {
 
             this._gameField.getGameFieldMenu().getGameFieldMenuConnectComputerItem().makeHidden();
@@ -326,7 +358,6 @@ Game.prototype.touchStartEventHandler = function (e) {
             window.location = 'telephonecontrol.html';
             break;
         }
-
 
         default: {
 
@@ -381,14 +412,13 @@ Game.prototype.resizeEventHandler = function (e) {
     var gameFieldBackgroundTowerLayer = gameFieldBackground.getGameFieldBackgroundTowerLayer();
 
     var towerClientRect = gameFieldBackgroundTowerLayer.getDOMElement().getBoundingClientRect();
+
     var towerWidthBeforeResize = gameFieldBackgroundTowerLayer.getWidth();
     var towerWidthAfterResize = towerClientRect.width;
-
     var towerWidthIndex = towerWidthAfterResize / towerWidthBeforeResize;
 
     var towerHeightBeforeResize = gameFieldBackgroundTowerLayer.getHeight();
     var towerHeightAfterResize = towerClientRect.height;
-
     var towerHeightIndex = towerHeightAfterResize / towerHeightBeforeResize;
 
     if (towerWidthIndex !== 1) {
@@ -431,7 +461,6 @@ Game.prototype.resizeEventHandler = function (e) {
 
     if (towerHeightIndex !== 1) {
 
-
         if (towerHeightIndex > 1) {
 
             gameFieldTower.addPixel(towerHeightAfterResize - towerHeightBeforeResize);
@@ -441,13 +470,12 @@ Game.prototype.resizeEventHandler = function (e) {
             gameFieldTower.minusPixel(towerHeightBeforeResize - towerHeightAfterResize);
         }
 
+        var middleStep = gameFieldTower.getVisibleSteps()[Math.floor(window.innerHeight / gameConfigs.gameField.gameFieldTower.steps.heightOfLevel)];
+        this._gamer.setTargetStep(middleStep);
+        this._gamer.setX(this._gamer.getTargetStep().getX());
+
         gameFieldBackgroundTowerLayer.setHeight(towerHeightAfterResize, false);
-
     }
-
-    var middleStep = gameFieldTower.getSteps()[Math.floor(window.innerHeight / gameConfigs.gameField.gameFieldTower.steps.heightOfLevel)];
-    this._gamer.setTargetStep(middleStep);
-    this._gamer.setX(this._gamer.getTargetStep().getX());
 }
 
 /* End Event Handlers */
@@ -491,11 +519,6 @@ Game.prototype.runGameLoop = function () {
 
         } else if (this._isSpaceKeyPressed) {
 
-            if (this._isSoundOn) {
-
-                this.soundManager.getJumpSound().play();
-            }
-
             this._gamer.jump();
 
             this._isSpaceKeyPressed = false;
@@ -503,20 +526,10 @@ Game.prototype.runGameLoop = function () {
 
         if (this._isLeftKeyPressed) {
 
-            if (this._isSoundOn) {
-
-                this.soundManager.getStepSound().play();
-            }
-
             this._gamer.moveLeft();
         }
 
         if (this._isRightKeyPressed) {
-
-            if (this._isSoundOn) {
-
-                this.soundManager.getStepSound().play();
-            }
 
             this._gamer.moveRight();
         }
@@ -602,7 +615,7 @@ Game.prototype.runGameLoop = function () {
     else if (this._isGameStop) {
         this._gameField.getGameFieldMenu().getGameFieldMenuGamePaused().makeVisible();
     }
-   
+
     this._gameField.getGameFieldBackground().getGameFieldBackgroundCloudsLayer().move();
     this._gameField.getGameFieldBackground().getGameFieldBackgroundStarsLayer().move();
 
@@ -622,7 +635,7 @@ Game.prototype.start = function () {
 }
 
 Game.prototype.reset = function () {
-
+   
     this._animationFrameManager.stop();
 
     this._gameField.removeFromParentDOMElement();
