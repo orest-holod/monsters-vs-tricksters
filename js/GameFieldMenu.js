@@ -9,7 +9,7 @@ function GameFieldMenu(parentDOMElement, appendToParentDOMElement) {
     this._menuHeader = new GameFieldMenuHeader(this.getDOMElement(), 'Monsters<br/>vs<br/>Tricksters');
     this._menuGameOver = new GameFieldMenuGameInfo(this.getDOMElement(),'menu-game-over', 'Game Over');
     this._menuGamePaused = new GameFieldMenuGameInfo(this.getDOMElement(), 'menu-game-paused', 'Game Paused');
-    this._menuAboutGame = new GameFieldMenuText(this.getDOMElement(), 'menu-game-about-game', aboutGameContent);
+    this._menuAboutGame = new GameFieldMenuText(this.getDOMElement(), 'menu-game-about-text', aboutGameContent);
     this._menuItems = [];
 
     var playGameMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'play-game-menu-item', 'New Game');
@@ -21,6 +21,7 @@ function GameFieldMenu(parentDOMElement, appendToParentDOMElement) {
     var aboutMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'about-menu-item', 'About');
     var connectComputerMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'connect-menu-item', 'Connect Computer');
     var remoteControlMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'remote-control-menu-item', 'Remote control');
+    var backToMenu = new GameFieldMenuItem(this.getDOMElement(), 'back-to-menu-menu-item', 'Go back to menu');
 
     this._menuItems.push(playGameMenuItem);
     this._menuItems.push(resumeGameMenuItem);
@@ -31,9 +32,12 @@ function GameFieldMenu(parentDOMElement, appendToParentDOMElement) {
     this._menuItems.push(aboutMenuItem);
     this._menuItems.push(connectComputerMenuItem);
     this._menuItems.push(remoteControlMenuItem);
+    this._menuItems.push(backToMenu);
 
     this._menuGameOver.makeHidden();
     this._menuGamePaused.makeHidden();
+    this._menuAboutGame.makeHidden();
+    this._menuItems[9].makeHidden();
     this.makeHidden();
 }
 
@@ -54,6 +58,11 @@ GameFieldMenu.prototype.getGameFieldMenuAboutGameText = function () {
     return this._menuAboutGame;
 }
 
+GameFieldMenu.prototype.getGameFieldMenuNewGameItem = function() {
+
+    return this._menuItems[0];
+}
+
 GameFieldMenu.prototype.getGameFieldMenuResumeItem = function() {
 
     return this._menuItems[1];
@@ -69,6 +78,16 @@ GameFieldMenu.prototype.getGameFieldMenuSoundOnOffItem = function() {
     return this._menuItems[3];
 }
 
+GameFieldMenu.prototype.getGameFieldMenuFacebookItem = function() {
+
+    return this._menuItems[4];
+}
+
+GameFieldMenu.prototype.getGameFieldMenuGoogleItem = function() {
+
+    return this._menuItems[5];
+}
+
 GameFieldMenu.prototype.getGameFieldMenuAboutGameItem = function() {
 
     return this._menuItems[6];
@@ -78,6 +97,14 @@ GameFieldMenu.prototype.getGameFieldMenuConnectComputerItem = function() {
     return this._menuItems[7];
 }
 
+GameFieldMenu.prototype.getGameFieldMenuRemoteControlItem = function() {
+    return this._menuItems[8];
+}
+
+GameFieldMenu.prototype.getGameFieldMenuBackToMenuItem = function() {
+    return this._menuItems[9];
+}
+
 GameFieldMenu.prototype.repaint = function () {
 
     GameEntity.prototype.repaint.call(this);
@@ -85,6 +112,7 @@ GameFieldMenu.prototype.repaint = function () {
     this._menuHeader.repaint();
     this._menuGameOver.repaint();
     this._menuGamePaused.repaint();
+    this._menuAboutGame.repaint();
     this._menuItems.forEach(function (menuItem) {
         menuItem.repaint();
     });

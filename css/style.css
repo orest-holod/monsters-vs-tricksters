@@ -333,6 +333,7 @@ body {
     #google-menu-item {
       width: 44%;
       display: inline-block;
+      float: left;
     }
 
     #music-on-off-menu-item,
@@ -344,11 +345,15 @@ body {
       margin-left: 2%;
     }
 
-#game-field-menu > div:hover {
+    #about-menu-item {
+      clear: both;
+    }
+
+#game-field-menu > div:not(.game-field-menu-text):hover {
     background: linear-gradient(to bottom, rgba(224,184,219,0.8) 0%, rgba(219,180,214,0) 24%, rgba(147,119,142,0.76) 84%, rgba(147,119,142,0.8) 100%);
 }
 
-#game-field-menu > div:active {
+#game-field-menu > div:not(.game-field-menu-text):active {
     background: linear-gradient(to bottom, rgba(147,119,142,0.8) 0%,rgba(147,119,142,0.41) 36%, rgba(224,184,219,0) 76%, rgba(224,184,219,0.8) 100%);
 }
 
@@ -370,7 +375,8 @@ body {
       line-height: 3.5rem;
     }
 
-    .game-field-menu-item, .game-field-menu-text {
+    .game-field-menu-item,
+    .game-field-menu-text {
       font-size: 1.8rem;
     }
 

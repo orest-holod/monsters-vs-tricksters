@@ -21,7 +21,7 @@ function Game(parentDOMElement) {
 
     this._isMusicOn = true;
     this._isSoundOn = true;
-   
+
     this._isGameOver = false;
     this._isGameStop = false;
 }
@@ -37,7 +37,7 @@ Game.prototype.keyDownEventHandler = function (e) {
         gamer = this.getGamerById(e.gamerID);
     }
     else {
-        
+
         gamer = this.getGamerById(1);
     }
 
@@ -222,6 +222,21 @@ Game.prototype.mouseClickEventHandler = function (e) {
                     break;
                 }
 
+            case 'about-menu-item': {
+
+                this._gameField.getGameFieldMenu().getGameFieldMenuNewGameItem().makeHidden();
+                this._gameField.getGameFieldMenu().getGameFieldMenuResumeItem().makeHidden();
+                this._gameField.getGameFieldMenu().getGameFieldMenuMusicOnOffItem().makeHidden();
+                this._gameField.getGameFieldMenu().getGameFieldMenuSoundOnOffItem().makeHidden();
+                this._gameField.getGameFieldMenu().getGameFieldMenuFacebookItem().makeHidden();
+                this._gameField.getGameFieldMenu().getGameFieldMenuGoogleItem().makeHidden();
+                this._gameField.getGameFieldMenu().getGameFieldMenuAboutGameItem().makeHidden();
+                this._gameField.getGameFieldMenu().getGameFieldMenuConnectComputerItem().makeHidden();
+                this._gameField.getGameFieldMenu().getGameFieldMenuRemoteControlItem().makeHidden();
+                this._gameField.getGameFieldMenu().getGameFieldMenuAboutGameText().makeVisible();
+                this._gameField.getGameFieldMenu().getGameFieldMenuBackToMenuItem().makeVisible();
+                break;
+            }
 
             case 'connect-menu-item':
                 {
@@ -237,6 +252,22 @@ Game.prototype.mouseClickEventHandler = function (e) {
                     window.location = 'telephonecontrol.html';
                     break;
                 }
+
+            case 'back-to-menu-menu-item': {
+
+                this._gameField.getGameFieldMenu().getGameFieldMenuAboutGameText().makeHidden();
+                this._gameField.getGameFieldMenu().getGameFieldMenuBackToMenuItem().makeHidden();
+                this._gameField.getGameFieldMenu().getGameFieldMenuNewGameItem().makeVisible();
+                this._gameField.getGameFieldMenu().getGameFieldMenuResumeItem().makeVisible();
+                this._gameField.getGameFieldMenu().getGameFieldMenuMusicOnOffItem().makeVisible();
+                this._gameField.getGameFieldMenu().getGameFieldMenuSoundOnOffItem().makeVisible();
+                this._gameField.getGameFieldMenu().getGameFieldMenuFacebookItem().makeVisible();
+                this._gameField.getGameFieldMenu().getGameFieldMenuGoogleItem().makeVisible();
+                this._gameField.getGameFieldMenu().getGameFieldMenuAboutGameItem().makeVisible();
+                this._gameField.getGameFieldMenu().getGameFieldMenuConnectComputerItem().makeVisible();
+                this._gameField.getGameFieldMenu().getGameFieldMenuRemoteControlItem().makeVisible();
+                break;
+            }
 
             default:
                 {
@@ -361,6 +392,22 @@ Game.prototype.touchStartEventHandler = function (e) {
             break;
         }
 
+        case 'about-menu-item': {
+
+            this._gameField.getGameFieldMenu().getGameFieldMenuNewGameItem().makeHidden();
+            this._gameField.getGameFieldMenu().getGameFieldMenuResumeItem().makeHidden();
+            this._gameField.getGameFieldMenu().getGameFieldMenuMusicOnOffItem().makeHidden();
+            this._gameField.getGameFieldMenu().getGameFieldMenuSoundOnOffItem().makeHidden();
+            this._gameField.getGameFieldMenu().getGameFieldMenuFacebookItem().makeHidden();
+            this._gameField.getGameFieldMenu().getGameFieldMenuGoogleItem().makeHidden();
+            this._gameField.getGameFieldMenu().getGameFieldMenuAboutGameItem().makeHidden();
+            this._gameField.getGameFieldMenu().getGameFieldMenuConnectComputerItem().makeHidden();
+            this._gameField.getGameFieldMenu().getGameFieldMenuRemoteControlItem().makeHidden();
+            this._gameField.getGameFieldMenu().getGameFieldMenuAboutGameText().makeVisible();
+            this._gameField.getGameFieldMenu().getGameFieldMenuBackToMenuItem().makeVisible();
+            break;
+        }
+
         case 'connect-menu-item': {
 
             this._gameField.getGameFieldMenu().getGameFieldMenuConnectComputerItem().makeHidden();
@@ -371,6 +418,22 @@ Game.prototype.touchStartEventHandler = function (e) {
         case 'remote-control-menu-item': {
 
             window.location = 'telephonecontrol.html';
+            break;
+        }
+
+        case 'back-to-menu-menu-item': {
+
+            this._gameField.getGameFieldMenu().getGameFieldMenuAboutGameText().makeHidden();
+            this._gameField.getGameFieldMenu().getGameFieldMenuBackToMenuItem().makeHidden();
+            this._gameField.getGameFieldMenu().getGameFieldMenuNewGameItem().makeVisible();
+            this._gameField.getGameFieldMenu().getGameFieldMenuResumeItem().makeVisible();
+            this._gameField.getGameFieldMenu().getGameFieldMenuMusicOnOffItem().makeVisible();
+            this._gameField.getGameFieldMenu().getGameFieldMenuSoundOnOffItem().makeVisible();
+            this._gameField.getGameFieldMenu().getGameFieldMenuFacebookItem().makeVisible();
+            this._gameField.getGameFieldMenu().getGameFieldMenuGoogleItem().makeVisible();
+            this._gameField.getGameFieldMenu().getGameFieldMenuAboutGameItem().makeVisible();
+            this._gameField.getGameFieldMenu().getGameFieldMenuConnectComputerItem().makeVisible();
+            this._gameField.getGameFieldMenu().getGameFieldMenuRemoteControlItem().makeVisible();
             break;
         }
 
@@ -497,7 +560,7 @@ Game.prototype.resizeEventHandler = function (e) {
             gamer.setX(this._gamer.getTargetStep().getX());
 
         }, this);
-      
+
         gameFieldBackgroundTowerLayer.setHeight(towerHeightAfterResize, false);
     }
 }
@@ -538,7 +601,7 @@ Game.prototype.runGameLoop = function () {
     if (!this._isGameOver && !this._isGameStop) {
 
         this._gamers.forEach(function(gamer) {
-            
+
             if (gamer.getIsFalling()) {
 
                 gamer.fall();
@@ -635,7 +698,7 @@ Game.prototype.runGameLoop = function () {
 
             this._isGameOver = true;
         }
-          
+
         this._gameField.getGameFieldTower().getVisibleTricksters().forEach(function (trickster) { trickster.rotate(); });
         this._gameField.getGameFieldTower().getVisibleTricksters().forEach(function (trickster) { trickster.levitate(); });
         this._gameField.getGameFieldTower().getVisibleMonsters().forEach(function (monster) { monster.rotate(); });
@@ -673,7 +736,7 @@ Game.prototype.start = function () {
 }
 
 Game.prototype.reset = function () {
-   
+
     this._animationFrameManager.stop();
 
     this._gameField.removeFromParentDOMElement();
