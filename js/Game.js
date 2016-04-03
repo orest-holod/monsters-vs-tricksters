@@ -10,40 +10,44 @@ function Game(parentDOMElement) {
 
     this._gameField = new GameField(that._parentDOMElement, true);
     this._gamer = new Gamer(that._gameField);
+    this._gamers = [this._gamer];
 
     this.soundManager = new SoundManager(parentDOMElement);
     this.soundManager.getBackgroundSound().loop = true;
     this.soundManager.getBackgroundSound().play();
 
+    this._isTouchDevice = false;
     this._isFirstTouch = true;
 
     this._isMusicOn = true;
     this._isSoundOn = true;
-    this._isEscPressed = false;
-    this._isRightKeyPressed = false;
-    this._isLeftKeyPressed = false;
-    this._isUpKeyPressed = false;
-    this._isDownKeyPressed = false;
-    this._isSpaceKeyPressed = false;
-
+   
     this._isGameOver = false;
     this._isGameStop = false;
-    this._isGameWin = false;
-
-    this._isTouchDevice = false;
 }
 
 /* Start Event Handlers */
 
 Game.prototype.keyDownEventHandler = function (e) {
 
+    var gamer = null;
+
+    if (e.gamerID) {
+
+        gamer = this.getGamerById(e.gamerID);
+    }
+    else {
+        
+        gamer = this.getGamerById(1);
+    }
+
     switch (e.keyCode) {
 
         case 27: {
 
-            if (!this._isEscPressed) {
+            if (!gamer.getIsEscPressed()) {
 
-                this._isEscPressed = true;
+                gamer.setIsEscPressed(true);
             }
 
             break;
@@ -51,13 +55,13 @@ Game.prototype.keyDownEventHandler = function (e) {
 
         case 38: {
 
-            this._isUpKeyPressed = true;
+            gamer.setIsUpKeyPressed(true);
             break;
         }
 
         case 40: {
 
-            this._isDownKeyPressed = true;
+            gamer.setIsDownKeyPressed(true);
             break;
         }
 
@@ -68,7 +72,7 @@ Game.prototype.keyDownEventHandler = function (e) {
                 this.soundManager.getStepSound().play();
             }
 
-            this._isRightKeyPressed = true;
+            gamer.setIsRightKeyPressed(true);
             break;
         }
 
@@ -79,7 +83,7 @@ Game.prototype.keyDownEventHandler = function (e) {
                 this.soundManager.getStepSound().play();
             }
 
-            this._isLeftKeyPressed = true;
+            gamer.setIsLeftKeyPressed(true);
             break;
         }
 
@@ -90,7 +94,7 @@ Game.prototype.keyDownEventHandler = function (e) {
                 this.soundManager.getJumpSound().play();
             }
 
-            this._isSpaceKeyPressed = true;
+            gamer.setIsSpaceKeyPressed(true);
             break;
         }
     }
@@ -98,13 +102,24 @@ Game.prototype.keyDownEventHandler = function (e) {
 
 Game.prototype.keyUpEventHandler = function (e) {
 
+    var gamer = null;
+
+    if (e.gamerID) {
+
+        gamer = this.getGamerById(e.gamerID);
+    }
+    else {
+
+        gamer = this.getGamerById(1);
+    }
+
     switch (e.keyCode) {
 
         case 27: {
 
-            if (this._isEscPressed) {
+            if (gamer.getIsEscPressed()) {
 
-                this._isEscPressed = false;
+                gamer.setIsEscPressed(false);
             }
 
             break;
@@ -112,31 +127,31 @@ Game.prototype.keyUpEventHandler = function (e) {
 
         case 38: {
 
-            this._isUpKeyPressed = false;
+            gamer.setIsUpKeyPressed(false);
             break;
         }
 
         case 40: {
 
-            this._isDownKeyPressed = false;
+            gamer.setIsDownKeyPressed(false);
             break;
         }
 
         case 39: {
 
-            this._isRightKeyPressed = false;
+            gamer.setIsRightKeyPressed(false);
             break;
         }
 
         case 37: {
 
-            this._isLeftKeyPressed = false;
+            gamer.setIsLeftKeyPressed(false);
             break;
         }
 
         case 32: {
 
-            this._isSpaceKeyPressed = false;
+            gamer.setIsSpaceKeyPressed(false);
             break;
         }
     }
@@ -265,7 +280,7 @@ Game.prototype.touchStartEventHandler = function (e) {
                 this.soundManager.getStepSound().play();
             }
 
-            this._isLeftKeyPressed = true;
+            this._gamer.setIsLeftKeyPressed(true);
             break;
         }
 
@@ -276,7 +291,7 @@ Game.prototype.touchStartEventHandler = function (e) {
                 this.soundManager.getStepSound().play();
             }
 
-            this._isRightKeyPressed = true;
+            this._gamer.setIsRightKeyPressed(true);
             break;
         }
 
@@ -287,7 +302,7 @@ Game.prototype.touchStartEventHandler = function (e) {
                 this.soundManager.getJumpSound().play();
             }
 
-            this._isSpaceKeyPressed = true;
+            this._gamer.setIsSpaceKeyPressed(true);
             break;
         }
 
@@ -386,19 +401,19 @@ Game.prototype.touchEndEventHandler = function (e) {
 
         case 'game-field-touch-left': {
 
-            this._isLeftKeyPressed = false;
+            this._gamer.setIsLeftKeyPressed(false);
             break;
         }
 
         case 'game-field-touch-right': {
 
-            this._isRightKeyPressed = false;
+            this._gamer.setIsRightKeyPressed(false);
             break;
         }
 
         case 'game-field-touch-space': {
 
-            this._isSpaceKeyPressed = false;
+            this._gamer.setIsSpaceKeyPressed(false);
             break;
         }
     }
@@ -452,7 +467,11 @@ Game.prototype.resizeEventHandler = function (e) {
                 targetLife.setTargetStep(step);
             }
 
-            this._gamer.setX(this._gamer.getTargetStep().getX());
+            this._gamers.forEach(function (gamer) {
+
+                gamer.setX(this._gamer.getTargetStep().getX());
+
+            }, this);
 
         }, this);
 
@@ -471,9 +490,14 @@ Game.prototype.resizeEventHandler = function (e) {
         }
 
         var middleStep = gameFieldTower.getVisibleSteps()[Math.floor(window.innerHeight / gameConfigs.gameField.gameFieldTower.steps.heightOfLevel)];
-        this._gamer.setTargetStep(middleStep);
-        this._gamer.setX(this._gamer.getTargetStep().getX());
 
+        this._gamers.forEach(function (gamer) {
+
+            gamer.setTargetStep(middleStep);
+            gamer.setX(this._gamer.getTargetStep().getX());
+
+        }, this);
+      
         gameFieldBackgroundTowerLayer.setHeight(towerHeightAfterResize, false);
     }
 }
@@ -484,23 +508,27 @@ Game.prototype.resizeEventHandler = function (e) {
 
 Game.prototype.runGameLoop = function () {
 
-    if (this._isEscPressed) {
+    this._gamers.forEach(function(gamer) {
 
-        if (this._gameField.getGameFieldMenu().isVisible()) {
+        if (gamer.getIsEscPressed()) {
 
-            this._gameField.getGameFieldMenu().makeHidden();
-            this._gameField.getGameFieldTower().makeVisible();
-            this._isGameStop = false;
+            if (this._gameField.getGameFieldMenu().isVisible()) {
 
-        } else {
+                this._gameField.getGameFieldMenu().makeHidden();
+                this._gameField.getGameFieldTower().makeVisible();
+                this._isGameStop = false;
 
-            this._gameField.getGameFieldMenu().makeVisible();
-            this._gameField.getGameFieldTower().makeHidden();
-            this._isGameStop = true;
+            } else {
+
+                this._gameField.getGameFieldMenu().makeVisible();
+                this._gameField.getGameFieldTower().makeHidden();
+                this._isGameStop = true;
+            }
+
+            gamer.setIsEscPressed(false);
         }
 
-        this._isEscPressed = false;
-    }
+    }, this);
 
     this._gameField.getGameFieldBackground().getGameFieldBackgroundFPSLayer()
         .setTextContent('{currentFPS}fps'.replace('{currentFPS}', this._animationFrameManager.getCurrentFPS()));
@@ -509,96 +537,105 @@ Game.prototype.runGameLoop = function () {
 
     if (!this._isGameOver && !this._isGameStop) {
 
-        if (this._gamer.getIsFalling()) {
+        this._gamers.forEach(function(gamer) {
+            
+            if (gamer.getIsFalling()) {
 
-            this._gamer.fall();
+                gamer.fall();
 
-        } else if (this._gamer.getIsJumping()) {
+            } else if (gamer.getIsJumping()) {
 
-            this._gamer.jump();
+                gamer.jump();
 
-        } else if (this._isSpaceKeyPressed) {
+            } else if (gamer.getIsSpaceKeyPressed()) {
 
-            this._gamer.jump();
+                gamer.jump();
 
-            this._isSpaceKeyPressed = false;
-        }
-
-        if (this._isLeftKeyPressed) {
-
-            this._gamer.moveLeft();
-        }
-
-        if (this._isRightKeyPressed) {
-
-            this._gamer.moveRight();
-        }
-
-        if (!this._isLeftKeyPressed && !this._isRightKeyPressed) {
-
-            this._gamer.standStill();
-        }
-
-        if (this._gamer.getY() <= 0) {
-
-            if (this._isSoundOn) {
-
-                this.soundManager.getGameOverSound().play();
+                gamer.setIsSpaceKeyPressed(false);
             }
 
-            this._isGameOver = true;
-        }
+            if (gamer.getIsLeftKeyPressed()) {
 
-        var touchedMonster = this._gamer.getTouchedMonster();
-
-        if (touchedMonster) {
-
-            if (this._isSoundOn) {
-
-                this.soundManager.getTouchedMonsterSound().play();
+                gamer.moveLeft();
             }
 
-            this._gameField.getGameFieldScore().addMonsters();
+            if (gamer.getIsRightKeyPressed()) {
 
-            this._gameField.getGameFieldTower().pickUpMonster(touchedMonster);
-        }
-
-        var touchedLife = this._gamer.getTouchedLife();
-
-        if (touchedLife && this._gameField.getGameFieldScore().getLifes() < 3) {
-
-            if (this._isSoundOn) {
-
-                this.soundManager.getLifeSound().play();
+                gamer.moveRight();
             }
 
-            this._gameField.getGameFieldScore().addLifes();
+            if (!gamer.getIsLeftKeyPressed() && !gamer.getIsRightKeyPressed()) {
 
-            this._gameField.getGameFieldTower().pickUpLife(touchedLife);
-        }
-
-        var touchedTrickster = this._gamer.getTouchedTrickster();
-
-        if (touchedTrickster) {
-
-            if (this._isSoundOn) {
-
-                this.soundManager.getTouchedTricksterSound().play();
+                gamer.standStill();
             }
 
-            this._gameField.getGameFieldScore().removeLifes();
-
-            if (!this._gameField.getGameFieldScore().getLifes()) {
+            if (gamer.getY() <= 0) {
 
                 if (this._isSoundOn) {
 
                     this.soundManager.getGameOverSound().play();
                 }
 
-                this._isGameOver = true;
+                gamer.setIsGameOver(true);
             }
-        }
 
+            var touchedMonster = gamer.getTouchedMonster();
+
+            if (touchedMonster) {
+
+                if (this._isSoundOn) {
+
+                    this.soundManager.getTouchedMonsterSound().play();
+                }
+
+                this._gameField.getGameFieldScore().addMonsters();
+
+                this._gameField.getGameFieldTower().pickUpMonster(touchedMonster);
+            }
+
+            var touchedLife = gamer.getTouchedLife();
+
+            if (touchedLife && this._gameField.getGameFieldScore().getLifes() < 3) {
+
+                if (this._isSoundOn) {
+
+                    this.soundManager.getLifeSound().play();
+                }
+
+                this._gameField.getGameFieldScore().addLifes();
+
+                this._gameField.getGameFieldTower().pickUpLife(touchedLife);
+            }
+
+            var touchedTrickster = gamer.getTouchedTrickster();
+
+            if (touchedTrickster) {
+
+                if (this._isSoundOn) {
+
+                    this.soundManager.getTouchedTricksterSound().play();
+                }
+
+                this._gameField.getGameFieldScore().removeLifes();
+
+                if (!this._gameField.getGameFieldScore().getLifes()) {
+
+                    if (this._isSoundOn) {
+
+                        this.soundManager.getGameOverSound().play();
+                    }
+
+                    this._isGameOver = true;
+                }
+            }
+
+        }, this);
+
+        if (this._gamers.every(function (gamer) { return gamer.getIsGameOver() === true; })) {
+
+            this._isGameOver = true;
+        }
+          
         this._gameField.getGameFieldTower().getVisibleTricksters().forEach(function (trickster) { trickster.rotate(); });
         this._gameField.getGameFieldTower().getVisibleTricksters().forEach(function (trickster) { trickster.levitate(); });
         this._gameField.getGameFieldTower().getVisibleMonsters().forEach(function (monster) { monster.rotate(); });
@@ -613,6 +650,7 @@ Game.prototype.runGameLoop = function () {
         this._gameField.getGameFieldMenu().getGameFieldMenuGamePaused().makeHidden();
     }
     else if (this._isGameStop) {
+
         this._gameField.getGameFieldMenu().getGameFieldMenuGamePaused().makeVisible();
     }
 
@@ -624,7 +662,7 @@ Game.prototype.runGameLoop = function () {
     /* Start Repaint */
 
     this._gameField.repaint();
-    this._gamer.repaint();
+    this._gamers.forEach(function (gamer) { gamer.repaint(); }, this);
 
     /* End Repaint */
 }
@@ -642,6 +680,7 @@ Game.prototype.reset = function () {
 
     this._gameField = new GameField(this._parentDOMElement, true);
     this._gamer = new Gamer(this._gameField);
+    this._gamers = [this._gamer];
 
     if (!this._isMusicOn) {
         document.getElementById('music-on-off-menu-item').innerHTML = 'Music ON';
@@ -651,18 +690,39 @@ Game.prototype.reset = function () {
         document.getElementById('sound-on-off-menu-item').innerHTML = 'Sound ON';
     }
 
-    this._isEscPressed = false;
-    this._isRightKeyPressed = false;
-    this._isLeftKeyPressed = false;
-    this._isUpKeyPressed = false;
-    this._isDownKeyPressed = false;
-    this._isSpaceKeyPressed = false;
-
     this._isGameOver = false;
-    this._isGameWin = false;
     this._isGameStop = false;
 
     this._animationFrameManager.runAtWantedFPS(this.runGameLoop.bind(this));
+}
+
+Game.prototype.getGamers = function () {
+
+    return this._gamers;
+}
+
+Game.prototype.setGamers = function (value) {
+
+    this._gamers = value;
+}
+
+Game.prototype.getGamerById = function (id) {
+
+    var gamers = this._gamers.filter(function (gamer) { return gamer.getID() == id; });
+
+    if (gamers.length) {
+
+        return gamers[0];
+    }
+    else {
+
+        return null;
+    }
+}
+
+Game.prototype.addGamer = function (gamer) {
+
+    this._gamers.push(gamer);
 }
 
 /* End Public Methods */
