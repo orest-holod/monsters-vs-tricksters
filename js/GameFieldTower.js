@@ -27,6 +27,8 @@ function GameFieldTower(parentDOMElement, appendToParentDOMElement) {
     this._monsters = this.generateMonsters(this._steps);
     this._lifes = this.generateLifes(this._steps);
 
+    this.update();
+
     /* End Init */
 }
 
@@ -214,7 +216,6 @@ GameFieldTower.prototype.pickUpMonster = function (monster) {
 
     var targetStep = monster.getTargetStep();
     targetStep.setTargetMonster(null);
-
 }
 
 GameFieldTower.prototype.pickUpLife = function (life) {
@@ -228,9 +229,7 @@ GameFieldTower.prototype.pickUpLife = function (life) {
     targetStep.setTargetLife(null);
 }
 
-GameFieldTower.prototype.repaint = function () {
-
-    GameFieldLayer.prototype.repaint.call(this);
+GameFieldTower.prototype.update = function () {
 
     if (this._visibleSteps.length && this._visibleSteps[this._visibleSteps.length - 1].getLevelIndex() === this._steps[this._steps.length - 1].getLevelIndex()) {
 
@@ -249,7 +248,7 @@ GameFieldTower.prototype.repaint = function () {
         var monster = step.getTargetMonster();
         var life = step.getTargetLife();
 
-        if ((step.getY() <= that._pixel + that._maxY && !step.getDOMElement().parentNode && step.getY() >= that._pixel)) {
+        if (!step.isAppendedToParentDOMElement() && step.getY() <= that.getHeight() && step.getY() >= that._pixel) {
 
             step.appendToParentDOMElement();
             that._visibleSteps.push(step);
@@ -278,7 +277,7 @@ GameFieldTower.prototype.repaint = function () {
                     monster.setWidth(monsterCR.width);
                     monster.setHeight(monsterCR.height);
                 }
-               
+
                 that._visibleMonsters.push(monster);
             }
 
@@ -290,48 +289,66 @@ GameFieldTower.prototype.repaint = function () {
 
                     var lifeCR = life.getDOMElement().getBoundingClientRect();
                     life.setWidth(lifeCR.width);
-                    life.setHeight(lifeCR.height);                   
+                    life.setHeight(lifeCR.height);
                 }
 
                 that._visibleLifes.push(life);
             }
 
-        } else if ((step.getY() < that._pixel || step.getY() > that._pixel + that._maxY) && step.getDOMElement().parentNode) {
+        } else if (step.isAppendedToParentDOMElement() && (step.getY() < that._pixel || step.getY() > that.getHeight())) {
 
             step.removeFromParentDOMElement();
             that._visibleSteps.splice(that._visibleSteps.indexOf(step), 1);
 
             if (trickster) {
+
                 trickster.removeFromParentDOMElement();
                 that._visibleTricksters.splice(that._visibleTricksters.indexOf(trickster), 1);
             }
 
             if (monster) {
+
                 monster.removeFromParentDOMElement();
                 that._visibleMonsters.splice(that._visibleMonsters.indexOf(monster), 1);
             }
+
             if (life) {
+
                 life.removeFromParentDOMElement();
                 that._visibleLifes.splice(that._visibleLifes.indexOf(life), 1);
             }
-
-
         }
+    });
+}
+
+GameFieldTower.prototype.repaint = function () {
+
+    GameFieldLayer.prototype.repaint.call(this);
+
+    this._visibleSteps.forEach(function (step) {
 
         step.repaint();
 
+        var trickster = step.getTargetTrickster();
+
         if (trickster) {
+
             trickster.repaint();
         }
 
+        var monster = step.getTargetMonster();
+
         if (monster) {
+
             monster.repaint();
         }
+
+        var life = step.getTargetLife();
+
         if (life) {
+
             life.repaint();
         }
-
-
     });
 }
 
@@ -339,12 +356,14 @@ GameFieldTower.prototype.addPixel = function (value) {
 
     this._pixel += value;
     this.setHeight(this.getHeight() + value);
+    this.update();
 }
 
 GameFieldTower.prototype.minusPixel = function (value) {
 
     this._pixel -= value;
     this.setHeight(this.getHeight() - value);
+    this.update();
 }
 
 /* End Public Methods */

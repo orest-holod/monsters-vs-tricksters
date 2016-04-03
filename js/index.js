@@ -11,7 +11,7 @@ document.addEventListener('keyup', game.keyUpEventHandler.bind(game), false);
 document.addEventListener('click', game.mouseClickEventHandler.bind(game), false);
 document.addEventListener('touchstart', game.touchStartEventHandler.bind(game), false);
 document.addEventListener('touchend', game.touchEndEventHandler.bind(game), false);
-window.addEventListener('resize', debounce(game.resizeEventHandler.bind(game), 100), false);
+window.addEventListener('resize', debounce(game.resizeEventHandler.bind(game), 500), false);
 
 /* End Event Listeners */
 

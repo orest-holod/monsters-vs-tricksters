@@ -136,7 +136,15 @@ body {
     z-index: 50;
 }
 
-@media only screen  and (min-width : 1256px) {
+@media only screen  and (min-width : 1024px) and (orientation: landscape) {
+
+    #game-field-touch {
+        display: none;
+    }
+
+}
+
+@media only screen  and (min-width : 768px) and (orientation: portrait) {
 
     #game-field-touch {
         display: none;
