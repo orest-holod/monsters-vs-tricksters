@@ -154,11 +154,11 @@ Game.prototype.mouseClickEventHandler = function (e) {
                     if (this._isMusicOn) {
                         this.soundManager.getBackgroundSound().pause();
                         this._isMusicOn = false;
-                        document.getElementById('music-on-off-menu-item').innerHTML = 'Music ON';
+                        this._gameField.getGameFieldMenu().getGameFieldMenuMusicOnOffItem().setTextContent('Music ON');
                     } else {
                         this.soundManager.getBackgroundSound().play();
                         this._isMusicOn = true;
-                        document.getElementById('music-on-off-menu-item').innerHTML = 'Music OFF';
+                        this._gameField.getGameFieldMenu().getGameFieldMenuMusicOnOffItem().setTextContent('Music OFF');
                     }
 
                     break;
@@ -169,10 +169,10 @@ Game.prototype.mouseClickEventHandler = function (e) {
 
                     if (this._isSoundOn) {
                         this._isSoundOn = false;
-                        document.getElementById('sound-on-off-menu-item').innerHTML = 'Sound ON';
+                        this._gameField.getGameFieldMenu().getGameFieldMenuSoundOnOffItem().setTextContent('Sound ON');
                     } else {
                         this._isSoundOn = true;
-                        document.getElementById('sound-on-off-menu-item').innerHTML = 'Sound OFF';
+                        this._gameField.getGameFieldMenu().getGameFieldMenuSoundOnOffItem().setTextContent('Sound OFF');
                     }
 
                     break;
@@ -273,30 +273,28 @@ Game.prototype.touchStartEventHandler = function (e) {
 
         case 'music-on-off-menu-item': {
 
-            if (this._isMusicOn) {
-                this.soundManager.getBackgroundSound().pause();
-                this._isMusicOn = false;
-                document.getElementById('music-on-off-menu-item').innerHTML = 'Music ON';
-            }
-            else {
-                this.soundManager.getBackgroundSound().play();
-                this._isMusicOn = true;
-                document.getElementById('music-on-off-menu-item').innerHTML = 'Music OFF';
-            }
+          if (this._isMusicOn) {
+              this.soundManager.getBackgroundSound().pause();
+              this._isMusicOn = false;
+              this._gameField.getGameFieldMenu().getGameFieldMenuMusicOnOffItem().setTextContent('Music ON');
+          } else {
+              this.soundManager.getBackgroundSound().play();
+              this._isMusicOn = true;
+              this._gameField.getGameFieldMenu().getGameFieldMenuMusicOnOffItem().setTextContent('Music OFF');
+          }
 
             break;
         }
 
         case 'sound-on-off-menu-item': {
 
-            if (this._isSoundOn) {
-                this._isSoundOn = false;
-                document.getElementById('sound-on-off-menu-item').innerHTML = 'Sound ON';
-            }
-            else {
-                this._isSoundOn = true;
-                document.getElementById('sound-on-off-menu-item').innerHTML = 'Sound OFF';
-            }
+          if (this._isSoundOn) {
+              this._isSoundOn = false;
+              this._gameField.getGameFieldMenu().getGameFieldMenuSoundOnOffItem().setTextContent('Sound ON');
+          } else {
+              this._isSoundOn = true;
+              this._gameField.getGameFieldMenu().getGameFieldMenuSoundOnOffItem().setTextContent('Sound OFF');
+          }
 
             break;
         }
@@ -602,7 +600,7 @@ Game.prototype.runGameLoop = function () {
     else if (this._isGameStop) {
         this._gameField.getGameFieldMenu().getGameFieldMenuGamePaused().makeVisible();
     }
-   
+
     this._gameField.getGameFieldBackground().getGameFieldBackgroundCloudsLayer().move();
     this._gameField.getGameFieldBackground().getGameFieldBackgroundStarsLayer().move();
 
