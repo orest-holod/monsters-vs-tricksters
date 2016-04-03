@@ -1,12 +1,15 @@
-﻿/* Start Game Field Menu Layer */
+/* Start Game Field Menu Layer */
 
 function GameFieldMenu(parentDOMElement, appendToParentDOMElement) {
 
     GameEntity.call(this, 'div', parentDOMElement, appendToParentDOMElement, 'game-field-menu', ['game-field']);
 
+    var aboutGameContent = 'Something about the game';
+
     this._menuHeader = new GameFieldMenuHeader(this.getDOMElement(), 'Monsters<br/>vs<br/>Tricksters');
     this._menuGameOver = new GameFieldMenuGameInfo(this.getDOMElement(),'menu-game-over', 'Game Over');
     this._menuGamePaused = new GameFieldMenuGameInfo(this.getDOMElement(), 'menu-game-paused', 'Game Paused');
+    this._menuAboutGame = new GameFieldMenuText(this.getDOMElement(), 'menu-game-about-game', aboutGameContent);
     this._menuItems = [];
 
     var playGameMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'play-game-menu-item', 'New Game');
@@ -46,6 +49,11 @@ GameFieldMenu.prototype.getGameFieldMenuGamePaused = function () {
     return this._menuGamePaused;
 }
 
+GameFieldMenu.prototype.getGameFieldMenuAboutGameText = function () {
+
+    return this._menuAboutGame;
+}
+
 GameFieldMenu.prototype.getGameFieldMenuResumeItem = function() {
 
     return this._menuItems[1];
@@ -59,6 +67,11 @@ GameFieldMenu.prototype.getGameFieldMenuMusicOnOffItem = function() {
 GameFieldMenu.prototype.getGameFieldMenuSoundOnOffItem = function() {
 
     return this._menuItems[3];
+}
+
+GameFieldMenu.prototype.getGameFieldMenuAboutGameItem = function() {
+
+    return this._menuItems[6];
 }
 
 GameFieldMenu.prototype.getGameFieldMenuConnectComputerItem = function() {
@@ -97,5 +110,12 @@ function GameFieldMenuGameInfo(parentDOMElement, id, textContent) {
 }
 
 GameFieldMenuGameInfo.prototype = Object.create(GameEntity.prototype);
+
+function GameFieldMenuText(parentDOMElement, id, textContent) {
+
+    GameEntity.call(this, 'div', parentDOMElement, true, id, ['game-field-menu-text'], textContent);
+}
+
+GameFieldMenuText.prototype = Object.create(GameEntity.prototype);
 
 /* End Game Field Menu Layer */
