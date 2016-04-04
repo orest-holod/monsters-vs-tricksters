@@ -12,7 +12,7 @@ function ConnectComputer() {
 		pinCodeForGuest = prompt('Please enter pin code for your game (for guest)'); 
 	}
 	wss.onclose = function(event) { console.log('closed'+event.code) }
-	/*wss.onmessage = function(event) {
+	wss.onmessage = function(event) {
 		try {
 			var data = JSON.parse(event.data);
 			if (pinCodeForGuest == data.pinCode) {
@@ -29,20 +29,6 @@ function ConnectComputer() {
 				}
 			} else if (pinCodeForRemoteControl == data.pinCode) {
 				data.gamerID = 1;
-				if (data.keyDownEvent) {
-					game.keyDownEventHandler(data);
-				} else {
-					game.keyUpEventHandler(data);
-				}
-			}
-		    console.log(data);
-		} catch (e) {}
-	};*/
-
-	wss.onmessage = function(event) {
-		try {
-			var data = JSON.parse(event.data);
-			if (pinCodeForRemoteControl == data.pinCode) {
 				if (data.keyDownEvent) {
 					game.keyDownEventHandler(data);
 				} else {
