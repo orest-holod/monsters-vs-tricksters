@@ -288,7 +288,7 @@ body {
         display: none;
     }
 
-    .game-field-menu-item {
+    .game-field-menu-item, .game-field-menu-text {
         text-align: center;
         position: relative;
         font-size: 2.5rem;
@@ -298,6 +298,12 @@ body {
         margin: 0 auto;
         box-shadow: 0 0 1rem white;
         margin-bottom: 1rem;
+    }
+
+    .game-field-menu-text {
+        text-align: justify;
+        padding-left: 5%;
+        padding-right: 5%;
     }
 
     #menu-header {
@@ -321,23 +327,33 @@ body {
         margin-top: 1rem;
     }
 
-    #music-on-off-menu-item, #sound-on-off-menu-item, #facebook-menu-item, #google-menu-item {
+    #music-on-off-menu-item,
+    #sound-on-off-menu-item,
+    #facebook-menu-item,
+    #google-menu-item {
       width: 44%;
       display: inline-block;
+      float: left;
     }
 
-    #music-on-off-menu-item, #facebook-menu-item {
+    #music-on-off-menu-item,
+    #facebook-menu-item {
       margin-left: 4.5%;
     }
-    #sound-on-off-menu-item, #google-menu-item {
+    #sound-on-off-menu-item,
+    #google-menu-item {
       margin-left: 2%;
     }
 
-#game-field-menu > div:hover {
+    #about-menu-item {
+      clear: both;
+    }
+
+#game-field-menu > div:not(.game-field-menu-text):hover {
     background: linear-gradient(to bottom, rgba(224,184,219,0.8) 0%, rgba(219,180,214,0) 24%, rgba(147,119,142,0.76) 84%, rgba(147,119,142,0.8) 100%);
 }
 
-#game-field-menu > div:active {
+#game-field-menu > div:not(.game-field-menu-text):active {
     background: linear-gradient(to bottom, rgba(147,119,142,0.8) 0%,rgba(147,119,142,0.41) 36%, rgba(224,184,219,0) 76%, rgba(224,184,219,0.8) 100%);
 }
 
@@ -353,22 +369,24 @@ body {
       line-height: 4.5rem;
     }
 
-     #menu-game-over,
+    #menu-game-over,
     #menu-game-paused {
       font-size: 3rem;
       line-height: 3.5rem;
     }
 
-    .game-field-menu-item {
+    .game-field-menu-item,
+    .game-field-menu-text {
       font-size: 1.8rem;
+    }
+
+    .game-field-menu-text {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
     }
 }
 
 @media only screen and (max-width: 450px) {
-
-    #game-field-menu {
-      width: 90%;
-    }
 
     #menu-header {
       font-size: 2.8rem;
@@ -379,10 +397,6 @@ body {
     #menu-game-paused {
       font-size: 1.8rem;
       line-height: 2.3rem;
-    }
-
-    .game-field-menu-item {
-      font-size: 1.8rem;
     }
 }
 

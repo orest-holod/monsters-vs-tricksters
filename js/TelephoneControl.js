@@ -1,10 +1,26 @@
-function TelphoneControl() {
+function TelephoneControl() {
+    var pinCode;
+    var gamerID = (function () {
+        function s4 () {
+            return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+        }
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+    })();
     /* Connect with server */
     
-    var wsUrl = 'ws://185.69.152.203:4871';
-    var ws = new WebSocket(wsUrl);
-    ws.onopen = function() { alert('connected!') };
-    ws.onclose = function(event) { alert('closed'+event.code) };
+    var wssUrl = 'wss://powerful-anchorage-61180.herokuapp.com';
+    var wss = new WebSocket(wssUrl);
+    wss.onopen = function() { 
+        alert('connected!');
+        pinCode = prompt('Please enter pin code for current game');
+        var sendObject = {
+            'newGuest': true,
+            'pinCode': pinCode,
+            'gamerID': gamerID
+        };
+        wss.send(JSON.stringify(sendObject)); 
+    };
+    wss.onclose = function(event) { alert('closed'+event.code) };
     
     /* Initialization necessary functions */
     
@@ -30,10 +46,13 @@ function TelphoneControl() {
             }
         }
         var sendObject = {
+            'pinCode': pinCode,
+            'newGuest': false,
+            'gamerID': gamerID,
             'keyDownEvent': true,
             'keyCode': keyCode
         }
-        ws.send(JSON.stringify(sendObject));
+        wss.send(JSON.stringify(sendObject));
     }
     
     function pressUpButton() {
@@ -59,10 +78,13 @@ function TelphoneControl() {
             
         }
         var sendObject = {
+            'pinCode': pinCode,
+            'newGuest': false,
+            'gamerID': gamerID,
             'keyDownEvent': false,
             'keyCode': keyCode
         }
-        ws.send(JSON.stringify(sendObject));
+        wss.send(JSON.stringify(sendObject));
     }
     
     function DeviceOrient (event) {
@@ -143,4 +165,4 @@ function TelphoneControl() {
     /* End add event */
 }
 
-TelphoneControl();
+TelephoneControl();
