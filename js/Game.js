@@ -720,14 +720,13 @@ Game.prototype.reset = function () {
 
 Game.prototype.getGamer = function () {
 
-    return this.gamer;
+    return this._gamer;
 }
 
 Game.prototype.setGamer = function (value) {
 
     this._gamer = value;
 }
-
 
 Game.prototype.getIsEscPressed = function () {
 

@@ -133,15 +133,15 @@ function TelephoneControl() {
     
     left.addEventListener('touchstart', leftDownButton);
     left.addEventListener('touchend', leftUpButton);
-   
-    right.addEventListener('touchstart', rightDownButton)
-    right.addEventListener('touchend', rightUpButton)
-    
-    jump.addEventListener('touchstart', pressDownButton.bind(jump))
-    jump.addEventListener('touchend', pressUpButton.bind(jump))
-    
-    pause.addEventListener('touchstart', pressDownButton.bind(pause))
-    pause.addEventListener('touchend', pressUpButton.bind(pause))
+
+    right.addEventListener('touchstart', rightDownButton);
+    right.addEventListener('touchend', rightUpButton);
+
+    jump.addEventListener('touchstart', pressDownButton.bind(jump));
+    jump.addEventListener('touchend', pressUpButton.bind(jump));
+
+    pause.addEventListener('touchstart', pressDownButton.bind(pause));
+    pause.addEventListener('touchend', pressUpButton.bind(pause));
     
     container.addEventListener('touchend', function() {
         if (checkbox.checked) {
