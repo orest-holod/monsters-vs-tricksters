@@ -100,6 +100,21 @@ Trickster.prototype.rotate = function () {
     this.setAngle(this.getAngle() + this.getDAngle());
 }
 
+Trickster.prototype.pulse = function () {
+
+    this.setScale(this.getScale() + this.getDScale());
+
+    if (this.getScale() >= 1.1) {
+
+        this.setDScale(-this.getDScale());
+    }
+
+    else if (this.getScale() < 1) {
+
+        this.setDScale(-this.getDScale());
+    }
+}
+
 Trickster.prototype.setTargetStep = function (value) {
 
     this._targetStep = value;

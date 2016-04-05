@@ -15,6 +15,7 @@ function Gamer(gameField) {
     this.setDX(gameConfigs.gamer.dx);
     this.setDY(gameConfigs.gamer.dy);
     this.setDAngle(gameConfigs.gamer.dAngle);
+    this.setDScale(gameConfigs.gamer.dScale);
 
     this._ddy = gameConfigs.gamer.ddy;
 
@@ -301,6 +302,21 @@ Gamer.prototype.fall = function () {
     if (deltaAfterFall) {
 
         this._gameFieldTower.minusPixel(deltaAfterFall);
+    }
+}
+
+Gamer.prototype.pulse = function () {
+
+    this.setScale(this.getScale() + this.getDScale());
+
+    if (this.getScale() >= 1.05) {
+
+        this.setDScale(-this.getDScale());
+    }
+
+    else if (this.getScale() < 1) {
+
+        this.setDScale(-this.getDScale());
     }
 }
 

@@ -24,7 +24,7 @@ Life.prototype.getTargetStep = function () {
     return this._targetStep;
 }
 
-Life.prototype.scale = function () {
+Life.prototype.pulse = function () {
 
     this.setScale(this.getScale() + this.getDScale());
 
