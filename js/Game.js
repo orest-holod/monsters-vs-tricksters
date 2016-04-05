@@ -734,6 +734,7 @@ Game.prototype.runGameLoop = function () {
         this._gameField.getGameFieldTower().getVisibleTricksters().forEach(function (trickster) { trickster.rotate(); });
         this._gameField.getGameFieldTower().getVisibleTricksters().forEach(function (trickster) { trickster.levitate(); });
         this._gameField.getGameFieldTower().getVisibleMonsters().forEach(function (monster) { monster.rotate(); });
+        this._gameField.getGameFieldTower().getVisibleLifes().forEach(function (life) { life.scale(); });
     }
     else if (this._isGameOver) {
 
