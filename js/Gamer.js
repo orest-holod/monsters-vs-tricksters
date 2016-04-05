@@ -247,7 +247,7 @@ Gamer.prototype.jump = function () {
 
     var nearestTopTargetStep = this.getNearestTopTargetStep();
 
-    if (!nearestTopTargetStep) {
+    if (!nearestTopTargetStep && this._jumpingCounter >= 2) {
 
         this._isJumping = false;
         this._jumpingCounter = 0;

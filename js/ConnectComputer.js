@@ -16,30 +16,11 @@ function ConnectComputer() {
 			if (pinCodeForRemoteControl == data.pinCode) {
 				if (data.firstConnect && !game.getGamer().getID()) {
 					game.getGamer().setID(data.gamerID);
-					game._gameField.getGameFieldBackground().getGameFieldBackgroundRemoteLayer().setTextContent("Remote control ON<br/>PIN to access: " + pinCodeForRemoteControl);
 				} else if (game.getGamer().getID() == data.gamerID) {
 					if (data.keyDownEvent) {
 						game.keyDownEventHandler(data);
 					} else if (data.keyUpEvent) {
 						game.keyUpEventHandler(data);
-					} else if (data.touchEventDown) {
-						game.mouseClickEventHandler(data);
-						game.touchStartEventHandler(data);
-						var sendObject = {
-							'gamerID': data.gamerID,
-							'pinCode': data.pinCode,
-							'newGame': true
-						};
-						wss.send(JSON.stringify(sendObject));
-						console.log(data.target.id);
-					} else if (data.touchEventUp) {
-						game.touchEndEventHandler(data);
-						var sendObject = {
-							'gamerID': data.gamerID,
-							'pinCode': data.pinCode,
-							'newGame': true
-						};
-						wss.send(JSON.stringify(sendObject));
 					}
 				}
 			}

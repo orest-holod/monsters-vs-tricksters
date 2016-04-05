@@ -50,6 +50,8 @@ function GameEntity(DOMElementTagName, parentDOMElement, appendToParentDOMElemen
     this._translateY = 0;
     this._display = 'block';
     this._textContent = '';
+    this._scale = 1;
+    this._dScale = 0;
 
     this._smthChanged = false;
 
@@ -65,7 +67,8 @@ function GameEntity(DOMElementTagName, parentDOMElement, appendToParentDOMElemen
         translateX: false,
         translateY: false,
         display: false,
-        textContent: false
+        textContent: false,
+        scale: false
     };
 
     /* End Initialize Private Data */
@@ -152,6 +155,15 @@ GameEntity.prototype.getAngle = function () {
 
 GameEntity.prototype.setAngle = function (value, needRepaint) {
 
+    if (value >= 360) {
+
+        value = value - 360;
+    }
+    else if (value <= -360) {
+
+        value = value + 360;
+    }
+
     this._angle = value;
 
     this._needRepaint.angle = needRepaint === undefined ? true : needRepaint;
@@ -166,6 +178,28 @@ GameEntity.prototype.getDAngle = function () {
 GameEntity.prototype.setDAngle = function (value) {
 
     this._dAngle = value;
+}
+
+GameEntity.prototype.getDScale = function () {
+
+    return this._dScale;
+}
+
+GameEntity.prototype.setDScale = function (value) {
+
+    this._dScale = value;
+}
+
+GameEntity.prototype.getScale = function () {
+
+    return this._scale;
+}
+
+GameEntity.prototype.setScale = function (value, needRepaint) {
+
+    this._scale = value;
+    this._needRepaint.scale = needRepaint === undefined ? true : needRepaint;
+    this._smthChanged = true;
 }
 
 GameEntity.prototype.getDOMElement = function () {
@@ -353,10 +387,11 @@ GameEntity.prototype.repaint = function () {
             this._needRepaint.height = false;
         }
 
-        if (this._needRepaint.angle || this._needRepaint.translateX || this._needRepaint.translateY) {
+        if (this._needRepaint.angle || this._needRepaint.translateX || this._needRepaint.translateY || this._scale) {
 
-            this._DOMElement.style.transform = 'rotate({angle}deg) translate3d({x}px, {y}px, 0)'
+            this._DOMElement.style.transform = 'rotate({angle}deg) scale({scale}) translate3d({x}px, {y}px, 0)'
                 .replace('{angle}', this._angle)
+                .replace('{scale}', this._scale)
                 .replace('{x}', this._translateX)
                 .replace('{y}', this._translateY);
 
