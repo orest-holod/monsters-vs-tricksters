@@ -31,6 +31,8 @@
 
                 numberOfTricksters: 250,
 
+                dScale: 0.05,
+
                 arrayOfDX: [0, 5, 10, 15, 20, 0, -5, -10, -15, -20],
                 arrayOfDY: [0, 5, 10, 15, 20, 0, -5, -10, -15, -20],
                 arrayOfDAngle: [0, 5, 10, 15, 20, 0, -5, -10, -15, -20],
@@ -49,7 +51,7 @@
 
                 numberOfLifes: 42,
 
-                scale: 0.1
+                dScale: 0.1
             }
 
         },
@@ -64,7 +66,8 @@
         dx: 20,
         dy: 35,
         dAngle: 10,
-        ddy: 35
+        ddy: 35,
+        dScale: 0.025
     },
 
     colors: [

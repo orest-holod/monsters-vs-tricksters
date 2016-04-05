@@ -97,6 +97,7 @@ GameFieldTower.prototype.generateTricksters = function (steps) {
         trickster.setDAngle(gameConfigs.gameField.gameFieldTower.tricksters.arrayOfDAngle[Math.floor(Math.random() * gameConfigs.gameField.gameFieldTower.tricksters.arrayOfDAngle.length)]);
         trickster.setLevitateDX(gameConfigs.gameField.gameFieldTower.tricksters.arrayOfLevitateDX[Math.floor(Math.random() * gameConfigs.gameField.gameFieldTower.tricksters.arrayOfLevitateDX.length)]);
         trickster.setLevitateDY(gameConfigs.gameField.gameFieldTower.tricksters.arrayOfLevitateDY[Math.floor(Math.random() * gameConfigs.gameField.gameFieldTower.tricksters.arrayOfLevitateDY.length)]);
+        trickster.setDScale(gameConfigs.gameField.gameFieldTower.tricksters.dScale);
 
         trickster.setTargetStep(step);
         tricksters.push(trickster);
@@ -155,7 +156,7 @@ GameFieldTower.prototype.generateLifes = function (steps) {
 
         var life = new Life(that._DOMElement, false);
 
-        life.setDScale(gameConfigs.gameField.gameFieldTower.lifes.scale);
+        life.setDScale(gameConfigs.gameField.gameFieldTower.lifes.dScale);
         life.setTargetStep(step);
         lifes.push(life);
 
