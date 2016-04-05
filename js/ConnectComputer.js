@@ -28,5 +28,5 @@ function ConnectComputer() {
 		} catch (e) {}
 	};
 
-	/* End initialize callback function*/
+    /* End initialize callback function*/
 }

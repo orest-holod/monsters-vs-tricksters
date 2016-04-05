@@ -112,6 +112,7 @@ Game.prototype.keyUpEventHandler = function (e) {
         case 38: {
 
             this._isUpKeyPressed = false;
+            this._gameField.getGameFieldTower().addPixel(100);
             break;
         }
 
@@ -232,7 +233,11 @@ Game.prototype.mouseClickEventHandler = function (e) {
                 {
 
                     this._gameField.getGameFieldMenu().getGameFieldMenuConnectComputerItem().makeHidden();
+
                     ConnectComputer();
+
+                    this._gameField.getGameFieldBackground().getGameFieldBackgroundRemoteLayer().setTextContent("Remote control ON<br/>PIN to access: ");
+
                     break;
                 }
 
@@ -301,7 +306,7 @@ Game.prototype.touchStartEventHandler = function (e) {
                 this.soundManager.getStepSound().play();
             }
 
-            this._gamer.setIsLeftKeyPressed(true);
+            this._isLeftKeyPressed = true;
             break;
         }
 
@@ -312,7 +317,7 @@ Game.prototype.touchStartEventHandler = function (e) {
                 this.soundManager.getStepSound().play();
             }
 
-            this._gamer.setIsRightKeyPressed(true);
+            this._isRightKeyPressed = true;
             break;
         }
 
@@ -323,7 +328,7 @@ Game.prototype.touchStartEventHandler = function (e) {
                 this.soundManager.getJumpSound().play();
             }
 
-            this._gamer.setIsSpaceKeyPressed(true);
+            this._isSpaceKeyPressed = true;
             break;
         }
 
@@ -454,23 +459,22 @@ Game.prototype.touchEndEventHandler = function (e) {
 
         case 'game-field-touch-left': {
 
-            this._gamer.setIsLeftKeyPressed(false);
+            this._isLeftKeyPressed = false;
             break;
         }
 
         case 'game-field-touch-right': {
 
-            this._gamer.setIsRightKeyPressed(false);
+            this._isRightKeyPressed = false;
             break;
         }
 
         case 'game-field-touch-space': {
 
-            this._gamer.setIsSpaceKeyPressed(false);
+            this._isSpaceKeyPressed = false;
             break;
         }
     }
-
 }
 
 Game.prototype.resizeEventHandler = function (e) {
@@ -478,15 +482,18 @@ Game.prototype.resizeEventHandler = function (e) {
     var gameFieldTower = this._gameField.getGameFieldTower();
     var gameFieldBackground = this._gameField.getGameFieldBackground();
     var gameFieldBackgroundTowerLayer = gameFieldBackground.getGameFieldBackgroundTowerLayer();
+    var gameFieldBackgroundStarsLayer = gameFieldBackground.getGameFieldBackgroundStarsLayer();
+    var gameFieldBackgroundCloudsLayer = gameFieldBackground.getGameFieldBackgroundCloudsLayer();
 
-    var towerClientRect = gameFieldBackgroundTowerLayer.getDOMElement().getBoundingClientRect();
+    var towerClientRect = gameFieldTower.getDOMElement().getBoundingClientRect();
+    var towerLayerClientRect = gameFieldBackgroundTowerLayer.getDOMElement().getBoundingClientRect();
 
-    var towerWidthBeforeResize = gameFieldBackgroundTowerLayer.getWidth();
+    var towerWidthBeforeResize = gameFieldTower.getWidth();
     var towerWidthAfterResize = towerClientRect.width;
     var towerWidthIndex = towerWidthAfterResize / towerWidthBeforeResize;
 
     var towerHeightBeforeResize = gameFieldBackgroundTowerLayer.getHeight();
-    var towerHeightAfterResize = towerClientRect.height;
+    var towerHeightAfterResize = towerLayerClientRect.height;
     var towerHeightIndex = towerHeightAfterResize / towerHeightBeforeResize;
 
     if (towerWidthIndex !== 1) {
@@ -523,26 +530,60 @@ Game.prototype.resizeEventHandler = function (e) {
 
         this._gamer.setX(this._gamer.getTargetStep().getX());
 
-        gameFieldBackgroundTowerLayer.setWidth(towerWidthAfterResize, false);
+        gameFieldTower.setWidth(towerWidthAfterResize, false);
     }
 
     if (towerHeightIndex !== 1) {
 
-        if (towerHeightIndex > 1) {
+        gameFieldTower.setHeight(gameFieldTower.getPixel() + towerHeightAfterResize);
 
-            gameFieldTower.addPixel(towerHeightAfterResize - towerHeightBeforeResize);
-        }
-        else {
-
-            gameFieldTower.minusPixel(towerHeightBeforeResize - towerHeightAfterResize);
-        }
+        gameFieldTower.update();
 
         var middleStep = gameFieldTower.getVisibleSteps()[Math.floor(window.innerHeight / gameConfigs.gameField.gameFieldTower.steps.heightOfLevel)];
-
         this._gamer.setTargetStep(middleStep);
         this._gamer.setX(this._gamer.getTargetStep().getX());
 
         gameFieldBackgroundTowerLayer.setHeight(towerHeightAfterResize, false);
+    }
+
+    if (gameFieldBackgroundStarsLayer.getDX() !== 0) {
+
+        gameFieldBackgroundStarsLayer.setWidth(window.innerWidth * 5);
+
+        if (gameFieldBackgroundStarsLayer.getDX() > 0) {
+
+            gameFieldBackgroundStarsLayer.setTranslateX(gameFieldBackgroundStarsLayer.getWidth() + window.innerWidth);
+        }
+    }
+
+    if (gameFieldBackgroundCloudsLayer.getDX() !== 0) {
+
+        gameFieldBackgroundCloudsLayer.setWidth(window.innerWidth * 5);
+
+        if (gameFieldBackgroundCloudsLayer.getDX() > 0) {
+
+            gameFieldBackgroundCloudsLayer.setTranslateX(gameFieldBackgroundCloudsLayer.getWidth() + window.innerWidth);
+        }
+    }
+
+    if (gameFieldBackgroundStarsLayer.getDY() !== 0) {
+
+        gameFieldBackgroundStarsLayer.setHeight(window.innerHeight * 5);
+
+        if (gameFieldBackgroundStarsLayer.getDY() > 0) {
+
+            gameFieldBackgroundStarsLayer.setTranslateY(-gameFieldBackgroundStarsLayer.getHeight() + window.innerHeight);
+        }
+    }
+
+    if (gameFieldBackgroundCloudsLayer.getDY() !== 0) {
+
+        gameFieldBackgroundCloudsLayer.setHeight(window.innerHeight * 5);
+
+        if (gameFieldBackgroundCloudsLayer.getDY() > 0) {
+
+            gameFieldBackgroundCloudsLayer.setTranslateY(-gameFieldBackgroundCloudsLayer.getHeight() + window.innerHeight);
+        }
     }
 }
 
