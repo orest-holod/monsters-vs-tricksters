@@ -21,6 +21,19 @@ function TelephoneControl() {
         wss.send(JSON.stringify(sendObject)); 
     };
     wss.onclose = function(event) { alert('closed'+event.code) };
+    wss.onmessage = function(event) {
+        try {
+            var data = JSON.parse(event.data);
+            if (pinCode == data.pinCode && gamerID == data.gamerID && data.newGame) {
+                var sendObject = {
+                    'firstConnect': true,
+                    'pinCode': pinCode,
+                    'gamerID': gamerID
+                };
+                wss.send(JSON.stringify(sendObject)); 
+            }
+        } catch (e) {}
+    }
     
     /* Initialization necessary functions */
     
@@ -87,6 +100,48 @@ function TelephoneControl() {
         wss.send(JSON.stringify(sendObject));
     }
     
+    function touchStart () {
+        this.className += ' action-button';
+        var id;
+        switch (this.id) {
+            case 'newGame': {
+                id = 'play-game-menu-item'
+                break;
+            }
+        }
+        var sendObject = {
+            'pinCode': pinCode,
+            'firstConnect': false,
+            'gamerID': gamerID,
+            'touchEventDown': true,
+            'target': {
+                'id': id
+            }
+        };
+        wss.send(JSON.stringify(sendObject));
+    }
+    
+    function touchEnd () {
+        this.className = this.className.replace(' action-button', '');
+        var id;
+        switch (this.id) {
+            case 'newGame': {
+                id = 'play-game-menu-item'
+                break;
+            }
+        }
+        var sendObject = {
+            'pinCode': pinCode,
+            'firstConnect': false,
+            'gamerID': gamerID,
+            'touchEventUp': true,
+            'target': {
+                'id': id
+            }
+        };
+        wss.send(JSON.stringify(sendObject));
+    }
+    
     function DeviceOrient (event) {
         if (event.beta < -6 && !isGo) {
             leftDownButton();
@@ -110,6 +165,7 @@ function TelephoneControl() {
     var right = document.getElementById('right');
     var jump = document.getElementById('jump');
     var pause = document.getElementById('pause');
+    var newGame = document.getElementById('newGame');
     var checkbox = document.getElementById('checkbox');
     var container = document.getElementById('container');
     
@@ -142,6 +198,9 @@ function TelephoneControl() {
 
     pause.addEventListener('touchstart', pressDownButton.bind(pause));
     pause.addEventListener('touchend', pressUpButton.bind(pause));
+    
+    newGame.addEventListener('touchstart', touchStart.bind(newGame));
+    newGame.addEventListener('touchend', touchEnd.bind(newGame));
     
     container.addEventListener('touchend', function() {
         if (checkbox.checked) {
