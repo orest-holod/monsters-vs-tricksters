@@ -152,6 +152,15 @@ GameEntity.prototype.getAngle = function () {
 
 GameEntity.prototype.setAngle = function (value, needRepaint) {
 
+    if (value >= 360) {
+
+        value = value - 360;
+    }
+    else if (value <= -360) {
+
+        value = value + 360;
+    }
+
     this._angle = value;
 
     this._needRepaint.angle = needRepaint === undefined ? true : needRepaint;

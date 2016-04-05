@@ -112,7 +112,8 @@ body {
     box-shadow: inset -4px -4px 129px -4px rgba(245,245,245,1), -1px -16px 33px 11px rgba(20,19,20,0.46), inset -1px -4px 123px 24px rgba(20,19,20,0.46), inset -1px -4px 95px 43px rgba(20,19,20,0.46);
 }
 
-#game-field-background-fps-layer {
+#game-field-background-fps-layer,
+#game-field-background-remote-layer {
     z-index: -2;
 
     width: auto;
@@ -123,6 +124,11 @@ body {
     font-size: 3rem;
     color: #d0c8c5;
     -webkit-text-stroke: 1px #e073ef;
+}
+
+#game-field-background-remote-layer {
+    font-size: 2rem;
+    padding-top: 4rem;
 }
 
 /* Game Field Touch */

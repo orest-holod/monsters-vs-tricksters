@@ -9,8 +9,11 @@ function GameFieldBackground(parentDOMElement, appendToParentDOMElement) {
     this._gameFieldBackgroundCloudsLayer = new GameFieldLayer(this._DOMElement, true, 'game-field-background-clouds-layer');
     this._gameFieldBackgroundTowerLayer = new GameFieldLayer(this._DOMElement, true, 'game-field-background-tower-layer');
     this._gameFieldBackgroundFPSLayer = new GameFieldLayer(this._DOMElement, true, 'game-field-background-fps-layer');
+    this._gameFieldBackgroundRemoteLayer = new GameFieldLayer(this._DOMElement, true, 'game-field-background-remote-layer');
 
     /* Start Init */
+
+    this._gameFieldBackgroundRemoteLayer.setTextContent("Remote control OFF");
 
     this._gameFieldBackgroundStarsLayer.setDX(gameConfigs.gameField.gameFieldBackground.gameFieldBackgroundStarsLayer.dx);
     this._gameFieldBackgroundStarsLayer.setDY(gameConfigs.gameField.gameFieldBackground.gameFieldBackgroundStarsLayer.dy);
@@ -90,6 +93,11 @@ GameFieldBackground.prototype.getGameFieldBackgroundFPSLayer = function () {
     return this._gameFieldBackgroundFPSLayer;
 }
 
+GameFieldBackground.prototype.getGameFieldBackgroundRemoteLayer = function () {
+
+    return this._gameFieldBackgroundRemoteLayer;
+}
+
 GameFieldBackground.prototype.repaint = function () {
 
     GameEntity.prototype.repaint.call(this);
@@ -99,6 +107,7 @@ GameFieldBackground.prototype.repaint = function () {
     this._gameFieldBackgroundCloudsLayer.repaint();
     this._gameFieldBackgroundTowerLayer.repaint();
     this._gameFieldBackgroundFPSLayer.repaint();
+    this._gameFieldBackgroundRemoteLayer.repaint();
 }
 
 /* End Public Methods */

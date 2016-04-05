@@ -366,6 +366,11 @@ GameFieldTower.prototype.minusPixel = function (value) {
     this.update();
 }
 
+GameFieldTower.prototype.getPixel = function() {
+
+    return this._pixel;
+}
+
 /* End Public Methods */
 
 /* End Game Field Tower */
