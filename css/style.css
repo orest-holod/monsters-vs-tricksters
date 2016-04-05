@@ -1,4 +1,4 @@
-﻿/* Fonts */
+﻿﻿/* Fonts */
 
 @font-face {
     font-family: Tricksters;
@@ -112,7 +112,8 @@ body {
     box-shadow: inset -4px -4px 129px -4px rgba(245,245,245,1), -1px -16px 33px 11px rgba(20,19,20,0.46), inset -1px -4px 123px 24px rgba(20,19,20,0.46), inset -1px -4px 95px 43px rgba(20,19,20,0.46);
 }
 
-#game-field-background-fps-layer {
+#game-field-background-fps-layer,
+#game-field-background-remote-layer {
     z-index: -2;
 
     width: auto;
@@ -123,6 +124,11 @@ body {
     font-size: 3rem;
     color: #d0c8c5;
     -webkit-text-stroke: 1px #e073ef;
+}
+
+#game-field-background-remote-layer {
+    font-size: 2rem;
+    padding-top: 4rem;
 }
 
 /* Game Field Touch */
@@ -483,12 +489,13 @@ body {
     right: 0;
     width: 100%;
     height: 100%;
-    background-color: #000;
-    color: red;
     text-align: center;
     padding-top: 20%;
     font-size: 70px;
     font-weight: bold;
+    background-image: radial-gradient(200% 100% at bottom center, #f7f7b6, #e96f92, #75517d, #1b2947), radial-gradient(220% 105% at top center, #1b2947 10%, #75517d 40%, #e96f92 65%, #f7f7b6);
+    -webkit-text-stroke: 2px #e073ef;
+    color: #d0c8c5;
 }
 
 
@@ -560,7 +567,7 @@ body {
 
   .button-action {
     bottom: 2%;
-    right: 5%;
+    right: 1%;
     background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #8fcf00), color-stop(100%, #6b9c00));
     background-color: #7db500;
     border-color: #5a8200;
@@ -569,17 +576,30 @@ body {
   }
 
   .button-caution {
-    height: 80px;
-    width: 160px;
-    right: 2%;
+    height: 40px;
+    width: 120px;
+    right: 1%;
     top: 2%;
-    line-height: 80px;
+    line-height: 40px;
     background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #e8543f), color-stop(100%, #d9331a));
     background-color: #e54028;
     border-color: #c22d18;
     color: white;
     text-shadow: 0 -1px 1px rgba(103, 24, 13, 0.35);
   }
+  
+  .button-highlight {
+    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #fa9915), color-stop(100%, #d87e04));
+    top: 2%;
+    height: 40px;
+    width: 120px;
+    line-height: 40px;
+    left: 1%;
+    background-color: #f18d05;
+    border-color: #bf7004;
+    color: white;
+    text-shadow: 0 -1px 1px rgba(91, 53, 2, 0.35);
+}
 
   .action-button {
     transform: translate(0px,4px);
@@ -587,6 +607,7 @@ body {
     color: #C0C0C0;
   }
   .container {
+    top: 10%;
     margin: 50px auto;
     width: 280px;
     text-align: center;
