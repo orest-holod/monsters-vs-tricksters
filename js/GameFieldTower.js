@@ -155,7 +155,7 @@ GameFieldTower.prototype.generateLifes = function (steps) {
 
         var life = new Life(that._DOMElement, false);
 
-        life.setDAngle(gameConfigs.gameField.gameFieldTower.lifes.arrayOfDAngle[Math.floor(Math.random() * gameConfigs.gameField.gameFieldTower.lifes.arrayOfDAngle.length)]);
+        life.setDScale(gameConfigs.gameField.gameFieldTower.lifes.scale);
         life.setTargetStep(step);
         lifes.push(life);
 

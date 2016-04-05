@@ -49,7 +49,7 @@
 
                 numberOfLifes: 42,
 
-                arrayOfDAngle: [5, -5]
+                scale: 0.1
             }
 
         },

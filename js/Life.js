@@ -24,6 +24,21 @@ Life.prototype.getTargetStep = function () {
     return this._targetStep;
 }
 
+Life.prototype.scale = function () {
+
+    this.setScale(this.getScale() + this.getDScale());
+
+    if (this.getScale() > 1.4) {
+
+        this.setDScale(-this.getDScale());
+    }
+
+    else if (this.getScale() < 1) {
+
+        this.setDScale(-this.getDScale());
+    }
+}
+
 /* End Public Methods */
 
 /* End Monster */

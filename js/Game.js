@@ -27,6 +27,7 @@ function Game(parentDOMElement) {
     this._isUpKeyPressed = false;
     this._isDownKeyPressed = false;
     this._isSpaceKeyPressed = false;
+    this._isSpaceKeyUp = true;
 
     this._isGameOver = false;
     this._isGameStop = false;
@@ -35,6 +36,8 @@ function Game(parentDOMElement) {
 /* Start Event Handlers */
 
 Game.prototype.keyDownEventHandler = function (e) {
+
+    e.preventDefault();
 
     switch (e.keyCode) {
 
@@ -84,18 +87,25 @@ Game.prototype.keyDownEventHandler = function (e) {
 
         case 32: {
 
-            if (this._isSoundOn) {
+            if (!this._isSpaceKeyPressed && this._isSpaceKeyUp) {
 
-                this.soundManager.getJumpSound().play();
+                if (this._isSoundOn) {
+
+                    this.soundManager.getJumpSound().play();
+                }
+
+                this._isSpaceKeyPressed = true;
+                this._isSpaceKeyUp = false;
             }
 
-            this._isSpaceKeyPressed = true;
             break;
         }
     }
 }
 
 Game.prototype.keyUpEventHandler = function (e) {
+
+    e.preventDefault();
 
     switch (e.keyCode) {
 
@@ -112,7 +122,6 @@ Game.prototype.keyUpEventHandler = function (e) {
         case 38: {
 
             this._isUpKeyPressed = false;
-            this._gameField.getGameFieldTower().addPixel(100);
             break;
         }
 
@@ -137,12 +146,16 @@ Game.prototype.keyUpEventHandler = function (e) {
         case 32: {
 
             this._isSpaceKeyPressed = false;
+            this._isSpaceKeyUp = true;
+
             break;
         }
     }
 }
 
 Game.prototype.mouseClickEventHandler = function (e) {
+
+    e.preventDefault();
 
     if (!this._isTouchDevice) {
 
@@ -285,6 +298,8 @@ Game.prototype.mouseClickEventHandler = function (e) {
 
 Game.prototype.touchStartEventHandler = function (e) {
 
+    e.preventDefault();
+
     if (this._isFirstTouch) {
 
         this.soundManager.getBackgroundSound().play();
@@ -323,12 +338,17 @@ Game.prototype.touchStartEventHandler = function (e) {
 
         case 'game-field-touch-space': {
 
-            if (this._isSoundOn) {
+            if (!this._isSpaceKeyPressed && this._isSpaceKeyUp) {
 
-                this.soundManager.getJumpSound().play();
+                if (this._isSoundOn) {
+
+                    this.soundManager.getJumpSound().play();
+                }
+
+                this._isSpaceKeyPressed = true;
+                this._isSpaceKeyUp = false;
             }
 
-            this._isSpaceKeyPressed = true;
             break;
         }
 
@@ -455,6 +475,8 @@ Game.prototype.touchStartEventHandler = function (e) {
 
 Game.prototype.touchEndEventHandler = function (e) {
 
+    e.preventDefault();
+
     switch (e.target.id) {
 
         case 'game-field-touch-left': {
@@ -472,6 +494,7 @@ Game.prototype.touchEndEventHandler = function (e) {
         case 'game-field-touch-space': {
 
             this._isSpaceKeyPressed = false;
+            this._isSpaceKeyUp = true;
             break;
         }
     }
@@ -711,6 +734,7 @@ Game.prototype.runGameLoop = function () {
         this._gameField.getGameFieldTower().getVisibleTricksters().forEach(function (trickster) { trickster.rotate(); });
         this._gameField.getGameFieldTower().getVisibleTricksters().forEach(function (trickster) { trickster.levitate(); });
         this._gameField.getGameFieldTower().getVisibleMonsters().forEach(function (monster) { monster.rotate(); });
+        this._gameField.getGameFieldTower().getVisibleLifes().forEach(function (life) { life.scale(); });
     }
     else if (this._isGameOver) {
 
