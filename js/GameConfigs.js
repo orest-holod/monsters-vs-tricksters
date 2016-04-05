@@ -1,6 +1,6 @@
 ﻿var gameConfigs = {
 
-    fps: 9,
+    fps: 10,
 
     gameField: {
 

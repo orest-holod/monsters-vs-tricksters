@@ -14,7 +14,7 @@ function TelephoneControl() {
         alert('connected!');
         pinCode = prompt('Please enter pin code for current game');
         var sendObject = {
-            'newGuest': true,
+            'firstConnect': true,
             'pinCode': pinCode,
             'gamerID': gamerID
         };
@@ -47,7 +47,7 @@ function TelephoneControl() {
         }
         var sendObject = {
             'pinCode': pinCode,
-            'newGuest': false,
+            'firstConnect': false,
             'gamerID': gamerID,
             'keyDownEvent': true,
             'keyCode': keyCode
@@ -79,9 +79,9 @@ function TelephoneControl() {
         }
         var sendObject = {
             'pinCode': pinCode,
-            'newGuest': false,
+            'firstConnect': false,
             'gamerID': gamerID,
-            'keyDownEvent': false,
+            'keyUpEvent': true,
             'keyCode': keyCode
         }
         wss.send(JSON.stringify(sendObject));
@@ -133,15 +133,15 @@ function TelephoneControl() {
     
     left.addEventListener('touchstart', leftDownButton);
     left.addEventListener('touchend', leftUpButton);
-   
-    right.addEventListener('touchstart', rightDownButton)
-    right.addEventListener('touchend', rightUpButton)
-    
-    jump.addEventListener('touchstart', pressDownButton.bind(jump))
-    jump.addEventListener('touchend', pressUpButton.bind(jump))
-    
-    pause.addEventListener('touchstart', pressDownButton.bind(pause))
-    pause.addEventListener('touchend', pressUpButton.bind(pause))
+
+    right.addEventListener('touchstart', rightDownButton);
+    right.addEventListener('touchend', rightUpButton);
+
+    jump.addEventListener('touchstart', pressDownButton.bind(jump));
+    jump.addEventListener('touchend', pressUpButton.bind(jump));
+
+    pause.addEventListener('touchstart', pressDownButton.bind(pause));
+    pause.addEventListener('touchend', pressUpButton.bind(pause));
     
     container.addEventListener('touchend', function() {
         if (checkbox.checked) {
