@@ -788,6 +788,24 @@ Game.prototype.reset = function () {
     this._gameFieldTouch = this._gameField.getGameFieldTouch();
     this._gamer = new Gamer(this._gameField);
 
+    if (this._isMusicOn) {
+
+        this._gameFieldMenu.getGameFieldMenuMusicOnOffItem().setTextContent('Music OFF');
+    }
+    else {
+
+        this._gameFieldMenu.getGameFieldMenuMusicOnOffItem().setTextContent('Music ON');
+    }
+
+    if (this._isSoundOn) {
+
+        this._gameFieldMenu.getGameFieldMenuSoundOnOffItem().setTextContent('Sound OFF');
+    }
+    else {
+
+        this._gameFieldMenu.getGameFieldMenuSoundOnOffItem().setTextContent('Sound ON');
+    }
+
     this._isGameOver = false;
     this._isGameStop = false;
 
