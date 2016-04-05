@@ -134,9 +134,6 @@ body {
 /* Game Field Touch */
 
 #game-field-touch {
-
-    display: none;
-
     top: auto;
 
     width: 100%;
@@ -145,11 +142,20 @@ body {
     z-index: 50;
 }
 
-@media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {  
+@media only screen  and (min-width : 1024px) and (orientation: landscape) {
 
     #game-field-touch {
-        display: block;
+        display: none;
     }
+
+}
+
+@media only screen  and (min-width : 768px) and (orientation: portrait) {
+
+    #game-field-touch {
+        display: none;
+    }
+
 }
 
 .game-field-touch-item {
