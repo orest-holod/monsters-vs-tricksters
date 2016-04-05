@@ -4,7 +4,7 @@ function Gamer(gameField) {
 
     GameEntity.call(this, 'div', gameField.getGameFieldTower().getDOMElement(), true, 'gamer', ['monster'], 'Q');
 
-    this._id = 1;
+    this._id = '';
 
     this._gameField = gameField;
     this._gameFieldTower = gameField.getGameFieldTower();
@@ -26,16 +26,6 @@ function Gamer(gameField) {
     this._jumpingCounter = 0;
   
     this._lastTouchedTrickster = null;
-
-    this._isEscPressed = false;
-    this._isRightKeyPressed = false;
-    this._isLeftKeyPressed = false;
-    this._isUpKeyPressed = false;
-    this._isDownKeyPressed = false;
-    this._isSpaceKeyPressed = false;
-
-    this._isGameOver = false;
-    this._isGameStop = false;
 }
 
 Gamer.prototype = Object.create(GameEntity.prototype);
@@ -312,86 +302,6 @@ Gamer.prototype.fall = function () {
 
         this._gameFieldTower.minusPixel(deltaAfterFall);
     }
-}
-
-Gamer.prototype.getIsEscPressed = function () {
-
-    return this._isEscPressed;
-}
-
-Gamer.prototype.setIsEscPressed = function (value) {
-
-    this._isEscPressed = value;
-}
-
-Gamer.prototype.getIsRightKeyPressed = function () {
-
-    return this._isRightKeyPressed;
-}
-
-Gamer.prototype.setIsRightKeyPressed = function (value) {
-
-    this._isRightKeyPressed = value;
-}
-
-Gamer.prototype.getIsLeftKeyPressed = function () {
-
-    return this._isLeftKeyPressed;
-}
-
-Gamer.prototype.setIsLeftKeyPressed = function (value) {
-
-    this._isLeftKeyPressed = value;
-}
-
-Gamer.prototype.getIsUpKeyPressed = function () {
-
-    return this._isUpKeyPressed;
-}
-
-Gamer.prototype.setIsUpKeyPressed = function (value) {
-
-    this._isUpKeyPressed = value;
-}
-
-Gamer.prototype.getIsDownKeyPressed = function () {
-
-    return this._isDownKeyPressed;
-}
-
-Gamer.prototype.setIsDownKeyPressed = function (value) {
-
-    this._isDownKeyPressed = value;
-}
-
-Gamer.prototype.getIsSpaceKeyPressed = function () {
-
-    return this._isSpaceKeyPressed;
-}
-
-Gamer.prototype.setIsSpaceKeyPressed = function (value) {
-
-    this._isSpaceKeyPressed = value;
-}
-
-Gamer.prototype.getIsGameOver = function () {
-
-    return this._isGameOver;
-}
-
-Gamer.prototype.setIsGameOver = function (value) {
-
-    this._isGameOver = value;
-}
-
-Gamer.prototype.getIsGameStop = function () {
-
-    return this._isGameStop;
-}
-
-Gamer.prototype.setIsGameStop = function (value) {
-
-    this._isGameStop = value;
 }
 
 /* End Public Methods */
