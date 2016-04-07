@@ -245,6 +245,10 @@ Game.prototype.mouseClickEventHandler = function (e) {
                 break;
             }
 
+            case 'menu-game-about-text': {
+                break;
+            }
+
             case 'connect-menu-item':
                 {
 
@@ -452,6 +456,10 @@ Game.prototype.touchStartEventHandler = function (e) {
             this._gameFieldMenu.getGameFieldMenuAboutGameItem().makeVisible();
             this._gameFieldMenu.getGameFieldMenuConnectComputerItem().makeVisible();
             this._gameFieldMenu.getGameFieldMenuRemoteControlItem().makeVisible();
+            break;
+        }
+
+        case 'menu-game-about-text': {
             break;
         }
 
@@ -736,7 +744,7 @@ Game.prototype.runGameLoop = function () {
 
         this._gameFieldTower.getVisibleTricksters().forEach(function (trickster) {
 
-            trickster.rotate(); 
+            trickster.rotate();
             trickster.levitate();
             trickster.pulse();
         });
