@@ -49,6 +49,7 @@ function GameEntity(DOMElementTagName, parentDOMElement, appendToParentDOMElemen
     this._translateX = 0;
     this._translateY = 0;
     this._display = 'block';
+    this._visibility = 'visible';
     this._textContent = '';
     this._scale = 1;
     this._dScale = 0;
@@ -67,6 +68,7 @@ function GameEntity(DOMElementTagName, parentDOMElement, appendToParentDOMElemen
         translateX: false,
         translateY: false,
         display: false,
+        visibility: false,
         textContent: false,
         scale: false
     };
@@ -277,25 +279,41 @@ GameEntity.prototype.setTextContent = function (value, needRepaint) {
     this._smthChanged = true;
 }
 
-GameEntity.prototype.makeHidden = function () {
+GameEntity.prototype.makeHidden = function (byVisibility) {
 
-    this._display = 'none';
+    if (byVisibility) {
 
-    this._needRepaint.display = true;
+        this._visibility = 'hidden';
+        this._needRepaint.visibility = true;
+    }
+    else {
+        
+        this._display = 'none';
+        this._needRepaint.display = true;
+    }
+    
     this._smthChanged = true;
 }
 
 GameEntity.prototype.makeVisible = function () {
 
-    this._display = 'block';
+    if (this._visibility === 'hidden') {
 
-    this._needRepaint.display = true;
+        this._visibility = 'visible';
+        this._needRepaint.visibility = true;
+    }
+    else {
+        
+        this._display = 'block';
+        this._needRepaint.display = true;
+    }
+    
     this._smthChanged = true;
 }
 
 GameEntity.prototype.isVisible = function () {
 
-    return this._display !== 'none';
+    return this._display !== 'none' && this._visibility!=='hidden';
 }
 
 GameEntity.prototype.appendToParentDOMElement = function() {
@@ -422,6 +440,14 @@ GameEntity.prototype.repaint = function () {
                 .replace('{display}', this._display);
 
             this._needRepaint.display = false;
+        }
+
+        if (this._needRepaint.visibility) {
+
+            this._DOMElement.style.visibility = '{visibility}'
+                .replace('{visibility}', this._visibility);
+
+            this._needRepaint.visibility = false;
         }
 
         if (this._needRepaint.textContent) {

@@ -41,7 +41,7 @@ function Game(parentDOMElement) {
 
 Game.prototype.keyDownEventHandler = function (e) {
 
-    e.preventDefault();
+    e.preventDefault && e.preventDefault();
 
     switch (e.keyCode) {
 
@@ -109,7 +109,7 @@ Game.prototype.keyDownEventHandler = function (e) {
 
 Game.prototype.keyUpEventHandler = function (e) {
 
-    e.preventDefault();
+    e.preventDefault && e.preventDefault();
 
     switch (e.keyCode) {
 
@@ -158,7 +158,7 @@ Game.prototype.keyUpEventHandler = function (e) {
 
 Game.prototype.mouseClickEventHandler = function (e) {
 
-    e.preventDefault();
+    e.preventDefault && e.preventDefault();
 
     if (!this._isTouchDevice) {
 
@@ -256,7 +256,7 @@ Game.prototype.mouseClickEventHandler = function (e) {
 
                     ConnectComputer();
 
-                    this._gameField.getGameFieldBackground().getGameFieldBackgroundRemoteLayer().setTextContent("Remote control ON<br/>PIN to access: ");
+                    this._gameField.getGameFieldBackground().getGameFieldBackgroundRemoteLayer().setTextContent("Remote control ON");
 
                     break;
                 }
@@ -295,7 +295,7 @@ Game.prototype.mouseClickEventHandler = function (e) {
                     } else {
 
                         this._gameFieldMenu.makeVisible();
-                        this._gameFieldTower.makeHidden();
+                        this._gameFieldTower.makeHidden(true);
                         this._isGameStop = true;
                     }
                 }
@@ -305,7 +305,7 @@ Game.prototype.mouseClickEventHandler = function (e) {
 
 Game.prototype.touchStartEventHandler = function (e) {
 
-    e.preventDefault();
+    e.preventDefault && e.preventDefault();
 
     if (this._isFirstTouch) {
 
@@ -475,7 +475,7 @@ Game.prototype.touchStartEventHandler = function (e) {
             else {
 
                 this._gameFieldMenu.makeVisible();
-                this._gameFieldTower.makeHidden();
+                this._gameFieldTower.makeHidden(true);
                 this._gameFieldTouch.makeHidden();
                 this._isGameStop = true;
             }
@@ -486,7 +486,7 @@ Game.prototype.touchStartEventHandler = function (e) {
 
 Game.prototype.touchEndEventHandler = function (e) {
 
-    e.preventDefault();
+    e.preventDefault && e.preventDefault();
 
     switch (e.target.id) {
 
@@ -638,7 +638,7 @@ Game.prototype.runGameLoop = function () {
         } else {
 
             this._gameFieldMenu.makeVisible();
-            this._gameFieldTower.makeHidden();
+            this._gameFieldTower.makeHidden(true);
             this._isGameStop = true;
         }
 
@@ -755,7 +755,7 @@ Game.prototype.runGameLoop = function () {
     else if (this._isGameOver) {
 
         this._gameFieldMenu.makeVisible();
-        this._gameFieldTower.makeHidden();
+        this._gameFieldTower.makeHidden(true);
         this._gameField.getGameFieldTouch().makeHidden();
         this._gameFieldMenu.getGameFieldMenuGameOver().makeVisible();
         this._gameFieldMenu.getGameFieldMenuResumeItem().makeHidden();
