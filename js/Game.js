@@ -295,7 +295,7 @@ Game.prototype.mouseClickEventHandler = function (e) {
                     } else {
 
                         this._gameFieldMenu.makeVisible();
-                        this._gameFieldTower.makeHidden();
+                        this._gameFieldTower.makeHidden(true);
                         this._isGameStop = true;
                     }
                 }
@@ -475,7 +475,7 @@ Game.prototype.touchStartEventHandler = function (e) {
             else {
 
                 this._gameFieldMenu.makeVisible();
-                this._gameFieldTower.makeHidden();
+                this._gameFieldTower.makeHidden(true);
                 this._gameFieldTouch.makeHidden();
                 this._isGameStop = true;
             }
@@ -638,7 +638,7 @@ Game.prototype.runGameLoop = function () {
         } else {
 
             this._gameFieldMenu.makeVisible();
-            this._gameFieldTower.makeHidden();
+            this._gameFieldTower.makeHidden(true);
             this._isGameStop = true;
         }
 
@@ -755,7 +755,7 @@ Game.prototype.runGameLoop = function () {
     else if (this._isGameOver) {
 
         this._gameFieldMenu.makeVisible();
-        this._gameFieldTower.makeHidden();
+        this._gameFieldTower.makeHidden(true);
         this._gameField.getGameFieldTouch().makeHidden();
         this._gameFieldMenu.getGameFieldMenuGameOver().makeVisible();
         this._gameFieldMenu.getGameFieldMenuResumeItem().makeHidden();

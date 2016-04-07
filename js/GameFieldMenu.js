@@ -4,7 +4,7 @@ function GameFieldMenu(parentDOMElement, appendToParentDOMElement) {
 
     GameEntity.call(this, 'div', parentDOMElement, appendToParentDOMElement, 'game-field-menu', ['game-field']);
 
-    var aboutGameContent = 'Pure HTML5/Javascript DOM-based infinite browser game. Gamer (main monster) jumps up an infinite tower looking and trying to resque his friends (other monsters) that have been kidnapped and now being under the spell of evil tricksters. Evil tricksters do their best to keep monster from resquing his friends...';
+    var aboutGameContent = 'Gamer (main monster) jumps up an infinite tower looking and trying to resque his friends (other monsters) that have been kidnapped and now being under the spell of evil tricksters. Evil tricksters do their best to keep monster from resquing his friends...';
 
     this._menuHeader = new GameFieldMenuHeader(this.getDOMElement(), 'Monsters<br/>vs<br/>Tricksters');
     this._menuGameOver = new GameFieldMenuGameInfo(this.getDOMElement(),'menu-game-over', 'Game Over');
