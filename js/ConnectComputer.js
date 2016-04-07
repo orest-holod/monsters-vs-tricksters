@@ -22,18 +22,8 @@ function ConnectComputer() {
 						game.keyDownEventHandler(data);
 					} else if (data.keyUpEvent) {
 						game.keyUpEventHandler(data);
-					} else if (data.touchEventDown) {
-						game.mouseClickEventHandler(data);
-						game.touchStartEventHandler(data);
-						var sendObject = {
-							'gamerID': data.gamerID,
-							'pinCode': data.pinCode,
-							'newGame': true
-						};
-						wss.send(JSON.stringify(sendObject));
-						console.log(data.target.id);
-					} else if (data.touchEventUp) {
-						game.touchEndEventHandler(data);
+					} else if (data.target.id == 'play-game-menu-item') {
+						game.reset(); 
 						var sendObject = {
 							'gamerID': data.gamerID,
 							'pinCode': data.pinCode,
