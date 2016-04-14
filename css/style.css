@@ -346,24 +346,20 @@ body {
     }
 
     #music-on-off-menu-item,
-    #sound-on-off-menu-item,
-    #facebook-menu-item,
-    #google-menu-item {
+    #sound-on-off-menu-item {
       width: 44%;
       display: inline-block;
       float: left;
     }
 
-    #music-on-off-menu-item,
-    #facebook-menu-item {
+    #music-on-off-menu-item {
       margin-left: 4.5%;
     }
-    #sound-on-off-menu-item,
-    #google-menu-item {
+    #sound-on-off-menu-item {
       margin-left: 2%;
     }
 
-    #about-menu-item {
+    #facebook-menu-item {
       clear: both;
     }
 

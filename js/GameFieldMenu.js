@@ -17,7 +17,6 @@ function GameFieldMenu(parentDOMElement, appendToParentDOMElement) {
     var musicOnOff = new GameFieldMenuItem(this.getDOMElement(), 'music-on-off-menu-item', 'Music OFF');
     var soundOnOff = new GameFieldMenuItem(this.getDOMElement(), 'sound-on-off-menu-item', 'Sound OFF');
     var facebookMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'facebook-menu-item', 'FB');
-    var googleMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'google-menu-item', 'G+');
     var aboutMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'about-menu-item', 'About');
     var connectComputerMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'connect-menu-item', 'Connect Computer');
     var remoteControlMenuItem = new GameFieldMenuItem(this.getDOMElement(), 'remote-control-menu-item', 'Remote control');
@@ -28,7 +27,6 @@ function GameFieldMenu(parentDOMElement, appendToParentDOMElement) {
     this._menuItems.push(musicOnOff);
     this._menuItems.push(soundOnOff);
     this._menuItems.push(facebookMenuItem);
-    this._menuItems.push(googleMenuItem);
     this._menuItems.push(aboutMenuItem);
     this._menuItems.push(connectComputerMenuItem);
     this._menuItems.push(remoteControlMenuItem);
@@ -37,7 +35,7 @@ function GameFieldMenu(parentDOMElement, appendToParentDOMElement) {
     this._menuGameOver.makeHidden();
     this._menuGamePaused.makeHidden();
     this._menuAboutGame.makeHidden();
-    this._menuItems[9].makeHidden();
+    this._menuItems[8].makeHidden();
     this.makeHidden();
 }
 
@@ -83,26 +81,22 @@ GameFieldMenu.prototype.getGameFieldMenuFacebookItem = function() {
     return this._menuItems[4];
 }
 
-GameFieldMenu.prototype.getGameFieldMenuGoogleItem = function() {
+
+GameFieldMenu.prototype.getGameFieldMenuAboutGameItem = function() {
 
     return this._menuItems[5];
 }
 
-GameFieldMenu.prototype.getGameFieldMenuAboutGameItem = function() {
-
+GameFieldMenu.prototype.getGameFieldMenuConnectComputerItem = function() {
     return this._menuItems[6];
 }
 
-GameFieldMenu.prototype.getGameFieldMenuConnectComputerItem = function() {
+GameFieldMenu.prototype.getGameFieldMenuRemoteControlItem = function() {
     return this._menuItems[7];
 }
 
-GameFieldMenu.prototype.getGameFieldMenuRemoteControlItem = function() {
-    return this._menuItems[8];
-}
-
 GameFieldMenu.prototype.getGameFieldMenuBackToMenuItem = function() {
-    return this._menuItems[9];
+    return this._menuItems[8];
 }
 
 GameFieldMenu.prototype.repaint = function () {
