@@ -4,7 +4,7 @@ Gamer (main monster) jumps up the infinite tower finding and saving his friends 
 
 ## Try it live:
 
-[Monsters vs. Tricksters](http://orest-o-holod.github.io/monsters-vs-tricksters/)
+[Monsters vs. Tricksters](http://orest-holod.github.io/monsters-vs-tricksters/)
 
 ### Used icon fonts:
 
